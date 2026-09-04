@@ -1,0 +1,9 @@
+# Python dependencies for building the online reading site.
+# Pin to minor ranges so local builds are reproducible while still receiving
+# patch-level security fixes.
+#
+# Why pin: an upstream release of mkdocs-material or a plugin can silently
+# break the local site build. A pinned range keeps upgrades deliberate.
+
+mkdocs-material[imaging] >= 9.5, < 10
+Markdown >= 3.5, < 4
