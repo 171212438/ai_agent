@@ -37,7 +37,7 @@ def resolve_llm_backend(
     primary_base_url: str,
     model: str,
 ) -> tuple[str, str, str, bool]:
-    """Resolve a backend from a loose key/URL pair, as the old helper did.
+    """接收“Key、API 地址、模型名称”，决定采用原配置还是 OpenRouter，最后返回一个四元组
 
     Prefer :func:`~agentbook.providers.resolution.resolve_backend`, which knows
     the provider registry and therefore reports far better errors. This exists

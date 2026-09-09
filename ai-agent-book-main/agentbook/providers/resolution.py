@@ -43,7 +43,7 @@ def build_openrouter_backend(
     api_key: str,
     provider: str = "openrouter",
 ) -> Backend:
-    """Build a backend that routes through OpenRouter.
+    """把传入参数和环境配置整理好，创建并返回一个走 OpenRouter 的 Backend 对象
 
     Shared by :func:`resolve_backend` and the legacy shim in
     :mod:`agentbook.providers.legacy` so the two cannot drift apart.
@@ -131,7 +131,7 @@ def resolve_backend(
     *,
     chosen_by_reader: bool = True,
 ) -> Backend:
-    """Resolve a provider name into a usable backend.
+    """根据服务商、模型和可用 Key，决定采用哪条调用路径，最后返回一个 Backend 对象
 
     Resolution order:
 

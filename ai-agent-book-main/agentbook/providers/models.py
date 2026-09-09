@@ -15,7 +15,8 @@ __all__ = ["Backend", "Provider"]
 
 @dataclass(frozen=True)
 class Provider:
-    """Static description of an OpenAI-compatible backend.
+    """模型服务商配置类:
+    保存服务商名称、默认 API 地址、默认模型等信息，并提供读取 API Key、确定实际 API 地址的方法
 
     Attributes:
         name: Canonical provider name, e.g. ``"kimi"``.
@@ -75,7 +76,8 @@ class Provider:
 
 @dataclass(frozen=True)
 class Backend:
-    """A resolved, ready-to-use OpenAI-compatible endpoint.
+    """保存已经确定好的模型调用配置:
+    使用哪个 API 地址、哪个模型、哪个 API Key，以及是否通过 OpenRouter 调用
 
     Attributes:
         api_key: Credential for ``base_url``. Never empty -- local runtimes get

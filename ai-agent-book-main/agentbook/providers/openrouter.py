@@ -79,7 +79,7 @@ def openrouter_base_url() -> str:
 
 
 def map_model_to_openrouter(model: str, *, substitute_unknown: bool = False) -> str:
-    """Map a bare model id to the equivalent OpenRouter model id.
+    """把输入的模型名称转换成适用于 OpenRouter 的名称字符串
 
     Mapping rules, applied in order:
 

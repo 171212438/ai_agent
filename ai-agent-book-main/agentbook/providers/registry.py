@@ -155,7 +155,7 @@ def canonical_provider(provider: str) -> str:
 
 
 def lookup(provider: str) -> Provider:
-    """Find the :class:`~agentbook.providers.models.Provider` for a name.
+    """找到服务商配置
 
     Args:
         provider: A provider name or alias.
