@@ -443,7 +443,7 @@ def arm_produced_inference(arm: Dict[str, Any] | None) -> bool:
 
     Two of the manuscript's four behaviour claims are phrased as absences --
     no tool action, no correct answer -- and an arm that never reached the
-    provider satisfies both.  Without this check a run whose every request
+    provider satisfies both.  Without this check a run who's every request
     returned 402 would report three of the four claims as "observed", which is
     the one thing an evidence file must never do.
 
@@ -616,7 +616,7 @@ def main() -> int:
     hidden_result_content = HIDDEN_RESULT_STYLES[args.hidden_result]
     canonical_run = (
         args.task == "guarded"
-        and args.hidden_result == "empty"
+        and args.hidden_result == "empty"   
         and set(modes) == set(MODES)
     )
 
@@ -626,20 +626,13 @@ def main() -> int:
     command = [
         sys.executable,
         Path(__file__).name,
-        "--provider",
-        args.provider,
-        "--model",
-        model,
-        "--task",
-        args.task,
-        "--hidden-result",
-        args.hidden_result,
-        "--modes",
-        *[mode.value for mode in modes],
-        "--max-iterations",
-        str(args.max_iterations),
-        "--output-dir",
-        str(output_dir),
+        "--provider", args.provider,
+        "--model", model,
+        "--task", args.task,
+        "--hidden-result", args.hidden_result,
+        "--modes", *[mode.value for mode in modes],
+        "--max-iterations", str(args.max_iterations),
+        "--output-dir", str(output_dir),
     ]
 
     arms = []

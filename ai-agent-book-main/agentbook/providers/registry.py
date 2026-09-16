@@ -66,7 +66,7 @@ PROVIDERS: dict[str, Provider] = {
     "zhipu": Provider(
         name="zhipu",
         base_url="https://open.bigmodel.cn/api/paas/v4",
-        default_model="glm-5.2",
+        default_model="glm-5.3-flash",
         key_vars=("ZHIPU_API_KEY",),
     ),
     "openrouter": Provider(
@@ -167,7 +167,7 @@ def lookup(provider: str) -> Provider:
         ValueError: If the name matches no registry entry or alias. The message
             lists the supported names.
     """
-    key = canonical_provider(provider)
+    key = canonical_provider(provider)  # 清理首尾空白、转换为小写，并处理别名
     if key not in PROVIDERS:
         supported = ", ".join(sorted(PROVIDERS))
         raise ValueError(f"Unsupported provider: {provider!r}. Supported: {supported}")
