@@ -562,29 +562,29 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__)  # __doc__-使用文件开头的说明文字作为命令行帮助描述
     parser.add_argument(
-        "--provider",
+        "--provider",  # 模型服务商
         default="kimi",
         choices=SUPPORTED_PROVIDERS,
         help="Provider to run every arm against (default: kimi).",
     )
     parser.add_argument(
-        "--model",
+        "--model",  # 模型名称
         default=None,
         help="Model id. Defaults to the chosen provider's registry default, so "
              "--provider alone is enough; naming a model from another provider "
              "is what makes every arm fail with a 400.",
     )
     parser.add_argument(
-        "--modes",
+        "--modes",  # 一个或多个实验模式
         nargs="+",
         choices=[mode.value for mode in MODES],
         help="Arms to run (default: all five). A subset is a probe, not a "
              "canonical run, and is never promoted to validation/latest.json.",
     )
     parser.add_argument(
-        "--task",
+        "--task",  # 任务版本
         default="guarded",
         choices=sorted(TASK_VARIANTS),
         help="guarded (default, canonical) forbids self-estimated exchange "
@@ -592,7 +592,7 @@ def main() -> int:
              "when nothing tells it not to guess.",
     )
     parser.add_argument(
-        "--hidden-result",
+        "--hidden-result",  # 隐藏工具结果的形式
         default="empty",
         choices=sorted(HIDDEN_RESULT_STYLES),
         help="How the no-tool-results arm withholds an observation. empty "
@@ -601,11 +601,11 @@ def main() -> int:
              "adds a signal the ablation was supposed to take away and lets "
              "the model notice and stop.",
     )
-    parser.add_argument("--max-iterations", type=int, default=5)
-    parser.add_argument("--output-dir", type=Path)
-    args = parser.parse_args()
+    parser.add_argument("--max-iterations", type=int, default=5)  # 最大迭代次数
+    parser.add_argument("--output-dir", type=Path)  # 指定输出目录
+    args = parser.parse_args()  # 读取程序启动参数，即 sys.argv[1:]
     if args.max_iterations < 2:
-        parser.error("--max-iterations must be at least 2")
+        parser.error("--max-iterations must be at least 2")  # 迭代次数至少为 2
 
     # An unset --model means "whatever this provider's default is", resolved
     # from the shared registry rather than from a constant that happens to name

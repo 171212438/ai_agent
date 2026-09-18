@@ -13,10 +13,9 @@ from dataclasses import dataclass
 __all__ = ["Backend", "Provider"]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True)  # 根据类中声明的字段，自动生成初始化等方法。显式传入的字段使用传入值，未传入的字段使用定义中的默认值
 class Provider:
-    """模型服务商配置类:
-    保存服务商名称、默认 API 地址、默认模型等信息，并提供读取 API Key、确定实际 API 地址的方法
+    """模型服务商配置类：保存服务商名称、默认 API 地址、默认模型等信息，并提供读取 API Key、确定实际 API 地址的方法
 
     Attributes:
         name: Canonical provider name, e.g. ``"kimi"``.
@@ -41,16 +40,16 @@ class Provider:
             OpenRouter on that basis.
     """
 
-    name: str
-    base_url: str
-    default_model: str
-    key_vars: tuple[str, ...] = ()
-    base_url_var: str | None = None
-    requires_key: bool = True
-    namespaces_models: bool = False
+    name: str  # 服务商的规范名称
+    base_url: str  # 默认 API 地址
+    default_model: str  # 默认模型名称
+    key_vars: tuple[str, ...] = ()  # 保存 API Key 的环境变量名称
+    base_url_var: str | None = None  # 用于覆盖默认 API 地址的环境变量名称
+    requires_key: bool = True  # 标记该服务商是否需要凭证
+    namespaces_models: bool = False  # 标记模型名是否采用“厂商/模型”这样的格式
 
     def api_key(self) -> str:
-        """Read this provider's API key from the environment.
+        """按顺序读取环境变量，返回第一个清理后非空的凭证
 
         Returns:
             The first non-empty value among ``key_vars``, stripped of
@@ -63,7 +62,7 @@ class Provider:
         return ""
 
     def resolved_base_url(self) -> str:
-        """Return the endpoint to call, honouring any environment override.
+        """优先返回环境变量中的非空地址，否则返回默认地址
 
         Returns:
             The value of ``base_url_var`` if that variable is set and non-empty,

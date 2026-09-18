@@ -201,9 +201,7 @@ def resolve_backend(
             # talking to the aggregator directly. An id with no mapping cannot
             # be requested here at all, so a working default beats a certain
             # failure -- unlike the reroute path above.
-            model=map_model_to_openrouter(resolved_model, substitute_unknown=True)
-            if spec.namespaces_models
-            else resolved_model,
+            model=map_model_to_openrouter(resolved_model, substitute_unknown=True) if spec.namespaces_models else resolved_model,
             provider=spec.name,
             using_openrouter=spec.name == _OPENROUTER,
         )

@@ -11,7 +11,7 @@ Resolution *policy* -- which provider wins, when to fall back -- lives in
 
 from __future__ import annotations
 
-from .models import Provider
+from .models import Provider  # 同一个包中的 models 模块
 from .openrouter import OPENROUTER_BASE_URL, OPENROUTER_DEFAULT_MODEL
 
 __all__ = [
@@ -22,7 +22,7 @@ __all__ = [
     "supported_providers",
 ]
 
-PROVIDERS: dict[str, Provider] = {
+PROVIDERS: dict[str, Provider] = {  # 字典，键预期是字符串，值预期是 Provider 实例
     "dashscope": Provider(
         name="dashscope",
         # Alibaba Cloud Model Studio (Bailian) keys are region-bound. Default
@@ -155,7 +155,7 @@ def canonical_provider(provider: str) -> str:
 
 
 def lookup(provider: str) -> Provider:
-    """找到服务商配置
+    """取出的是注册表中已经存在的对象：整理名称 → 检查是否存在 → 返回配置，或者抛出异常
 
     Args:
         provider: A provider name or alias.
@@ -167,7 +167,7 @@ def lookup(provider: str) -> Provider:
         ValueError: If the name matches no registry entry or alias. The message
             lists the supported names.
     """
-    key = canonical_provider(provider)  # 清理首尾空白、转换为小写，并处理别名
+    key = canonical_provider(provider)  # 清理首尾空白、统一大小写，并将已知别名转换为规范名称，如 moonshot 是 kimi 的别名
     if key not in PROVIDERS:
         supported = ", ".join(sorted(PROVIDERS))
         raise ValueError(f"Unsupported provider: {provider!r}. Supported: {supported}")
