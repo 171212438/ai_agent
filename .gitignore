@@ -7,3 +7,7 @@
 
 # Python bytecode cache directories at every level
 __pycache__/
+
+/.venv/lib/python3.13/site-packages/codex_cli_bin/bin/codex
+/.venv/lib/python3.13/site-packages/torch/lib/libtorch_cpu.dylib
+/.venv/lib/python3.13/site-packages/codex_cli_bin/bin/codex-code-mode-host
