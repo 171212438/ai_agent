@@ -19,9 +19,6 @@ namespace at {
 namespace compositeimplicitautograd {
 
 TORCH_API at::Tensor flatten(const at::Tensor & self, int64_t start_dim=0, int64_t end_dim=-1);
-TORCH_API at::Tensor flatten(const at::Tensor & self, int64_t start_dim, int64_t end_dim, at::Dimname out_dim);
-TORCH_API at::Tensor flatten(const at::Tensor & self, at::Dimname start_dim, at::Dimname end_dim, at::Dimname out_dim);
-TORCH_API at::Tensor flatten(const at::Tensor & self, at::DimnameList dims, at::Dimname out_dim);
 
 } // namespace compositeimplicitautograd
 } // namespace at

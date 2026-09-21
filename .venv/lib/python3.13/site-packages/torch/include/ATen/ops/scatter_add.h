@@ -38,11 +38,6 @@ inline at::Tensor & scatter_add_outf(const at::Tensor & self, int64_t dim, const
     return at::_ops::scatter_add_out::call(self, dim, index, src, out);
 }
 
-// aten::scatter_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor
-inline at::Tensor scatter_add(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & src) {
-    return at::_ops::scatter_add_dimname::call(self, dim, index, src);
-}
-
 }
 
 #else

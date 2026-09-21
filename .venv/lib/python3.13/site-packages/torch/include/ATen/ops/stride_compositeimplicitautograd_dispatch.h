@@ -19,7 +19,6 @@ namespace at {
 namespace compositeimplicitautograd {
 
 TORCH_API int64_t stride(const at::Tensor & self, int64_t dim);
-TORCH_API int64_t stride(const at::Tensor & self, at::Dimname dim);
 
 } // namespace compositeimplicitautograd
 } // namespace at

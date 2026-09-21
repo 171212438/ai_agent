@@ -138,36 +138,6 @@ namespace redispatch {
         return at::_ops::_has_same_storage_numel::redispatch(dispatchKeySet, self, other);
     }
 
-    // aten::rename_(Tensor(a!) self, Dimname[]? names) -> Tensor(a!)
-    inline at::Tensor & rename_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, ::std::optional<at::DimnameList> names) {
-        return at::_ops::rename_::redispatch(dispatchKeySet, self, names);
-    }
-
-    // aten::rename(Tensor(a) self, Dimname[]? names) -> Tensor(a)
-    inline at::Tensor rename(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<at::DimnameList> names) {
-        return at::_ops::rename::redispatch(dispatchKeySet, self, names);
-    }
-
-    // aten::align_to(Tensor(a) self, Dimname[] names) -> Tensor(a)
-    inline at::Tensor align_to(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList names) {
-        return at::_ops::align_to::redispatch(dispatchKeySet, self, names);
-    }
-
-    // aten::align_to.ellipsis_idx(Tensor(a) self, Dimname[] order, int ellipsis_idx) -> Tensor(a)
-    inline at::Tensor align_to(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList order, int64_t ellipsis_idx) {
-        return at::_ops::align_to_ellipsis_idx::redispatch(dispatchKeySet, self, order, ellipsis_idx);
-    }
-
-    // aten::align_as(Tensor self, Tensor other) -> Tensor
-    inline at::Tensor align_as(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const at::Tensor & other) {
-        return at::_ops::align_as::redispatch(dispatchKeySet, self, other);
-    }
-
-    // aten::align_tensors(Tensor[] tensors) -> Tensor[]
-    inline ::std::vector<at::Tensor> align_tensors(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors) {
-        return at::_ops::align_tensors::redispatch(dispatchKeySet, tensors);
-    }
-
     // aten::_assert_async(Tensor self) -> ()
     inline void _assert_async(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self) {
         return at::_ops::_assert_async::redispatch(dispatchKeySet, self);
@@ -236,11 +206,6 @@ namespace redispatch {
     // aten::_make_dep_token(*, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None, MemoryFormat? memory_format=None) -> Tensor
     inline at::Tensor _make_dep_token(c10::DispatchKeySet dispatchKeySet, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory, ::std::optional<at::MemoryFormat> memory_format) {
         return at::_ops::_make_dep_token::redispatch(dispatchKeySet, dtype, layout, device, pin_memory, memory_format);
-    }
-
-    // aten::refine_names(Tensor(a) self, Dimname[] names) -> Tensor(a)
-    inline at::Tensor refine_names(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList names) {
-        return at::_ops::refine_names::redispatch(dispatchKeySet, self, names);
     }
 
     // aten::_use_cudnn_ctc_loss(Tensor log_probs, Tensor targets, int[] input_lengths, int[] target_lengths, int blank) -> bool
@@ -778,21 +743,6 @@ namespace redispatch {
         return at::_ops::all_dims_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
     }
 
-    // aten::all.dimname(Tensor self, Dimname dim, bool keepdim=False) -> Tensor
-    inline at::Tensor all(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::all_dimname::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::all.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & all_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::all_dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
-    }
-
-    // aten::all.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & all_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & out) {
-        return at::_ops::all_dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
-    }
-
     // aten::allclose(Tensor self, Tensor other, float rtol=1e-05, float atol=1e-08, bool equal_nan=False) -> bool
     inline bool allclose(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const at::Tensor & other, double rtol=1e-05, double atol=1e-08, bool equal_nan=false) {
         return at::_ops::allclose::redispatch(dispatchKeySet, self, other, rtol, atol, equal_nan);
@@ -826,21 +776,6 @@ namespace redispatch {
     // aten::any.dims_out(Tensor self, int[]? dim=None, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & any_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, at::Tensor & out) {
         return at::_ops::any_dims_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
-    }
-
-    // aten::any.dimname(Tensor self, Dimname dim, bool keepdim=False) -> Tensor
-    inline at::Tensor any(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::any_dimname::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::any.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & any_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::any_dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
-    }
-
-    // aten::any.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & any_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & out) {
-        return at::_ops::any_dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
     }
 
     // aten::arange(Scalar end, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
@@ -1563,21 +1498,6 @@ namespace redispatch {
         return at::_ops::cat_out::redispatch(dispatchKeySet, tensors, dim, out);
     }
 
-    // aten::cat.names(Tensor[] tensors, Dimname dim) -> Tensor
-    inline at::Tensor cat(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim) {
-        return at::_ops::cat_names::redispatch(dispatchKeySet, tensors, dim);
-    }
-
-    // aten::cat.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & cat_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::TensorList tensors, at::Dimname dim) {
-        return at::_ops::cat_names_out::redispatch(dispatchKeySet, tensors, dim, out);
-    }
-
-    // aten::cat.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & cat_outf(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim, at::Tensor & out) {
-        return at::_ops::cat_names_out::redispatch(dispatchKeySet, tensors, dim, out);
-    }
-
     // aten::concat(Tensor[] tensors, int dim=0) -> Tensor
     inline at::Tensor concat(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, int64_t dim=0) {
         return at::_ops::concat::redispatch(dispatchKeySet, tensors, dim);
@@ -1593,21 +1513,6 @@ namespace redispatch {
         return at::_ops::concat_out::redispatch(dispatchKeySet, tensors, dim, out);
     }
 
-    // aten::concat.names(Tensor[] tensors, Dimname dim) -> Tensor
-    inline at::Tensor concat(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim) {
-        return at::_ops::concat_names::redispatch(dispatchKeySet, tensors, dim);
-    }
-
-    // aten::concat.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & concat_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::TensorList tensors, at::Dimname dim) {
-        return at::_ops::concat_names_out::redispatch(dispatchKeySet, tensors, dim, out);
-    }
-
-    // aten::concat.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & concat_outf(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim, at::Tensor & out) {
-        return at::_ops::concat_names_out::redispatch(dispatchKeySet, tensors, dim, out);
-    }
-
     // aten::concatenate(Tensor[] tensors, int dim=0) -> Tensor
     inline at::Tensor concatenate(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, int64_t dim=0) {
         return at::_ops::concatenate::redispatch(dispatchKeySet, tensors, dim);
@@ -1621,21 +1526,6 @@ namespace redispatch {
     // aten::concatenate.out(Tensor[] tensors, int dim=0, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & concatenate_outf(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, int64_t dim, at::Tensor & out) {
         return at::_ops::concatenate_out::redispatch(dispatchKeySet, tensors, dim, out);
-    }
-
-    // aten::concatenate.names(Tensor[] tensors, Dimname dim) -> Tensor
-    inline at::Tensor concatenate(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim) {
-        return at::_ops::concatenate_names::redispatch(dispatchKeySet, tensors, dim);
-    }
-
-    // aten::concatenate.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & concatenate_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::TensorList tensors, at::Dimname dim) {
-        return at::_ops::concatenate_names_out::redispatch(dispatchKeySet, tensors, dim, out);
-    }
-
-    // aten::concatenate.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & concatenate_outf(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim, at::Tensor & out) {
-        return at::_ops::concatenate_names_out::redispatch(dispatchKeySet, tensors, dim, out);
     }
 
     // aten::block_diag(Tensor[] tensors) -> Tensor
@@ -2323,21 +2213,6 @@ namespace redispatch {
         return at::_ops::cummax_out::redispatch(dispatchKeySet, self, dim, values, indices);
     }
 
-    // aten::cummax.dimname(Tensor self, Dimname dim) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> cummax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::cummax_dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
-    // aten::cummax.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> cummax_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::cummax_dimname_out::redispatch(dispatchKeySet, self, dim, values, indices);
-    }
-
-    // aten::cummax.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> cummax_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::cummax_dimname_out::redispatch(dispatchKeySet, self, dim, values, indices);
-    }
-
     // aten::_cummax_helper(Tensor self, Tensor(a!) values, Tensor(b!) indices, int dim) -> ()
     inline void _cummax_helper(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Tensor & values, at::Tensor & indices, int64_t dim) {
         return at::_ops::_cummax_helper::redispatch(dispatchKeySet, self, values, indices, dim);
@@ -2356,21 +2231,6 @@ namespace redispatch {
     // aten::cummin.out(Tensor self, int dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
     inline ::std::tuple<at::Tensor &,at::Tensor &> cummin_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, at::Tensor & values, at::Tensor & indices) {
         return at::_ops::cummin_out::redispatch(dispatchKeySet, self, dim, values, indices);
-    }
-
-    // aten::cummin.dimname(Tensor self, Dimname dim) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> cummin(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::cummin_dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
-    // aten::cummin.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> cummin_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::cummin_dimname_out::redispatch(dispatchKeySet, self, dim, values, indices);
-    }
-
-    // aten::cummin.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> cummin_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::cummin_dimname_out::redispatch(dispatchKeySet, self, dim, values, indices);
     }
 
     // aten::_cummin_helper(Tensor self, Tensor(a!) values, Tensor(b!) indices, int dim) -> ()
@@ -2403,26 +2263,6 @@ namespace redispatch {
         return at::_ops::cumprod_out::redispatch(dispatchKeySet, self, dim, dtype, out);
     }
 
-    // aten::cumprod.dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor cumprod(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::cumprod_dimname::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
-    // aten::cumprod_.dimname(Tensor(a!) self, Dimname dim, *, ScalarType? dtype=None) -> Tensor(a!)
-    inline at::Tensor & cumprod_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::cumprod__dimname::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
-    // aten::cumprod.dimname_out(Tensor self, Dimname dim, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & cumprod_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::cumprod_dimname_out::redispatch(dispatchKeySet, self, dim, dtype, out);
-    }
-
-    // aten::cumprod.dimname_out(Tensor self, Dimname dim, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & cumprod_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
-        return at::_ops::cumprod_dimname_out::redispatch(dispatchKeySet, self, dim, dtype, out);
-    }
-
     // aten::cumprod_backward(Tensor grad, Tensor input, int dim, Tensor output) -> Tensor
     inline at::Tensor cumprod_backward(c10::DispatchKeySet dispatchKeySet, const at::Tensor & grad, const at::Tensor & input, int64_t dim, const at::Tensor & output) {
         return at::_ops::cumprod_backward::redispatch(dispatchKeySet, grad, input, dim, output);
@@ -2446,26 +2286,6 @@ namespace redispatch {
     // aten::cumsum.out(Tensor self, int dim, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & cumsum_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
         return at::_ops::cumsum_out::redispatch(dispatchKeySet, self, dim, dtype, out);
-    }
-
-    // aten::cumsum.dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor cumsum(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::cumsum_dimname::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
-    // aten::cumsum_.dimname(Tensor(a!) self, Dimname dim, *, ScalarType? dtype=None) -> Tensor(a!)
-    inline at::Tensor & cumsum_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::cumsum__dimname::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
-    // aten::cumsum.dimname_out(Tensor self, Dimname dim, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & cumsum_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::cumsum_dimname_out::redispatch(dispatchKeySet, self, dim, dtype, out);
-    }
-
-    // aten::cumsum.dimname_out(Tensor self, Dimname dim, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & cumsum_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
-        return at::_ops::cumsum_dimname_out::redispatch(dispatchKeySet, self, dim, dtype, out);
     }
 
     // aten::cumulative_trapezoid.x(Tensor y, Tensor x, *, int dim=-1) -> Tensor
@@ -2526,11 +2346,6 @@ namespace redispatch {
     // aten::linalg_diagonal(Tensor(a) A, *, int offset=0, int dim1=-2, int dim2=-1) -> Tensor(a)
     inline at::Tensor linalg_diagonal(c10::DispatchKeySet dispatchKeySet, const at::Tensor & A, int64_t offset=0, int64_t dim1=-2, int64_t dim2=-1) {
         return at::_ops::linalg_diagonal::redispatch(dispatchKeySet, A, offset, dim1, dim2);
-    }
-
-    // aten::diagonal.Dimname(Tensor(a) self, *, Dimname outdim, Dimname dim1, Dimname dim2, int offset=0) -> Tensor(a)
-    inline at::Tensor diagonal(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname outdim, at::Dimname dim1, at::Dimname dim2, int64_t offset=0) {
-        return at::_ops::diagonal_Dimname::redispatch(dispatchKeySet, self, outdim, dim1, dim2, offset);
     }
 
     // aten::diagonal_backward(Tensor grad_output, SymInt[] input_sizes, int offset, int dim1, int dim2) -> Tensor
@@ -2896,16 +2711,6 @@ namespace redispatch {
     // aten::_embedding_bag_per_sample_weights_backward(Tensor grad, Tensor weight, Tensor indices, Tensor offsets, Tensor offset2bag, int mode, int padding_idx=-1) -> Tensor
     inline at::Tensor _embedding_bag_per_sample_weights_backward(c10::DispatchKeySet dispatchKeySet, const at::Tensor & grad, const at::Tensor & weight, const at::Tensor & indices, const at::Tensor & offsets, const at::Tensor & offset2bag, int64_t mode, int64_t padding_idx=-1) {
         return at::_ops::_embedding_bag_per_sample_weights_backward::redispatch(dispatchKeySet, grad, weight, indices, offsets, offset2bag, mode, padding_idx);
-    }
-
-    // aten::empty.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None, MemoryFormat? memory_format=None) -> Tensor
-    inline at::Tensor empty(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}, ::std::optional<at::MemoryFormat> memory_format=::std::nullopt) {
-        return at::_ops::empty_names::redispatch(dispatchKeySet, size, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt(), c10::impl::check_tensor_options_and_extract_memory_format(options, memory_format));
-    }
-
-    // aten::empty.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None, MemoryFormat? memory_format=None) -> Tensor
-    inline at::Tensor empty(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory, ::std::optional<at::MemoryFormat> memory_format) {
-        return at::_ops::empty_names::redispatch(dispatchKeySet, size, names, dtype, layout, device, pin_memory, memory_format);
     }
 
     // aten::empty.memory_format(SymInt[] size, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None, MemoryFormat? memory_format=None) -> Tensor
@@ -3368,21 +3173,6 @@ namespace redispatch {
         return at::_ops::flatten_using_ints::redispatch(dispatchKeySet, self, start_dim, end_dim);
     }
 
-    // aten::flatten.named_out_dim(Tensor(a) self, int start_dim, int end_dim, Dimname out_dim) -> Tensor(a)
-    inline at::Tensor flatten(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t start_dim, int64_t end_dim, at::Dimname out_dim) {
-        return at::_ops::flatten_named_out_dim::redispatch(dispatchKeySet, self, start_dim, end_dim, out_dim);
-    }
-
-    // aten::flatten.using_names(Tensor(a) self, Dimname start_dim, Dimname end_dim, Dimname out_dim) -> Tensor(a)
-    inline at::Tensor flatten(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname start_dim, at::Dimname end_dim, at::Dimname out_dim) {
-        return at::_ops::flatten_using_names::redispatch(dispatchKeySet, self, start_dim, end_dim, out_dim);
-    }
-
-    // aten::flatten.DimnameList(Tensor(a) self, Dimname[] dims, Dimname out_dim) -> Tensor(a)
-    inline at::Tensor flatten(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dims, at::Dimname out_dim) {
-        return at::_ops::flatten_DimnameList::redispatch(dispatchKeySet, self, dims, out_dim);
-    }
-
     // aten::unflatten.int(Tensor(a) self, int dim, SymInt[] sizes) -> Tensor(a)
     inline at::Tensor unflatten(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, at::IntArrayRef sizes) {
         return at::_ops::unflatten_int::redispatch(dispatchKeySet, self, dim, c10::fromIntArrayRefSlow(sizes));
@@ -3391,16 +3181,6 @@ namespace redispatch {
     // aten::unflatten.int(Tensor(a) self, int dim, SymInt[] sizes) -> Tensor(a)
     inline at::Tensor unflatten_symint(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, c10::SymIntArrayRef sizes) {
         return at::_ops::unflatten_int::redispatch(dispatchKeySet, self, dim, sizes);
-    }
-
-    // aten::unflatten.Dimname(Tensor(a) self, Dimname dim, SymInt[] sizes, Dimname[] names) -> Tensor(a)
-    inline at::Tensor unflatten(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, at::IntArrayRef sizes, at::DimnameList names) {
-        return at::_ops::unflatten_Dimname::redispatch(dispatchKeySet, self, dim, c10::fromIntArrayRefSlow(sizes), names);
-    }
-
-    // aten::unflatten.Dimname(Tensor(a) self, Dimname dim, SymInt[] sizes, Dimname[] names) -> Tensor(a)
-    inline at::Tensor unflatten_symint(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, c10::SymIntArrayRef sizes, at::DimnameList names) {
-        return at::_ops::unflatten_Dimname::redispatch(dispatchKeySet, self, dim, sizes, names);
     }
 
     // aten::fill.Scalar(Tensor self, Scalar value) -> Tensor
@@ -3491,16 +3271,6 @@ namespace redispatch {
     // aten::frac.out(Tensor self, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & frac_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Tensor & out) {
         return at::_ops::frac_out::redispatch(dispatchKeySet, self, out);
-    }
-
-    // aten::full.names(int[] size, Scalar fill_value, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor full(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, const at::Scalar & fill_value, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::full_names::redispatch(dispatchKeySet, size, fill_value, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::full.names(int[] size, Scalar fill_value, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor full(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, const at::Scalar & fill_value, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::full_names::redispatch(dispatchKeySet, size, fill_value, names, dtype, layout, device, pin_memory);
     }
 
     // aten::full(SymInt[] size, Scalar fill_value, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
@@ -3908,16 +3678,6 @@ namespace redispatch {
         return at::_ops::index_copy::redispatch(dispatchKeySet, self, dim, index, source);
     }
 
-    // aten::index_copy_.dimname(Tensor(a!) self, Dimname dim, Tensor index, Tensor source) -> Tensor(a!)
-    inline at::Tensor & index_copy_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source) {
-        return at::_ops::index_copy__dimname::redispatch(dispatchKeySet, self, dim, index, source);
-    }
-
-    // aten::index_copy.dimname(Tensor self, Dimname dim, Tensor index, Tensor source) -> Tensor
-    inline at::Tensor index_copy(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source) {
-        return at::_ops::index_copy_dimname::redispatch(dispatchKeySet, self, dim, index, source);
-    }
-
     // aten::index_put_(Tensor(a!) self, Tensor?[] indices, Tensor values, bool accumulate=False) -> Tensor(a!)
     inline at::Tensor & index_put_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, const c10::List<::std::optional<at::Tensor>> & indices, const at::Tensor & values, bool accumulate=false) {
         return at::_ops::index_put_::redispatch(dispatchKeySet, self, indices, values, accumulate);
@@ -4131,36 +3891,6 @@ namespace redispatch {
     // aten::kthvalue.values(Tensor self, SymInt k, int dim=-1, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
     inline ::std::tuple<at::Tensor &,at::Tensor &> kthvalue_symint_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, c10::SymInt k, int64_t dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
         return at::_ops::kthvalue_values::redispatch(dispatchKeySet, self, k, dim, keepdim, values, indices);
-    }
-
-    // aten::kthvalue.dimname(Tensor self, SymInt k, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> kthvalue(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t k, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::kthvalue_dimname::redispatch(dispatchKeySet, self, k, dim, keepdim);
-    }
-
-    // aten::kthvalue.dimname(Tensor self, SymInt k, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> kthvalue_symint(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, c10::SymInt k, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::kthvalue_dimname::redispatch(dispatchKeySet, self, k, dim, keepdim);
-    }
-
-    // aten::kthvalue.dimname_out(Tensor self, SymInt k, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> kthvalue_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, int64_t k, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::kthvalue_dimname_out::redispatch(dispatchKeySet, self, k, dim, keepdim, values, indices);
-    }
-
-    // aten::kthvalue.dimname_out(Tensor self, SymInt k, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> kthvalue_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t k, at::Dimname dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::kthvalue_dimname_out::redispatch(dispatchKeySet, self, k, dim, keepdim, values, indices);
-    }
-
-    // aten::kthvalue.dimname_out(Tensor self, SymInt k, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> kthvalue_symint_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, c10::SymInt k, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::kthvalue_dimname_out::redispatch(dispatchKeySet, self, k, dim, keepdim, values, indices);
-    }
-
-    // aten::kthvalue.dimname_out(Tensor self, SymInt k, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> kthvalue_symint_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, c10::SymInt k, at::Dimname dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::kthvalue_dimname_out::redispatch(dispatchKeySet, self, k, dim, keepdim, values, indices);
     }
 
     // aten::layer_norm(Tensor input, SymInt[] normalized_shape, Tensor? weight=None, Tensor? bias=None, float eps=1e-05, bool cudnn_enable=True) -> Tensor
@@ -4743,11 +4473,6 @@ namespace redispatch {
         return at::_ops::log_softmax_int_out::redispatch(dispatchKeySet, self, dim, dtype, out);
     }
 
-    // aten::log_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor log_softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::log_softmax_Dimname::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
     // aten::_log_softmax(Tensor self, int dim, bool half_to_float) -> Tensor
     inline at::Tensor _log_softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool half_to_float) {
         return at::_ops::_log_softmax::redispatch(dispatchKeySet, self, dim, half_to_float);
@@ -4808,21 +4533,6 @@ namespace redispatch {
         return at::_ops::logcumsumexp_out::redispatch(dispatchKeySet, self, dim, out);
     }
 
-    // aten::logcumsumexp.dimname(Tensor self, Dimname dim) -> Tensor
-    inline at::Tensor logcumsumexp(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::logcumsumexp_dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
-    // aten::logcumsumexp.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & logcumsumexp_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::logcumsumexp_dimname_out::redispatch(dispatchKeySet, self, dim, out);
-    }
-
-    // aten::logcumsumexp.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & logcumsumexp_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, at::Tensor & out) {
-        return at::_ops::logcumsumexp_dimname_out::redispatch(dispatchKeySet, self, dim, out);
-    }
-
     // aten::logsumexp(Tensor self, int[1] dim, bool keepdim=False) -> Tensor
     inline at::Tensor logsumexp(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::IntArrayRef dim, bool keepdim=false) {
         return at::_ops::logsumexp::redispatch(dispatchKeySet, self, dim, keepdim);
@@ -4836,21 +4546,6 @@ namespace redispatch {
     // aten::logsumexp.out(Tensor self, int[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & logsumexp_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::IntArrayRef dim, bool keepdim, at::Tensor & out) {
         return at::_ops::logsumexp_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
-    }
-
-    // aten::logsumexp.names(Tensor self, Dimname[1] dim, bool keepdim=False) -> Tensor
-    inline at::Tensor logsumexp(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim=false) {
-        return at::_ops::logsumexp_names::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::logsumexp.names_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & logsumexp_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool keepdim=false) {
-        return at::_ops::logsumexp_names_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
-    }
-
-    // aten::logsumexp.names_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & logsumexp_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, at::Tensor & out) {
-        return at::_ops::logsumexp_names_out::redispatch(dispatchKeySet, self, dim, keepdim, out);
     }
 
     // aten::margin_ranking_loss(Tensor input1, Tensor input2, Tensor target, float margin=0.0, int reduction=Mean) -> Tensor
@@ -4956,21 +4651,6 @@ namespace redispatch {
     // aten::max.dim_max(Tensor self, int dim, bool keepdim=False, *, Tensor(a!) max, Tensor(b!) max_values) -> (Tensor(a!) values, Tensor(b!) indices)
     inline ::std::tuple<at::Tensor &,at::Tensor &> max_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool keepdim, at::Tensor & max, at::Tensor & max_values) {
         return at::_ops::max_dim_max::redispatch(dispatchKeySet, self, dim, keepdim, max, max_values);
-    }
-
-    // aten::max.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> max(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::max_names_dim::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::max.names_dim_max(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) max, Tensor(b!) max_values) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> max_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & max, at::Tensor & max_values, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::max_names_dim_max::redispatch(dispatchKeySet, self, dim, keepdim, max, max_values);
-    }
-
-    // aten::max.names_dim_max(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) max, Tensor(b!) max_values) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> max_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & max, at::Tensor & max_values) {
-        return at::_ops::max_names_dim_max::redispatch(dispatchKeySet, self, dim, keepdim, max, max_values);
     }
 
     // aten::value_selecting_reduction_backward(Tensor grad, int dim, Tensor indices, SymInt[] sizes, bool keepdim) -> Tensor
@@ -5088,21 +4768,6 @@ namespace redispatch {
         return at::_ops::mean_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
     }
 
-    // aten::mean.names_dim(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::mean_names_dim::redispatch(dispatchKeySet, self, dim, keepdim, dtype);
-    }
-
-    // aten::mean.names_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & mean_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::mean_names_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
-    }
-
-    // aten::mean.names_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & mean_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
-        return at::_ops::mean_names_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
-    }
-
     // aten::nanmean(Tensor self, int[1]? dim=None, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
     inline at::Tensor nanmean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim=::std::nullopt, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
         return at::_ops::nanmean::redispatch(dispatchKeySet, self, dim, keepdim, dtype);
@@ -5138,21 +4803,6 @@ namespace redispatch {
         return at::_ops::median_dim_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
     }
 
-    // aten::median.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> median(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::median_names_dim::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::median.names_dim_values(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> median_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::median_names_dim_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
-    }
-
-    // aten::median.names_dim_values(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> median_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::median_names_dim_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
-    }
-
     // aten::nanmedian(Tensor self) -> Tensor
     inline at::Tensor nanmedian(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self) {
         return at::_ops::nanmedian::redispatch(dispatchKeySet, self);
@@ -5173,21 +4823,6 @@ namespace redispatch {
         return at::_ops::nanmedian_dim_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
     }
 
-    // aten::nanmedian.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> nanmedian(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::nanmedian_names_dim::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::nanmedian.names_dim_values(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> nanmedian_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::nanmedian_names_dim_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
-    }
-
-    // aten::nanmedian.names_dim_values(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> nanmedian_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::nanmedian_names_dim_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
-    }
-
     // aten::min.dim(Tensor self, int dim, bool keepdim=False) -> (Tensor values, Tensor indices)
     inline ::std::tuple<at::Tensor,at::Tensor> min(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool keepdim=false) {
         return at::_ops::min_dim::redispatch(dispatchKeySet, self, dim, keepdim);
@@ -5201,21 +4836,6 @@ namespace redispatch {
     // aten::min.dim_min(Tensor self, int dim, bool keepdim=False, *, Tensor(a!) min, Tensor(b!) min_indices) -> (Tensor(a!) values, Tensor(b!) indices)
     inline ::std::tuple<at::Tensor &,at::Tensor &> min_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool keepdim, at::Tensor & min, at::Tensor & min_indices) {
         return at::_ops::min_dim_min::redispatch(dispatchKeySet, self, dim, keepdim, min, min_indices);
-    }
-
-    // aten::min.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> min(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::min_names_dim::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::min.names_dim_min(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) min, Tensor(b!) min_indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> min_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & min, at::Tensor & min_indices, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::min_names_dim_min::redispatch(dispatchKeySet, self, dim, keepdim, min, min_indices);
-    }
-
-    // aten::min.names_dim_min(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) min, Tensor(b!) min_indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> min_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & min, at::Tensor & min_indices) {
-        return at::_ops::min_names_dim_min::redispatch(dispatchKeySet, self, dim, keepdim, min, min_indices);
     }
 
     // aten::amin(Tensor self, int[1] dim=[], bool keepdim=False) -> Tensor
@@ -5476,21 +5096,6 @@ namespace redispatch {
     // aten::mode.values(Tensor self, int dim=-1, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
     inline ::std::tuple<at::Tensor &,at::Tensor &> mode_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
         return at::_ops::mode_values::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
-    }
-
-    // aten::mode.dimname(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> mode(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::mode_dimname::redispatch(dispatchKeySet, self, dim, keepdim);
-    }
-
-    // aten::mode.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> mode_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-        return at::_ops::mode_dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
-    }
-
-    // aten::mode.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> mode_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::mode_dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, values, indices);
     }
 
     // aten::mul.Tensor(Tensor self, Tensor other) -> Tensor
@@ -5758,16 +5363,6 @@ namespace redispatch {
         return at::_ops::_nnpack_spatial_convolution::redispatch(dispatchKeySet, input, weight, bias, padding, stride);
     }
 
-    // aten::ones.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor ones(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::ones_names::redispatch(dispatchKeySet, size, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::ones.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor ones(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::ones_names::redispatch(dispatchKeySet, size, names, dtype, layout, device, pin_memory);
-    }
-
     // aten::ones(SymInt[] size, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
     inline at::Tensor ones(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, at::TensorOptions options={}) {
         return at::_ops::ones::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
@@ -6016,46 +5611,6 @@ namespace redispatch {
     // aten::scalar_tensor(Scalar s, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
     inline at::Tensor scalar_tensor(c10::DispatchKeySet dispatchKeySet, const at::Scalar & s, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
         return at::_ops::scalar_tensor::redispatch(dispatchKeySet, s, dtype, layout, device, pin_memory);
-    }
-
-    // aten::rand.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::rand_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::rand.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::rand_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, dtype, layout, device, pin_memory);
-    }
-
-    // aten::rand.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::rand_names::redispatch(dispatchKeySet, size, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::rand.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::rand_names::redispatch(dispatchKeySet, size, names, dtype, layout, device, pin_memory);
-    }
-
-    // aten::rand.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::rand_generator_with_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::rand.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::rand_generator_with_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, dtype, layout, device, pin_memory);
-    }
-
-    // aten::rand.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::rand_generator_with_names::redispatch(dispatchKeySet, size, generator, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::rand.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor rand_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::rand_generator_with_names::redispatch(dispatchKeySet, size, generator, names, dtype, layout, device, pin_memory);
     }
 
     // aten::rand(SymInt[] size, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
@@ -6456,46 +6011,6 @@ namespace redispatch {
     // aten::randn.generator(SymInt[] size, *, Generator? generator, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
     inline at::Tensor randn_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
         return at::_ops::randn_generator::redispatch(dispatchKeySet, size, generator, dtype, layout, device, pin_memory);
-    }
-
-    // aten::randn.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::randn_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::randn.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::randn_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, dtype, layout, device, pin_memory);
-    }
-
-    // aten::randn.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::randn_names::redispatch(dispatchKeySet, size, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::randn.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::randn_names::redispatch(dispatchKeySet, size, names, dtype, layout, device, pin_memory);
-    }
-
-    // aten::randn.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::randn_generator_with_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::randn.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::randn_generator_with_names::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, dtype, layout, device, pin_memory);
-    }
-
-    // aten::randn.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::randn_generator_with_names::redispatch(dispatchKeySet, size, generator, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::randn.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor randn_symint(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::randn_generator_with_names::redispatch(dispatchKeySet, size, generator, names, dtype, layout, device, pin_memory);
     }
 
     // aten::randn.out(SymInt[] size, *, Tensor(a!) out) -> Tensor(a!)
@@ -6998,11 +6513,6 @@ namespace redispatch {
         return at::_ops::rsqrt_out::redispatch(dispatchKeySet, self, out);
     }
 
-    // aten::select.Dimname(Tensor(a) self, Dimname dim, int index) -> Tensor(a)
-    inline at::Tensor select(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, int64_t index) {
-        return at::_ops::select_Dimname::redispatch(dispatchKeySet, self, dim, index);
-    }
-
     // aten::select.int(Tensor(a) self, int dim, SymInt index) -> Tensor(a)
     inline at::Tensor select(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, int64_t index) {
         return at::_ops::select_int::redispatch(dispatchKeySet, self, dim, index);
@@ -7228,11 +6738,6 @@ namespace redispatch {
         return at::_ops::size_int::redispatch(dispatchKeySet, self, dim);
     }
 
-    // aten::size.Dimname(Tensor self, Dimname dim) -> int
-    inline int64_t size(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::size_Dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
     // aten::sym_size.int(Tensor self, int dim) -> SymInt
     inline c10::SymInt __dispatch_sym_size(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim) {
         return at::_ops::sym_size_int::redispatch(dispatchKeySet, self, dim);
@@ -7336,11 +6841,6 @@ namespace redispatch {
     // aten::softmax.int_out(Tensor self, int dim, ScalarType? dtype=None, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & softmax_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
         return at::_ops::softmax_int_out::redispatch(dispatchKeySet, self, dim, dtype, out);
-    }
-
-    // aten::softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::softmax_Dimname::redispatch(dispatchKeySet, self, dim, dtype);
     }
 
     // aten::_softmax(Tensor self, int dim, bool half_to_float) -> Tensor
@@ -7463,11 +6963,6 @@ namespace redispatch {
         return at::_ops::squeeze_dim::redispatch(dispatchKeySet, self, dim);
     }
 
-    // aten::squeeze.dimname(Tensor(a) self, Dimname dim) -> Tensor(a)
-    inline at::Tensor squeeze(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::squeeze_dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
     // aten::squeeze.dims(Tensor(a) self, int[] dim) -> Tensor(a)
     inline at::Tensor squeeze(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::IntArrayRef dim) {
         return at::_ops::squeeze_dims::redispatch(dispatchKeySet, self, dim);
@@ -7486,11 +6981,6 @@ namespace redispatch {
     // aten::squeeze_.dims(Tensor(a!) self, int[] dim) -> Tensor(a!)
     inline at::Tensor & squeeze_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::IntArrayRef dim) {
         return at::_ops::squeeze__dims::redispatch(dispatchKeySet, self, dim);
-    }
-
-    // aten::squeeze_.dimname(Tensor(a!) self, Dimname dim) -> Tensor(a!)
-    inline at::Tensor & squeeze_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim) {
-        return at::_ops::squeeze__dimname::redispatch(dispatchKeySet, self, dim);
     }
 
     // aten::sspaddmm(Tensor self, Tensor mat1, Tensor mat2, *, Scalar beta=1, Scalar alpha=1) -> Tensor
@@ -7618,11 +7108,6 @@ namespace redispatch {
         return at::_ops::stride_int::redispatch(dispatchKeySet, self, dim);
     }
 
-    // aten::stride.Dimname(Tensor self, Dimname dim) -> int
-    inline int64_t stride(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::stride_Dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
     // aten::sym_stride.int(Tensor self, int dim) -> SymInt
     inline c10::SymInt __dispatch_sym_stride(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim) {
         return at::_ops::sym_stride_int::redispatch(dispatchKeySet, self, dim);
@@ -7638,11 +7123,6 @@ namespace redispatch {
         return at::_ops::sum_dim_IntList::redispatch(dispatchKeySet, self, dim, keepdim, dtype);
     }
 
-    // aten::sum.dim_DimnameList(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor sum(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::sum_dim_DimnameList::redispatch(dispatchKeySet, self, dim, keepdim, dtype);
-    }
-
     // aten::sum.IntList_out(Tensor self, int[1]? dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & sum_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
         return at::_ops::sum_IntList_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
@@ -7651,16 +7131,6 @@ namespace redispatch {
     // aten::sum.IntList_out(Tensor self, int[1]? dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & sum_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
         return at::_ops::sum_IntList_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
-    }
-
-    // aten::sum.DimnameList_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & sum_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::sum_DimnameList_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
-    }
-
-    // aten::sum.DimnameList_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & sum_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
-        return at::_ops::sum_DimnameList_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
     }
 
     // aten::_nested_sum_backward(Tensor grad, Tensor self, int[1]? dim, bool keepdim=False) -> Tensor
@@ -7778,16 +7248,6 @@ namespace redispatch {
         return at::_ops::std_mean_correction::redispatch(dispatchKeySet, self, dim, correction, keepdim);
     }
 
-    // aten::std_mean.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> (Tensor, Tensor)
-    inline ::std::tuple<at::Tensor,at::Tensor> std_mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-        return at::_ops::std_mean_names_dim::redispatch(dispatchKeySet, self, dim, unbiased, keepdim);
-    }
-
-    // aten::std_mean.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> (Tensor, Tensor)
-    inline ::std::tuple<at::Tensor,at::Tensor> std_mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-        return at::_ops::std_mean_correction_names::redispatch(dispatchKeySet, self, dim, correction, keepdim);
-    }
-
     // aten::std.out(Tensor self, int[1]? dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & std_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::OptionalIntArrayRef dim, bool unbiased, bool keepdim=false) {
         return at::_ops::std_out::redispatch(dispatchKeySet, self, dim, unbiased, keepdim, out);
@@ -7808,36 +7268,6 @@ namespace redispatch {
         return at::_ops::std_correction_out::redispatch(dispatchKeySet, self, dim, correction, keepdim, out);
     }
 
-    // aten::std.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> Tensor
-    inline at::Tensor std(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-        return at::_ops::std_names_dim::redispatch(dispatchKeySet, self, dim, unbiased, keepdim);
-    }
-
-    // aten::std.names_out(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & std_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-        return at::_ops::std_names_out::redispatch(dispatchKeySet, self, dim, unbiased, keepdim, out);
-    }
-
-    // aten::std.names_out(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & std_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim, at::Tensor & out) {
-        return at::_ops::std_names_out::redispatch(dispatchKeySet, self, dim, unbiased, keepdim, out);
-    }
-
-    // aten::std.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> Tensor
-    inline at::Tensor std(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-        return at::_ops::std_correction_names::redispatch(dispatchKeySet, self, dim, correction, keepdim);
-    }
-
-    // aten::std.correction_names_out(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & std_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-        return at::_ops::std_correction_names_out::redispatch(dispatchKeySet, self, dim, correction, keepdim, out);
-    }
-
-    // aten::std.correction_names_out(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & std_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim, at::Tensor & out) {
-        return at::_ops::std_correction_names_out::redispatch(dispatchKeySet, self, dim, correction, keepdim, out);
-    }
-
     // aten::prod(Tensor self, *, ScalarType? dtype=None) -> Tensor
     inline at::Tensor prod(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
         return at::_ops::prod::redispatch(dispatchKeySet, self, dtype);
@@ -7856,21 +7286,6 @@ namespace redispatch {
     // aten::prod.int_out(Tensor self, int dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & prod_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
         return at::_ops::prod_int_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
-    }
-
-    // aten::prod.dim_Dimname(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor prod(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::prod_dim_Dimname::redispatch(dispatchKeySet, self, dim, keepdim, dtype);
-    }
-
-    // aten::prod.Dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & prod_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::prod_Dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
-    }
-
-    // aten::prod.Dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & prod_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
-        return at::_ops::prod_Dimname_out::redispatch(dispatchKeySet, self, dim, keepdim, dtype, out);
     }
 
     // aten::t(Tensor(a) self) -> Tensor(a)
@@ -7986,11 +7401,6 @@ namespace redispatch {
     // aten::transpose.int(Tensor(a) self, int dim0, int dim1) -> Tensor(a)
     inline at::Tensor transpose(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim0, int64_t dim1) {
         return at::_ops::transpose_int::redispatch(dispatchKeySet, self, dim0, dim1);
-    }
-
-    // aten::transpose.Dimname(Tensor(a) self, Dimname dim0, Dimname dim1) -> Tensor(a)
-    inline at::Tensor transpose(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim0, at::Dimname dim1) {
-        return at::_ops::transpose_Dimname::redispatch(dispatchKeySet, self, dim0, dim1);
     }
 
     // aten::_mkldnn_transpose(Tensor self, int dim0, int dim1) -> Tensor
@@ -8313,36 +7723,6 @@ namespace redispatch {
         return at::_ops::var_correction_out::redispatch(dispatchKeySet, self, dim, correction, keepdim, out);
     }
 
-    // aten::var.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> Tensor
-    inline at::Tensor var(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-        return at::_ops::var_names_dim::redispatch(dispatchKeySet, self, dim, unbiased, keepdim);
-    }
-
-    // aten::var.names_out(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & var_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-        return at::_ops::var_names_out::redispatch(dispatchKeySet, self, dim, unbiased, keepdim, out);
-    }
-
-    // aten::var.names_out(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & var_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim, at::Tensor & out) {
-        return at::_ops::var_names_out::redispatch(dispatchKeySet, self, dim, unbiased, keepdim, out);
-    }
-
-    // aten::var.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> Tensor
-    inline at::Tensor var(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-        return at::_ops::var_correction_names::redispatch(dispatchKeySet, self, dim, correction, keepdim);
-    }
-
-    // aten::var.correction_names_out(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & var_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-        return at::_ops::var_correction_names_out::redispatch(dispatchKeySet, self, dim, correction, keepdim, out);
-    }
-
-    // aten::var.correction_names_out(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & var_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim, at::Tensor & out) {
-        return at::_ops::var_correction_names_out::redispatch(dispatchKeySet, self, dim, correction, keepdim, out);
-    }
-
     // aten::var_mean(Tensor self, bool unbiased=True) -> (Tensor, Tensor)
     inline ::std::tuple<at::Tensor,at::Tensor> var_mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, bool unbiased) {
         return at::_ops::var_mean::redispatch(dispatchKeySet, self, unbiased);
@@ -8356,16 +7736,6 @@ namespace redispatch {
     // aten::var_mean.correction(Tensor self, int[1]? dim=None, *, Scalar? correction=None, bool keepdim=False) -> (Tensor, Tensor)
     inline ::std::tuple<at::Tensor,at::Tensor> var_mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim=::std::nullopt, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
         return at::_ops::var_mean_correction::redispatch(dispatchKeySet, self, dim, correction, keepdim);
-    }
-
-    // aten::var_mean.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> (Tensor, Tensor)
-    inline ::std::tuple<at::Tensor,at::Tensor> var_mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-        return at::_ops::var_mean_names_dim::redispatch(dispatchKeySet, self, dim, unbiased, keepdim);
-    }
-
-    // aten::var_mean.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> (Tensor, Tensor)
-    inline ::std::tuple<at::Tensor,at::Tensor> var_mean(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-        return at::_ops::var_mean_correction_names::redispatch(dispatchKeySet, self, dim, correction, keepdim);
     }
 
     // aten::view_as(Tensor(a) self, Tensor other) -> Tensor(a)
@@ -8431,16 +7801,6 @@ namespace redispatch {
     // aten::_weight_norm_differentiable_backward(Tensor grad_w, Tensor saved_v, Tensor saved_g, Tensor saved_norms, int dim) -> (Tensor, Tensor)
     inline ::std::tuple<at::Tensor,at::Tensor> _weight_norm_differentiable_backward(c10::DispatchKeySet dispatchKeySet, const at::Tensor & grad_w, const at::Tensor & saved_v, const at::Tensor & saved_g, const at::Tensor & saved_norms, int64_t dim) {
         return at::_ops::_weight_norm_differentiable_backward::redispatch(dispatchKeySet, grad_w, saved_v, saved_g, saved_norms, dim);
-    }
-
-    // aten::zeros.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor zeros(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-        return at::_ops::zeros_names::redispatch(dispatchKeySet, size, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-    }
-
-    // aten::zeros.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-    inline at::Tensor zeros(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-        return at::_ops::zeros_names::redispatch(dispatchKeySet, size, names, dtype, layout, device, pin_memory);
     }
 
     // aten::_efficientzerotensor(SymInt[] size, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
@@ -8638,11 +7998,6 @@ namespace redispatch {
         return at::_ops::_sparse_softmax_int::redispatch(dispatchKeySet, self, dim, dtype);
     }
 
-    // aten::_sparse_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor _sparse_softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::_sparse_softmax_Dimname::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
     // aten::_sparse_softmax(Tensor self, int dim, bool half_to_float) -> Tensor
     inline at::Tensor _sparse_softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, bool half_to_float) {
         return at::_ops::_sparse_softmax::redispatch(dispatchKeySet, self, dim, half_to_float);
@@ -8656,11 +8011,6 @@ namespace redispatch {
     // aten::_sparse_log_softmax.int(Tensor self, int dim, ScalarType? dtype=None) -> Tensor
     inline at::Tensor _sparse_log_softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
         return at::_ops::_sparse_log_softmax_int::redispatch(dispatchKeySet, self, dim, dtype);
-    }
-
-    // aten::_sparse_log_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-    inline at::Tensor _sparse_log_softmax(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-        return at::_ops::_sparse_log_softmax_Dimname::redispatch(dispatchKeySet, self, dim, dtype);
     }
 
     // aten::_sparse_log_softmax(Tensor self, int dim, bool half_to_float) -> Tensor
@@ -8716,36 +8066,6 @@ namespace redispatch {
     // aten::norm.out(Tensor self, Scalar? p, int[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & norm_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::IntArrayRef dim, bool keepdim, at::Tensor & out) {
         return at::_ops::norm_out::redispatch(dispatchKeySet, self, p, dim, keepdim, out);
-    }
-
-    // aten::norm.names_ScalarOpt_dim_dtype(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype) -> Tensor
-    inline at::Tensor norm(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype) {
-        return at::_ops::norm_names_ScalarOpt_dim_dtype::redispatch(dispatchKeySet, self, p, dim, keepdim, dtype);
-    }
-
-    // aten::norm.names_ScalarOpt_dim(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False) -> Tensor
-    inline at::Tensor norm(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim=false) {
-        return at::_ops::norm_names_ScalarOpt_dim::redispatch(dispatchKeySet, self, p, dim, keepdim);
-    }
-
-    // aten::norm.names_dtype_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & norm_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype) {
-        return at::_ops::norm_names_dtype_out::redispatch(dispatchKeySet, self, p, dim, keepdim, dtype, out);
-    }
-
-    // aten::norm.names_dtype_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & norm_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype, at::Tensor & out) {
-        return at::_ops::norm_names_dtype_out::redispatch(dispatchKeySet, self, p, dim, keepdim, dtype, out);
-    }
-
-    // aten::norm.names_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & norm_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim=false) {
-        return at::_ops::norm_names_out::redispatch(dispatchKeySet, self, p, dim, keepdim, out);
-    }
-
-    // aten::norm.names_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & norm_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::Tensor & out) {
-        return at::_ops::norm_names_out::redispatch(dispatchKeySet, self, p, dim, keepdim, out);
     }
 
     // aten::frexp.Tensor(Tensor self) -> (Tensor mantissa, Tensor exponent)
@@ -9488,11 +8808,6 @@ namespace redispatch {
         return at::_ops::unbind_int::redispatch(dispatchKeySet, self, dim);
     }
 
-    // aten::unbind.Dimname(Tensor(a -> *) self, Dimname dim) -> Tensor(a)[]
-    inline ::std::vector<at::Tensor> unbind(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim) {
-        return at::_ops::unbind_Dimname::redispatch(dispatchKeySet, self, dim);
-    }
-
     // aten::to_sparse.sparse_dim(Tensor self, int sparse_dim) -> Tensor
     inline at::Tensor to_sparse(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t sparse_dim) {
         return at::_ops::to_sparse_sparse_dim::redispatch(dispatchKeySet, self, sparse_dim);
@@ -10153,11 +9468,6 @@ namespace redispatch {
         return at::_ops::index_add::redispatch(dispatchKeySet, self, dim, index, source, alpha);
     }
 
-    // aten::index_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor source, *, Scalar alpha=1) -> Tensor
-    inline at::Tensor index_add(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha=1) {
-        return at::_ops::index_add_dimname::redispatch(dispatchKeySet, self, dim, index, source, alpha);
-    }
-
     // aten::index_reduce.out(Tensor self, int dim, Tensor index, Tensor source, str reduce, *, bool include_self=True, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & index_reduce_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, int64_t dim, const at::Tensor & index, const at::Tensor & source, c10::string_view reduce, bool include_self=true) {
         return at::_ops::index_reduce_out::redispatch(dispatchKeySet, self, dim, index, source, reduce, include_self, out);
@@ -10196,26 +9506,6 @@ namespace redispatch {
     // aten::index_fill.int_Tensor(Tensor self, int dim, Tensor index, Tensor value) -> Tensor
     inline at::Tensor index_fill(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, const at::Tensor & index, const at::Tensor & value) {
         return at::_ops::index_fill_int_Tensor::redispatch(dispatchKeySet, self, dim, index, value);
-    }
-
-    // aten::index_fill_.Dimname_Scalar(Tensor(a!) self, Dimname dim, Tensor index, Scalar value) -> Tensor(a!)
-    inline at::Tensor & index_fill_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Scalar & value) {
-        return at::_ops::index_fill__Dimname_Scalar::redispatch(dispatchKeySet, self, dim, index, value);
-    }
-
-    // aten::index_fill_.Dimname_Tensor(Tensor(a!) self, Dimname dim, Tensor index, Tensor value) -> Tensor(a!)
-    inline at::Tensor & index_fill_(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & value) {
-        return at::_ops::index_fill__Dimname_Tensor::redispatch(dispatchKeySet, self, dim, index, value);
-    }
-
-    // aten::index_fill.Dimname_Scalar(Tensor self, Dimname dim, Tensor index, Scalar value) -> Tensor
-    inline at::Tensor index_fill(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Scalar & value) {
-        return at::_ops::index_fill_Dimname_Scalar::redispatch(dispatchKeySet, self, dim, index, value);
-    }
-
-    // aten::index_fill.Dimname_Tensor(Tensor self, Dimname dim, Tensor index, Tensor value) -> Tensor
-    inline at::Tensor index_fill(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & value) {
-        return at::_ops::index_fill_Dimname_Tensor::redispatch(dispatchKeySet, self, dim, index, value);
     }
 
     // aten::scatter.src(Tensor self, int dim, Tensor index, Tensor src) -> Tensor
@@ -10298,16 +9588,6 @@ namespace redispatch {
         return at::_ops::scatter_value_reduce_out::redispatch(dispatchKeySet, self, dim, index, value, reduce, out);
     }
 
-    // aten::scatter.dimname_src(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor
-    inline at::Tensor scatter(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & src) {
-        return at::_ops::scatter_dimname_src::redispatch(dispatchKeySet, self, dim, index, src);
-    }
-
-    // aten::scatter.dimname_value(Tensor self, Dimname dim, Tensor index, Scalar value) -> Tensor
-    inline at::Tensor scatter(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Scalar & value) {
-        return at::_ops::scatter_dimname_value::redispatch(dispatchKeySet, self, dim, index, value);
-    }
-
     // aten::scatter_add(Tensor self, int dim, Tensor index, Tensor src) -> Tensor
     inline at::Tensor scatter_add(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, const at::Tensor & index, const at::Tensor & src) {
         return at::_ops::scatter_add::redispatch(dispatchKeySet, self, dim, index, src);
@@ -10326,11 +9606,6 @@ namespace redispatch {
     // aten::scatter_add.out(Tensor self, int dim, Tensor index, Tensor src, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & scatter_add_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, const at::Tensor & index, const at::Tensor & src, at::Tensor & out) {
         return at::_ops::scatter_add_out::redispatch(dispatchKeySet, self, dim, index, src, out);
-    }
-
-    // aten::scatter_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor
-    inline at::Tensor scatter_add(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & src) {
-        return at::_ops::scatter_add_dimname::redispatch(dispatchKeySet, self, dim, index, src);
     }
 
     // aten::scatter_reduce.two(Tensor self, int dim, Tensor index, Tensor src, str reduce, *, bool include_self=True) -> Tensor
@@ -11383,21 +10658,6 @@ namespace redispatch {
         return at::_ops::index_select::redispatch(dispatchKeySet, self, dim, index);
     }
 
-    // aten::index_select.dimname_out(Tensor self, Dimname dim, Tensor index, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & index_select_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, const at::Tensor & index) {
-        return at::_ops::index_select_dimname_out::redispatch(dispatchKeySet, self, dim, index, out);
-    }
-
-    // aten::index_select.dimname_out(Tensor self, Dimname dim, Tensor index, *, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & index_select_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, at::Tensor & out) {
-        return at::_ops::index_select_dimname_out::redispatch(dispatchKeySet, self, dim, index, out);
-    }
-
-    // aten::index_select.dimname(Tensor self, Dimname dim, Tensor index) -> Tensor
-    inline at::Tensor index_select(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index) {
-        return at::_ops::index_select_dimname::redispatch(dispatchKeySet, self, dim, index);
-    }
-
     // aten::index_select_backward(Tensor grad, SymInt[] self_sizes, int dim, Tensor index) -> Tensor
     inline at::Tensor index_select_backward(c10::DispatchKeySet dispatchKeySet, const at::Tensor & grad, at::IntArrayRef self_sizes, int64_t dim, const at::Tensor & index) {
         return at::_ops::index_select_backward::redispatch(dispatchKeySet, grad, c10::fromIntArrayRefSlow(self_sizes), dim, index);
@@ -11501,21 +10761,6 @@ namespace redispatch {
     // aten::gather_backward(Tensor grad, Tensor self, int dim, Tensor index, bool sparse_grad) -> Tensor
     inline at::Tensor gather_backward(c10::DispatchKeySet dispatchKeySet, const at::Tensor & grad, const at::Tensor & self, int64_t dim, const at::Tensor & index, bool sparse_grad) {
         return at::_ops::gather_backward::redispatch(dispatchKeySet, grad, self, dim, index, sparse_grad);
-    }
-
-    // aten::gather.dimname_out(Tensor self, Dimname dim, Tensor index, *, bool sparse_grad=False, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & gather_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad=false) {
-        return at::_ops::gather_dimname_out::redispatch(dispatchKeySet, self, dim, index, sparse_grad, out);
-    }
-
-    // aten::gather.dimname_out(Tensor self, Dimname dim, Tensor index, *, bool sparse_grad=False, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & gather_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad, at::Tensor & out) {
-        return at::_ops::gather_dimname_out::redispatch(dispatchKeySet, self, dim, index, sparse_grad, out);
-    }
-
-    // aten::gather.dimname(Tensor self, Dimname dim, Tensor index, *, bool sparse_grad=False) -> Tensor
-    inline at::Tensor gather(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad=false) {
-        return at::_ops::gather_dimname::redispatch(dispatchKeySet, self, dim, index, sparse_grad);
     }
 
     // aten::_gather_sparse_backward(Tensor self, int dim, Tensor index, Tensor grad) -> Tensor
@@ -12483,36 +11728,6 @@ namespace redispatch {
         return at::_ops::sort_stable::redispatch(dispatchKeySet, self, stable, dim, descending);
     }
 
-    // aten::sort.dimname_values(Tensor self, Dimname dim, bool descending=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> sort_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim, bool descending=false) {
-        return at::_ops::sort_dimname_values::redispatch(dispatchKeySet, self, dim, descending, values, indices);
-    }
-
-    // aten::sort.dimname_values(Tensor self, Dimname dim, bool descending=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> sort_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool descending, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::sort_dimname_values::redispatch(dispatchKeySet, self, dim, descending, values, indices);
-    }
-
-    // aten::sort.dimname_values_stable(Tensor self, *, bool? stable, Dimname dim, bool descending=False, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> sort_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & values, at::Tensor & indices, const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending=false) {
-        return at::_ops::sort_dimname_values_stable::redispatch(dispatchKeySet, self, stable, dim, descending, values, indices);
-    }
-
-    // aten::sort.dimname_values_stable(Tensor self, *, bool? stable, Dimname dim, bool descending=False, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-    inline ::std::tuple<at::Tensor &,at::Tensor &> sort_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending, at::Tensor & values, at::Tensor & indices) {
-        return at::_ops::sort_dimname_values_stable::redispatch(dispatchKeySet, self, stable, dim, descending, values, indices);
-    }
-
-    // aten::sort.dimname(Tensor self, Dimname dim, bool descending=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> sort(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool descending=false) {
-        return at::_ops::sort_dimname::redispatch(dispatchKeySet, self, dim, descending);
-    }
-
-    // aten::sort.dimname_stable(Tensor self, *, bool? stable, Dimname dim, bool descending=False) -> (Tensor values, Tensor indices)
-    inline ::std::tuple<at::Tensor,at::Tensor> sort(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending=false) {
-        return at::_ops::sort_dimname_stable::redispatch(dispatchKeySet, self, stable, dim, descending);
-    }
-
     // aten::msort.out(Tensor self, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & msort_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self) {
         return at::_ops::msort_out::redispatch(dispatchKeySet, self, out);
@@ -12546,11 +11761,6 @@ namespace redispatch {
     // aten::argsort.stable_out(Tensor self, *, bool stable, int dim=-1, bool descending=False, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & argsort_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, bool stable, int64_t dim, bool descending, at::Tensor & out) {
         return at::_ops::argsort_stable_out::redispatch(dispatchKeySet, self, stable, dim, descending, out);
-    }
-
-    // aten::argsort.dimname(Tensor self, Dimname dim, bool descending=False) -> Tensor
-    inline at::Tensor argsort(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool descending=false) {
-        return at::_ops::argsort_dimname::redispatch(dispatchKeySet, self, dim, descending);
     }
 
     // aten::topk.values(Tensor self, SymInt k, int dim=-1, bool largest=True, bool sorted=True, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
@@ -13601,6 +12811,11 @@ namespace redispatch {
     // aten::_foreach_copy(Tensor[] self, Tensor[] src, bool non_blocking=False) -> Tensor[] self_out
     inline ::std::vector<at::Tensor> _foreach_copy(c10::DispatchKeySet dispatchKeySet, at::TensorList self, at::TensorList src, bool non_blocking=false) {
         return at::_ops::_foreach_copy::redispatch(dispatchKeySet, self, src, non_blocking);
+    }
+
+    // aten::_foreach_mm(Tensor[] self, Tensor[] mat2) -> Tensor[]
+    inline ::std::vector<at::Tensor> _foreach_mm(c10::DispatchKeySet dispatchKeySet, at::TensorList self, at::TensorList mat2) {
+        return at::_ops::_foreach_mm::redispatch(dispatchKeySet, self, mat2);
     }
 
     // aten::bucketize.Tensor(Tensor self, Tensor boundaries, *, bool out_int32=False, bool right=False) -> Tensor
@@ -20798,16 +20013,6 @@ namespace redispatch {
         return at::_ops::_embedding_bag_per_sample_weights_backward_out::redispatch(dispatchKeySet, grad, weight, indices, offsets, offset2bag, mode, padding_idx, out);
     }
 
-    // aten::empty.names_out(int[] size, *, Dimname[]? names, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & empty_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::MemoryFormat> memory_format=::std::nullopt) {
-        return at::_ops::empty_names_out::redispatch(dispatchKeySet, size, names, memory_format, out);
-    }
-
-    // aten::empty.names_out(int[] size, *, Dimname[]? names, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & empty_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::MemoryFormat> memory_format, at::Tensor & out) {
-        return at::_ops::empty_names_out::redispatch(dispatchKeySet, size, names, memory_format, out);
-    }
-
     // aten::empty_permuted.out(SymInt[] size, int[] physical_layout, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & empty_permuted_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, at::IntArrayRef physical_layout) {
         return at::_ops::empty_permuted_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), physical_layout, out);
@@ -21096,16 +20301,6 @@ namespace redispatch {
     // aten::floor_divide.Scalar_out(Tensor self, Scalar other, *, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & floor_divide_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, const at::Scalar & other, at::Tensor & out) {
         return at::_ops::floor_divide_Scalar_out::redispatch(dispatchKeySet, self, other, out);
-    }
-
-    // aten::full.names_out(int[] size, Scalar fill_value, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & full_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, const at::Scalar & fill_value, ::std::optional<at::DimnameList> names) {
-        return at::_ops::full_names_out::redispatch(dispatchKeySet, size, fill_value, names, out);
-    }
-
-    // aten::full.names_out(int[] size, Scalar fill_value, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & full_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, const at::Scalar & fill_value, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::full_names_out::redispatch(dispatchKeySet, size, fill_value, names, out);
     }
 
     // aten::full_like.out(Tensor self, Scalar fill_value, *, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
@@ -21878,16 +21073,6 @@ namespace redispatch {
         return at::_ops::_nnpack_spatial_convolution_out::redispatch(dispatchKeySet, input, weight, bias, padding, stride, out);
     }
 
-    // aten::ones.names_out(int[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & ones_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names) {
-        return at::_ops::ones_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
-    // aten::ones.names_out(int[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & ones_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::ones_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
     // aten::ones_like.out(Tensor self, *, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & ones_like_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, ::std::optional<at::MemoryFormat> memory_format=::std::nullopt) {
         return at::_ops::ones_like_out::redispatch(dispatchKeySet, self, memory_format, out);
@@ -22008,46 +21193,6 @@ namespace redispatch {
         return at::_ops::scalar_tensor_out::redispatch(dispatchKeySet, s, out);
     }
 
-    // aten::rand.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names) {
-        return at::_ops::rand_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, out);
-    }
-
-    // aten::rand.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::rand_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, out);
-    }
-
-    // aten::rand.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_symint_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names) {
-        return at::_ops::rand_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
-    // aten::rand.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_symint_outf(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::rand_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
-    // aten::rand.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names) {
-        return at::_ops::rand_generator_with_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, out);
-    }
-
-    // aten::rand.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::rand_generator_with_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, out);
-    }
-
-    // aten::rand.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_symint_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names) {
-        return at::_ops::rand_generator_with_names_out::redispatch(dispatchKeySet, size, generator, names, out);
-    }
-
-    // aten::rand.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & rand_symint_outf(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::rand_generator_with_names_out::redispatch(dispatchKeySet, size, generator, names, out);
-    }
-
     // aten::rand_like.out(Tensor self, *, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & rand_like_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, const at::Tensor & self, ::std::optional<at::MemoryFormat> memory_format=::std::nullopt) {
         return at::_ops::rand_like_out::redispatch(dispatchKeySet, self, memory_format, out);
@@ -22166,46 +21311,6 @@ namespace redispatch {
     // aten::randint_like.low_generator_dtype_out(Tensor self, SymInt low, SymInt high, *, Generator? generator, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
     inline at::Tensor & randint_like_symint_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, c10::SymInt low, c10::SymInt high, ::std::optional<at::Generator> generator, ::std::optional<at::MemoryFormat> memory_format, at::Tensor & out) {
         return at::_ops::randint_like_low_generator_dtype_out::redispatch(dispatchKeySet, self, low, high, generator, memory_format, out);
-    }
-
-    // aten::randn.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names) {
-        return at::_ops::randn_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, out);
-    }
-
-    // aten::randn.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::randn_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), names, out);
-    }
-
-    // aten::randn.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_symint_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names) {
-        return at::_ops::randn_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
-    // aten::randn.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_symint_outf(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::randn_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
-    // aten::randn.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names) {
-        return at::_ops::randn_generator_with_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, out);
-    }
-
-    // aten::randn.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::randn_generator_with_names_out::redispatch(dispatchKeySet, c10::fromIntArrayRefSlow(size), generator, names, out);
-    }
-
-    // aten::randn.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_symint_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names) {
-        return at::_ops::randn_generator_with_names_out::redispatch(dispatchKeySet, size, generator, names, out);
-    }
-
-    // aten::randn.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & randn_symint_outf(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::randn_generator_with_names_out::redispatch(dispatchKeySet, size, generator, names, out);
     }
 
     // aten::randn_like.out(Tensor self, *, MemoryFormat? memory_format=None, Tensor(a!) out) -> Tensor(a!)
@@ -22736,16 +21841,6 @@ namespace redispatch {
     // aten::_weight_norm_interface_backward.out(Tensor grad_w, Tensor saved_v, Tensor saved_g, Tensor saved_norms, int dim, *, Tensor(a!) out0, Tensor(b!) out1) -> (Tensor(a!), Tensor(b!))
     inline ::std::tuple<at::Tensor &,at::Tensor &> _weight_norm_interface_backward_outf(c10::DispatchKeySet dispatchKeySet, const at::Tensor & grad_w, const at::Tensor & saved_v, const at::Tensor & saved_g, const at::Tensor & saved_norms, int64_t dim, at::Tensor & out0, at::Tensor & out1) {
         return at::_ops::_weight_norm_interface_backward_out::redispatch(dispatchKeySet, grad_w, saved_v, saved_g, saved_norms, dim, out0, out1);
-    }
-
-    // aten::zeros.names_out(int[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & zeros_out(c10::DispatchKeySet dispatchKeySet, at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names) {
-        return at::_ops::zeros_names_out::redispatch(dispatchKeySet, size, names, out);
-    }
-
-    // aten::zeros.names_out(int[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-    inline at::Tensor & zeros_outf(c10::DispatchKeySet dispatchKeySet, at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-        return at::_ops::zeros_names_out::redispatch(dispatchKeySet, size, names, out);
     }
 
     // aten::_efficientzerotensor.out(SymInt[] size, *, Tensor(a!) out) -> Tensor(a!)

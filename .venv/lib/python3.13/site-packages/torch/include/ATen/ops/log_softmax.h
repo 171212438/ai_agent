@@ -38,11 +38,6 @@ inline at::Tensor & log_softmax_outf(const at::Tensor & self, int64_t dim, ::std
     return at::_ops::log_softmax_int_out::call(self, dim, dtype, out);
 }
 
-// aten::log_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor log_softmax(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-    return at::_ops::log_softmax_Dimname::call(self, dim, dtype);
-}
-
 }
 
 #else

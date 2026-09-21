@@ -60,28 +60,6 @@ struct TORCH_API any_dims_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, at::Tensor & out);
 };
 
-struct TORCH_API any_dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::any";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "any.dimname(Tensor self, Dimname dim, bool keepdim=False) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, bool keepdim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim);
-};
-
-struct TORCH_API any_dimname_out {
-  using schema = at::Tensor & (const at::Tensor &, at::Dimname, bool, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::any";
-  static constexpr const char* overload_name = "dimname_out";
-  static constexpr const char* schema_str = "any.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & out);
-};
-
 struct TORCH_API any {
   using schema = at::Tensor (const at::Tensor &);
   using ptr_schema = schema*;

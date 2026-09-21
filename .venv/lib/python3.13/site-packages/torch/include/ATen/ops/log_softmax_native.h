@@ -19,7 +19,6 @@ namespace at {
 namespace native {
 TORCH_API at::Tensor log_softmax(const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt);
 TORCH_API at::Tensor & log_softmax_out(const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-TORCH_API at::Tensor log_softmax(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt);
 } // namespace native
 } // namespace at
 

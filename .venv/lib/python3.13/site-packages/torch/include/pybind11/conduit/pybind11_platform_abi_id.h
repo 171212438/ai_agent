@@ -1,4 +1,3 @@
-#if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 #pragma once
 
 // Copyright (c) 2024 The pybind Community.
@@ -86,7 +85,3 @@
 
 #define PYBIND11_PLATFORM_ABI_ID                                                                  \
     PYBIND11_COMPILER_TYPE PYBIND11_STDLIB PYBIND11_BUILD_ABI PYBIND11_BUILD_TYPE
-
-#else
-#error "This file should not be included when either TORCH_STABLE_ONLY or TORCH_TARGET_VERSION is defined."
-#endif  // !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)

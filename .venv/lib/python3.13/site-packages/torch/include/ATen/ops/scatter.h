@@ -80,16 +80,6 @@ inline at::Tensor & scatter_outf(const at::Tensor & self, int64_t dim, const at:
     return at::_ops::scatter_value_reduce_out::call(self, dim, index, value, reduce, out);
 }
 
-// aten::scatter.dimname_src(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor
-inline at::Tensor scatter(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & src) {
-    return at::_ops::scatter_dimname_src::call(self, dim, index, src);
-}
-
-// aten::scatter.dimname_value(Tensor self, Dimname dim, Tensor index, Scalar value) -> Tensor
-inline at::Tensor scatter(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Scalar & value) {
-    return at::_ops::scatter_dimname_value::call(self, dim, index, value);
-}
-
 }
 
 #else

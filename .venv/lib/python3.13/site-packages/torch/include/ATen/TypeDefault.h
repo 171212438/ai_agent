@@ -1,7 +1,6 @@
 #if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 #pragma once
 
-#include <ATen/Dimname.h>
 #include <c10/core/MemoryFormat.h>
 #include <c10/core/QScheme.h>
 #include <c10/core/Scalar.h>

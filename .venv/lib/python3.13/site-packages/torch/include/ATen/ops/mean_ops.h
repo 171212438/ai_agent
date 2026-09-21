@@ -60,28 +60,6 @@ struct TORCH_API mean_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
 };
 
-struct TORCH_API mean_names_dim {
-  using schema = at::Tensor (const at::Tensor &, at::DimnameList, bool, ::std::optional<at::ScalarType>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::mean";
-  static constexpr const char* overload_name = "names_dim";
-  static constexpr const char* schema_str = "mean.names_dim(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype);
-};
-
-struct TORCH_API mean_names_out {
-  using schema = at::Tensor & (const at::Tensor &, at::DimnameList, bool, ::std::optional<at::ScalarType>, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::mean";
-  static constexpr const char* overload_name = "names_out";
-  static constexpr const char* schema_str = "mean.names_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-};
-
 }} // namespace at::_ops
 
 #else

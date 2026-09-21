@@ -22,7 +22,6 @@ TORCH_API at::Tensor argsort(const at::Tensor & self, int64_t dim=-1, bool desce
 TORCH_API at::Tensor argsort(const at::Tensor & self, bool stable, int64_t dim=-1, bool descending=false);
 TORCH_API at::Tensor & argsort_out(at::Tensor & out, const at::Tensor & self, bool stable, int64_t dim=-1, bool descending=false);
 TORCH_API at::Tensor & argsort_outf(const at::Tensor & self, bool stable, int64_t dim, bool descending, at::Tensor & out);
-TORCH_API at::Tensor argsort(const at::Tensor & self, at::Dimname dim, bool descending=false);
 
 } // namespace compositeimplicitautograd
 } // namespace at

@@ -137,7 +137,8 @@ struct TORCH_API SugaredValue
   // Value *
   virtual Value* len(const SourceRange& loc, GraphFunction& m) {
     throw(
-        ErrorReport(loc) << "'" << kind() << "'" << " object is not iterable");
+        ErrorReport(loc) << '\'' << kind() << '\''
+                         << " object is not iterable");
   }
 
   // expression for ith element for iterable value
@@ -147,7 +148,7 @@ struct TORCH_API SugaredValue
       Value* idx,
       TypePtr type_hint = nullptr) {
     throw(
-        ErrorReport(loc) << "'" << kind() << "'"
+        ErrorReport(loc) << '\'' << kind() << '\''
                          << " object is not subscriptable");
   }
 
@@ -161,8 +162,8 @@ struct TORCH_API SimpleValue : public SugaredValue {
   std::string kind() const override {
     std::stringstream ss;
     // NOLINTNEXTLINE(clang-analyzer-core.CallAndMessage)
-    ss << "value of type '" << value_->type()->annotation_str() << "'";
-    return ss.str();
+    ss << "value of type '" << value_->type()->annotation_str() << '\'';
+    return std::move(ss).str();
   }
   Value* asValue(const SourceRange& range, GraphFunction& m) override {
     return value_;

@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include <c10/macros/Export.h>
 

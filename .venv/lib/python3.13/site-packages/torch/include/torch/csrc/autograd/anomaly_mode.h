@@ -1,8 +1,8 @@
 #if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 #pragma once
 
+#include <c10/util/intrusive_ptr.h>
 #include <torch/csrc/Export.h>
-#include <memory>
 #include <string>
 
 namespace torch::autograd {
@@ -62,11 +62,11 @@ struct TORCH_API AnomalyMetadata {
   virtual ~AnomalyMetadata();
   virtual void store_stack();
   virtual void print_stack(const std::string& current_node_name);
-  virtual void assign_parent(const std::shared_ptr<Node>& parent_node);
+  virtual void assign_parent(const c10::intrusive_ptr<Node>& parent_node);
 
  private:
   std::string traceback_;
-  std::shared_ptr<Node> parent_;
+  c10::intrusive_ptr<Node> parent_;
 };
 
 } // namespace torch::autograd

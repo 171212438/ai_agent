@@ -18,7 +18,6 @@
 namespace at {
 namespace native {
 TORCH_API at::Tensor unflatten_symint(const at::Tensor & self, int64_t dim, c10::SymIntArrayRef sizes);
-TORCH_API at::Tensor unflatten_dimname_symint(const at::Tensor & self, at::Dimname dim, c10::SymIntArrayRef sizes, at::DimnameList names);
 } // namespace native
 } // namespace at
 

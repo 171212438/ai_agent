@@ -27,17 +27,6 @@ struct TORCH_API size_int {
   static int64_t redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim);
 };
 
-struct TORCH_API size_Dimname {
-  using schema = int64_t (const at::Tensor &, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::size";
-  static constexpr const char* overload_name = "Dimname";
-  static constexpr const char* schema_str = "size.Dimname(Tensor self, Dimname dim) -> int";
-  static int64_t call(const at::Tensor & self, at::Dimname dim);
-  static int64_t redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim);
-};
-
 }} // namespace at::_ops
 
 #else

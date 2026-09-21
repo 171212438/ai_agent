@@ -38,20 +38,6 @@ inline ::std::tuple<at::Tensor &,at::Tensor &> mode_outf(const at::Tensor & self
     return at::_ops::mode_values::call(self, dim, keepdim, values, indices);
 }
 
-// aten::mode.dimname(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> mode(const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-    return at::_ops::mode_dimname::call(self, dim, keepdim);
-}
-
-// aten::mode.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-inline ::std::tuple<at::Tensor &,at::Tensor &> mode_out(at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-    return at::_ops::mode_dimname_out::call(self, dim, keepdim, values, indices);
-}
-// aten::mode.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-inline ::std::tuple<at::Tensor &,at::Tensor &> mode_outf(const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & values, at::Tensor & indices) {
-    return at::_ops::mode_dimname_out::call(self, dim, keepdim, values, indices);
-}
-
 }
 
 #else

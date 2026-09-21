@@ -44,7 +44,7 @@ class AdaptiveAvgPool2d : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", output_size=" << output_size;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -101,7 +101,7 @@ class AdaptiveAvgPool2dBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -161,7 +161,7 @@ class LogSoftmax : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", half_to_float=" << half_to_float;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -224,7 +224,7 @@ class LogSoftmaxBackwardData : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", input_dtype=" << input_dtype;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -289,7 +289,7 @@ class ReshapeAliasCopy : public TsNode {
     ss << TsNode::ToString();
     ss << ", size=" << size;
     ss << ", stride=" << stride;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -352,7 +352,7 @@ class Softmax : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", half_to_float=" << half_to_float;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -415,7 +415,7 @@ class SoftmaxBackwardData : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", input_dtype=" << input_dtype;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -477,7 +477,7 @@ class Abs : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -532,7 +532,7 @@ class AddTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -590,7 +590,7 @@ class Addcdiv : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -650,7 +650,7 @@ class Addcmul : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -710,7 +710,7 @@ class Addmm : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -772,7 +772,7 @@ class AliasCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -827,7 +827,7 @@ class All : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -882,7 +882,7 @@ class Any : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -937,7 +937,7 @@ class ArangeStartOut : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1000,7 +1000,7 @@ class AsStridedCopy : public TsNode {
     ss << TsNode::ToString();
     ss << ", size=" << size;
     ss << ", stride=" << stride;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1065,7 +1065,7 @@ class AsStridedScatter : public TsNode {
     ss << TsNode::ToString();
     ss << ", size=" << size;
     ss << ", stride=" << stride;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1144,7 +1144,7 @@ class AvgPool2d : public TsNode {
     } else {
       ss << ", divisor_override=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1231,7 +1231,7 @@ class AvgPool2dBackward : public TsNode {
     } else {
       ss << ", divisor_override=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1305,7 +1305,7 @@ class Baddbmm : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1372,7 +1372,7 @@ class Bernoulli : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1435,7 +1435,7 @@ class BernoulliP : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1495,7 +1495,7 @@ class BinaryCrossEntropy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1557,7 +1557,7 @@ class BinaryCrossEntropyBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1620,7 +1620,7 @@ class BitwiseAndTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1677,7 +1677,7 @@ class BitwiseOrTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1734,7 +1734,7 @@ class Bmm : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1792,7 +1792,7 @@ class Cat : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1850,7 +1850,7 @@ class Clamp : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1910,7 +1910,7 @@ class ClampMin : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -1968,7 +1968,7 @@ class ConstantPadNd : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", pad=" << pad;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2038,7 +2038,7 @@ class Convolution : public TsNode {
     ss << ", transposed=" << transposed;
     ss << ", output_padding=" << output_padding;
     ss << ", groups=" << groups;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2133,7 +2133,7 @@ class ConvolutionBackward : public TsNode {
     ss << ", output_padding=" << output_padding;
     ss << ", groups=" << groups;
     ss << ", output_mask=" << output_mask;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2215,7 +2215,7 @@ class Cos : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2277,7 +2277,7 @@ class Cumsum : public TsNode {
     } else {
       ss << ", dtype=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2336,7 +2336,7 @@ class DetachCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2396,7 +2396,7 @@ class DiagonalCopy : public TsNode {
     ss << ", offset=" << offset;
     ss << ", dim1=" << dim1;
     ss << ", dim2=" << dim2;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2464,7 +2464,7 @@ class DiagonalScatter : public TsNode {
     ss << ", offset=" << offset;
     ss << ", dim1=" << dim1;
     ss << ", dim2=" << dim2;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2529,7 +2529,7 @@ class DivTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2591,7 +2591,7 @@ class DivTensorMode : public TsNode {
     } else {
       ss << ", rounding_mode=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2649,7 +2649,7 @@ class Elu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2711,7 +2711,7 @@ class EluBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", is_result=" << is_result;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2781,7 +2781,7 @@ class Embedding : public TsNode {
     ss << ", padding_idx=" << padding_idx;
     ss << ", scale_grad_by_freq=" << scale_grad_by_freq;
     ss << ", sparse=" << sparse;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2851,7 +2851,7 @@ class EmbeddingDenseBackward : public TsNode {
     ss << ", num_weights=" << num_weights;
     ss << ", padding_idx=" << padding_idx;
     ss << ", scale_grad_by_freq=" << scale_grad_by_freq;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2916,7 +2916,7 @@ class EqScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -2973,7 +2973,7 @@ class EqTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3030,7 +3030,7 @@ class Exp : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3088,7 +3088,7 @@ class ExpandCopy : public TsNode {
     ss << TsNode::ToString();
     ss << ", size=" << size;
     ss << ", implicit=" << implicit;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3148,7 +3148,7 @@ class Flip : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dims=" << dims;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3205,7 +3205,7 @@ class Floor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3260,7 +3260,7 @@ class Frac : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3318,7 +3318,7 @@ class Gather : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", sparse_grad=" << sparse_grad;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3379,7 +3379,7 @@ class GeScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3436,7 +3436,7 @@ class GeTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3494,7 +3494,7 @@ class Gelu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", approximate=" << approximate;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3551,7 +3551,7 @@ class GeluBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", approximate=" << approximate;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3610,7 +3610,7 @@ class Glu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3668,7 +3668,7 @@ class GluBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3728,7 +3728,7 @@ class GluJvp : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3794,7 +3794,7 @@ class GridSampler2d : public TsNode {
     ss << ", interpolation_mode=" << interpolation_mode;
     ss << ", padding_mode=" << padding_mode;
     ss << ", align_corners=" << align_corners;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3866,7 +3866,7 @@ class GridSampler2dBackward : public TsNode {
     ss << ", padding_mode=" << padding_mode;
     ss << ", align_corners=" << align_corners;
     ss << ", output_mask=" << output_mask;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3936,7 +3936,7 @@ class GtScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -3993,7 +3993,7 @@ class GtTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4050,7 +4050,7 @@ class Hardsigmoid : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4106,7 +4106,7 @@ class IndexSelect : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4165,7 +4165,7 @@ class LeScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4222,7 +4222,7 @@ class LeTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4279,7 +4279,7 @@ class LeakyRelu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4337,7 +4337,7 @@ class LeakyReluBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", self_is_result=" << self_is_result;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4398,7 +4398,7 @@ class Log : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4453,7 +4453,7 @@ class Log2 : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4508,7 +4508,7 @@ class LogSigmoidBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4567,7 +4567,7 @@ class LogSigmoidForward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4622,7 +4622,7 @@ class Logdet : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4677,7 +4677,7 @@ class LtScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4734,7 +4734,7 @@ class LtTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4791,7 +4791,7 @@ class MaskedFillScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4850,7 +4850,7 @@ class MaskedFillTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4912,7 +4912,7 @@ class MaxDim : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", keepdim=" << keepdim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -4972,7 +4972,7 @@ class Max : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5036,7 +5036,7 @@ class MaxPool2dWithIndices : public TsNode {
     ss << ", padding=" << padding;
     ss << ", dilation=" << dilation;
     ss << ", ceil_mode=" << ceil_mode;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5114,7 +5114,7 @@ class MaxPool2dWithIndicesBackward : public TsNode {
     ss << ", padding=" << padding;
     ss << ", dilation=" << dilation;
     ss << ", ceil_mode=" << ceil_mode;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5187,7 +5187,7 @@ class Maximum : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5249,7 +5249,7 @@ class Mean : public TsNode {
     } else {
       ss << ", dtype=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5318,7 +5318,7 @@ class MeanDim : public TsNode {
     } else {
       ss << ", dtype=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5380,7 +5380,7 @@ class Min : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5435,7 +5435,7 @@ class Minimum : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5492,7 +5492,7 @@ class Mm : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5549,7 +5549,7 @@ class MulTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5606,7 +5606,7 @@ class Mv : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5671,7 +5671,7 @@ class NativeBatchNorm : public TsNode {
     ss << ", training=" << training;
     ss << ", momentum=" << momentum;
     ss << ", eps=" << eps;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5754,7 +5754,7 @@ class NativeBatchNormBackward : public TsNode {
     ss << ", train=" << train;
     ss << ", eps=" << eps;
     ss << ", output_mask=" << output_mask;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5840,7 +5840,7 @@ class NativeDropout : public TsNode {
     } else {
       ss << ", train=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5901,7 +5901,7 @@ class NativeDropoutBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", scale=" << scale;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -5964,7 +5964,7 @@ class NativeLayerNorm : public TsNode {
     ss << TsNode::ToString();
     ss << ", normalized_shape=" << normalized_shape;
     ss << ", eps=" << eps;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6033,7 +6033,7 @@ class NativeLayerNormBackward : public TsNode {
     ss << TsNode::ToString();
     ss << ", normalized_shape=" << normalized_shape;
     ss << ", output_mask=" << output_mask;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6104,7 +6104,7 @@ class NeScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6161,7 +6161,7 @@ class NeTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6218,7 +6218,7 @@ class Neg : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6276,7 +6276,7 @@ class NllLoss2dBackward : public TsNode {
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
     ss << ", ignore_index=" << ignore_index;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6347,7 +6347,7 @@ class NllLoss2dForward : public TsNode {
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
     ss << ", ignore_index=" << ignore_index;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6414,7 +6414,7 @@ class NllLossBackward : public TsNode {
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
     ss << ", ignore_index=" << ignore_index;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6485,7 +6485,7 @@ class NllLossForward : public TsNode {
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
     ss << ", ignore_index=" << ignore_index;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6549,7 +6549,7 @@ class Nonzero : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6607,7 +6607,7 @@ class NormScalaroptDim : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", keepdim=" << keepdim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6678,7 +6678,7 @@ class NormalFunctional : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6741,7 +6741,7 @@ class PermuteCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dims=" << dims;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6798,7 +6798,7 @@ class PowTensorTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6855,7 +6855,7 @@ class PowTensorScalar : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6925,7 +6925,7 @@ class RandomFrom : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -6994,7 +6994,7 @@ class RandomTo : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7058,7 +7058,7 @@ class Random : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7114,7 +7114,7 @@ class Reciprocal : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7169,7 +7169,7 @@ class Relu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7224,7 +7224,7 @@ class RemainderTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7282,7 +7282,7 @@ class Repeat : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", repeats=" << repeats;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7339,7 +7339,7 @@ class Rsqrt : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7395,7 +7395,7 @@ class ScatterAdd : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7459,7 +7459,7 @@ class SelectCopyInt : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", index=" << index;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7522,7 +7522,7 @@ class SelectScatter : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", index=" << index;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7584,7 +7584,7 @@ class Selu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7639,7 +7639,7 @@ class Sgn : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7694,7 +7694,7 @@ class Sigmoid : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7749,7 +7749,7 @@ class SigmoidBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7806,7 +7806,7 @@ class Silu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7863,7 +7863,7 @@ class SliceCopyTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7929,7 +7929,7 @@ class SliceScatter : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -7998,7 +7998,7 @@ class SmoothL1Loss : public TsNode {
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
     ss << ", beta=" << beta;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8063,7 +8063,7 @@ class SmoothL1LossBackward : public TsNode {
     ss << TsNode::ToString();
     ss << ", reduction=" << reduction;
     ss << ", beta=" << beta;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8127,7 +8127,7 @@ class Softplus : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8186,7 +8186,7 @@ class SoftplusBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8250,7 +8250,7 @@ class Sort : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
     ss << ", descending=" << descending;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8310,7 +8310,7 @@ class Sqrt : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8365,7 +8365,7 @@ class SqueezeCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8421,7 +8421,7 @@ class SqueezeCopyDim : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8479,7 +8479,7 @@ class SqueezeCopyDims : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8537,7 +8537,7 @@ class Stack : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8595,7 +8595,7 @@ class Std : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", unbiased=" << unbiased;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8661,7 +8661,7 @@ class StdDim : public TsNode {
     }
     ss << ", unbiased=" << unbiased;
     ss << ", keepdim=" << keepdim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8731,7 +8731,7 @@ class StdCorrection : public TsNode {
       ss << ", dim=null";
     }
     ss << ", keepdim=" << keepdim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8792,7 +8792,7 @@ class SubTensor : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8855,7 +8855,7 @@ class Sum : public TsNode {
     } else {
       ss << ", dtype=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8924,7 +8924,7 @@ class SumDimIntlist : public TsNode {
     } else {
       ss << ", dtype=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -8986,7 +8986,7 @@ class TCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9041,7 +9041,7 @@ class Tanh : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9096,7 +9096,7 @@ class TanhBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9153,7 +9153,7 @@ class Threshold : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9212,7 +9212,7 @@ class ThresholdBackward : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9278,7 +9278,7 @@ class Topk : public TsNode {
     ss << ", dim=" << dim;
     ss << ", largest=" << largest;
     ss << ", sorted=" << sorted;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9344,7 +9344,7 @@ class Trace : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9402,7 +9402,7 @@ class TransposeCopyInt : public TsNode {
     ss << TsNode::ToString();
     ss << ", dim0=" << dim0;
     ss << ", dim1=" << dim1;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9463,7 +9463,7 @@ class Tril : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", diagonal=" << diagonal;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9521,7 +9521,7 @@ class Triu : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", diagonal=" << diagonal;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9578,7 +9578,7 @@ class Trunc : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9638,7 +9638,7 @@ class UnfoldCopy : public TsNode {
     ss << ", dimension=" << dimension;
     ss << ", size=" << size;
     ss << ", step=" << step;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9710,7 +9710,7 @@ class Uniform : public TsNode {
     } else {
       ss << ", generator=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9773,7 +9773,7 @@ class UnsqueezeCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dim=" << dim;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9845,7 +9845,7 @@ class UpsampleBilinear2d : public TsNode {
     } else {
       ss << ", scales_w=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -9928,7 +9928,7 @@ class UpsampleBilinear2dBackward : public TsNode {
     } else {
       ss << ", scales_w=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -10010,7 +10010,7 @@ class UpsampleNearest2d : public TsNode {
     } else {
       ss << ", scales_w=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -10088,7 +10088,7 @@ class UpsampleNearest2dBackward : public TsNode {
     } else {
       ss << ", scales_w=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -10155,7 +10155,7 @@ class ViewCopy : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", size=" << size;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -10213,7 +10213,7 @@ class ViewCopyDtype : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
     ss << ", dtype=" << dtype;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -10270,7 +10270,7 @@ class Zero : public TsNode {
     std::stringstream ss;
     ss << TsNode::ToString();
 
-    return ss.str();
+    return std::move(ss).str();
   }
 
 

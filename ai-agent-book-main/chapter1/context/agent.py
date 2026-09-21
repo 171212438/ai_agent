@@ -59,17 +59,17 @@ class ToolCall:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
-@dataclass
+@dataclass  # 根据这些字段自动生成初始化方法
 class AgentTrajectory:
     """Tracks the agent's execution trajectory"""
-    reasoning_steps: List[str] = field(default_factory=list)
-    tool_calls: List[ToolCall] = field(default_factory=list)
+    reasoning_steps: List[str] = field(default_factory=list)  # 运行中记录的推理文本
+    tool_calls: List[ToolCall] = field(default_factory=list)  # 工具调用记录
     # Exact, credential-free request/response evidence for every real model
     # turn.  This is deliberately part of the trajectory: Experiment 1-1 is
     # about what the model could see at decision time, so reconstructing the
     # request after the fact is not acceptable evidence.
-    api_turns: List[Dict[str, Any]] = field(default_factory=list)
-    context_mode: ContextMode = ContextMode.FULL
+    api_turns: List[Dict[str, Any]] = field(default_factory=list)  # 模型调用的请求、响应或异常等证据
+    context_mode: ContextMode = ContextMode.FULL  # 当前上下文模式
 
 
 class ToolRegistry:

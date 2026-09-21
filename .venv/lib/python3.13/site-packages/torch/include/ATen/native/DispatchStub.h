@@ -67,6 +67,7 @@ enum class CPUCapability {
   ZVECTOR = 1,
 #elif defined(HAVE_SVE_CPU_DEFINITION)
   SVE256 = 1,
+  SVE128 = 2,
 #else
   AVX2 = 1,
   AVX512 = 2,
@@ -117,6 +118,7 @@ struct TORCH_API DispatchStubImpl {
       , void *ZVECTOR
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+      , void *SVE128
       , void *SVE256
 #endif
   );
@@ -138,6 +140,7 @@ struct TORCH_API DispatchStubImpl {
     , void *ZVECTOR
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+    , void *SVE128
     , void *SVE256
 #endif
   );
@@ -159,6 +162,7 @@ struct TORCH_API DispatchStubImpl {
       , void *ZVECTOR
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+      , void *SVE128
       , void *SVE256
 #endif
   );
@@ -183,6 +187,7 @@ struct TORCH_API DispatchStubImpl {
     , void *ZVECTOR
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+    , void *SVE128
     , void *SVE256
 #endif
   );
@@ -240,6 +245,7 @@ private:
       , reinterpret_cast<void*>(ZVECTOR)
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+      , reinterpret_cast<void*>(SVE128)
       , reinterpret_cast<void*>(SVE256)
 #endif
       )
@@ -301,6 +307,7 @@ public:
       , reinterpret_cast<void*>(ZVECTOR)
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+      , reinterpret_cast<void*>(SVE128)
       , reinterpret_cast<void*>(SVE256)
 #endif
       );
@@ -324,6 +331,7 @@ public:
   static TORCH_API FnPtr ZVECTOR;
 #endif
 #ifdef HAVE_SVE_CPU_DEFINITION
+  static TORCH_API FnPtr SVE128;
   static TORCH_API FnPtr SVE256;
 #endif
 private:
@@ -428,8 +436,10 @@ struct RegisterPRIVATEUSE1Dispatch {
 #endif
 
 #ifdef HAVE_SVE_CPU_DEFINITION
+#define REGISTER_SVE128_DISPATCH(name, fn) REGISTER_ARCH_DISPATCH(name, SVE128, fn)
 #define REGISTER_SVE256_DISPATCH(name, fn) REGISTER_ARCH_DISPATCH(name, SVE256, fn)
 #else
+#define REGISTER_SVE128_DISPATCH(name, fn)
 #define REGISTER_SVE256_DISPATCH(name, fn)
 #endif
 
@@ -441,6 +451,7 @@ struct RegisterPRIVATEUSE1Dispatch {
   REGISTER_AVX2_DISPATCH(name, fn)                                             \
   REGISTER_VSX_DISPATCH(name, fn)                                              \
   REGISTER_ZVECTOR_DISPATCH(name, fn)                                          \
+  REGISTER_SVE128_DISPATCH(name, fn)                                           \
   REGISTER_SVE256_DISPATCH(name, fn)
 
 #define REGISTER_NO_CPU_DISPATCH(name)                                         \
@@ -489,6 +500,7 @@ struct RegisterPRIVATEUSE1Dispatch {
 #define REGISTER_DISPATCH(name, fn) REGISTER_ARCH_DISPATCH(name, CPU_CAPABILITY, fn)
 #endif
 #define ALSO_REGISTER_AVX512_DISPATCH(name, fn) REGISTER_ARCH_DISPATCH(name, CPU_CAPABILITY, fn)
+#define ALSO_REGISTER_SVE128_DISPATCH(name, fn) REGISTER_ARCH_DISPATCH(name, CPU_CAPABILITY, fn)
 #define ALSO_REGISTER_SVE256_DISPATCH(name, fn) REGISTER_ARCH_DISPATCH(name, CPU_CAPABILITY, fn)
 #endif
 } // namespace at::native

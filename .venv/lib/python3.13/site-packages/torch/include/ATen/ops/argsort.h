@@ -43,11 +43,6 @@ inline at::Tensor & argsort_outf(const at::Tensor & self, bool stable, int64_t d
     return at::_ops::argsort_stable_out::call(self, stable, dim, descending, out);
 }
 
-// aten::argsort.dimname(Tensor self, Dimname dim, bool descending=False) -> Tensor
-inline at::Tensor argsort(const at::Tensor & self, at::Dimname dim, bool descending=false) {
-    return at::_ops::argsort_dimname::call(self, dim, descending);
-}
-
 }
 
 #else

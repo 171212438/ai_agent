@@ -29,11 +29,6 @@ inline at::Tensor diagonal(const at::Tensor & self, int64_t offset=0, int64_t di
     return at::_ops::diagonal::call(self, offset, dim1, dim2);
 }
 
-// aten::diagonal.Dimname(Tensor(a) self, *, Dimname outdim, Dimname dim1, Dimname dim2, int offset=0) -> Tensor(a)
-inline at::Tensor diagonal(const at::Tensor & self, at::Dimname outdim, at::Dimname dim1, at::Dimname dim2, int64_t offset=0) {
-    return at::_ops::diagonal_Dimname::call(self, outdim, dim1, dim2, offset);
-}
-
 }
 
 #else

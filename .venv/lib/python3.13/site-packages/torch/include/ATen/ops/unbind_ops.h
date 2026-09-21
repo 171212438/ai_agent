@@ -27,17 +27,6 @@ struct TORCH_API unbind_int {
   static ::std::vector<at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim);
 };
 
-struct TORCH_API unbind_Dimname {
-  using schema = ::std::vector<at::Tensor> (const at::Tensor &, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::unbind";
-  static constexpr const char* overload_name = "Dimname";
-  static constexpr const char* schema_str = "unbind.Dimname(Tensor(a -> *) self, Dimname dim) -> Tensor(a)[]";
-  static ::std::vector<at::Tensor> call(const at::Tensor & self, at::Dimname dim);
-  static ::std::vector<at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim);
-};
-
 }} // namespace at::_ops
 
 #else

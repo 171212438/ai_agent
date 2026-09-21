@@ -18,10 +18,6 @@ namespace at {
 
 namespace compositeexplicitautograd {
 
-TORCH_API at::Tensor zeros(at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={});
-TORCH_API at::Tensor zeros(at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory);
-TORCH_API at::Tensor & zeros_out(at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names);
-TORCH_API at::Tensor & zeros_outf(at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out);
 TORCH_API at::Tensor zeros(at::IntArrayRef size, at::TensorOptions options={});
 TORCH_API at::Tensor zeros(at::IntArrayRef size, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory);
 TORCH_API at::Tensor zeros_symint(c10::SymIntArrayRef size, at::TensorOptions options={});

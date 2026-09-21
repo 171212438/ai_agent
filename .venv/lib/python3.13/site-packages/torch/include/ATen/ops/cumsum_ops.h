@@ -49,39 +49,6 @@ struct TORCH_API cumsum_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
 };
 
-struct TORCH_API cumsum_dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, ::std::optional<at::ScalarType>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::cumsum";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "cumsum.dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype);
-};
-
-struct TORCH_API cumsum__dimname {
-  using schema = at::Tensor & (at::Tensor &, at::Dimname, ::std::optional<at::ScalarType>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::cumsum_";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "cumsum_.dimname(Tensor(a!) self, Dimname dim, *, ScalarType? dtype=None) -> Tensor(a!)";
-  static at::Tensor & call(at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype);
-};
-
-struct TORCH_API cumsum_dimname_out {
-  using schema = at::Tensor & (const at::Tensor &, at::Dimname, ::std::optional<at::ScalarType>, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::cumsum";
-  static constexpr const char* overload_name = "dimname_out";
-  static constexpr const char* schema_str = "cumsum.dimname_out(Tensor self, Dimname dim, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-};
-
 }} // namespace at::_ops
 
 #else

@@ -1,6 +1,7 @@
 #if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 #pragma once
 
+#include <tuple>
 #include <ATen/cuda/PhiloxCudaState.h>
 #include <ATen/cuda/detail/UnpackRaw.cuh>
 

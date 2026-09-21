@@ -36,7 +36,7 @@ std::string FlightRecorder<EventType>::Entry::getTraceback() {
     #4 main from /home/user/repro.py:34
     #5 <module> from /home/user/repro.py:40
   */
-  return oss.str();
+  return std::move(oss).str();
 }
 
 template <typename EventType>

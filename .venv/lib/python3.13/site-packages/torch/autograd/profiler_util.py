@@ -561,12 +561,15 @@ class EventMetadata(NamedTuple):
     priority: int | None
     blocks_per_sm: float | None
     warps_per_sm: float | None
-    occupancy: float | None
+    occupancy: dict[str, Any] | None
+    est_occupancy_pct: float | None
     queued: int | None
     graph_id: int | None
     graph_node_id: int | None
     stream: int | None
     context: int | None
+    channel: int | None
+    channel_type: int | None
     # Memory fields
     bytes: int | None
     bandwidth_gb_s: float | None
@@ -590,10 +593,6 @@ class EventMetadata(NamedTuple):
     is_async: bool | None
 
 
-def _to_int_list(v: str) -> list[int]:
-    return json.loads(v)
-
-
 def _to_str(v: str) -> str:
     return v.strip('"')
 
@@ -606,17 +605,20 @@ def _to_bool(v: str) -> bool:
 _EVENT_METADATA_KEYS: dict[str, tuple[str, Callable[[str], Any]]] = {
     "registers per thread": ("registers_per_thread", int),
     "shared memory": ("shared_memory", int),
-    "grid": ("grid", _to_int_list),
-    "block": ("block", _to_int_list),
+    "grid": ("grid", json.loads),  # list[int]
+    "block": ("block", json.loads),  # list[int]
     "priority": ("priority", int),
     "blocks per SM": ("blocks_per_sm", float),
     "warps per SM": ("warps_per_sm", float),
-    "est. achieved occupancy %": ("occupancy", float),
+    "est. achieved occupancy %": ("est_occupancy_pct", float),
+    "occupancy": ("occupancy", json.loads),  # dict[str, Any]
     "queued": ("queued", int),
     "graph id": ("graph_id", int),
     "graph node id": ("graph_node_id", int),
     "stream": ("stream", int),
     "context": ("context", int),
+    "channel": ("channel", int),
+    "channel_type": ("channel_type", int),
     "bytes": ("bytes", int),
     "memory bandwidth (GB/s)": ("bandwidth_gb_s", float),
     "Collective name": ("collective_name", _to_str),
@@ -1574,9 +1576,14 @@ def _canonicalize_profiler_events(events):
         node_name = event["args"].get("node_name", "")
         stack_trace = event["args"].get("stack_trace", "")
 
-        # Get the last non-empty line of the stack trace
+        # Get the last non-empty line of the stack trace that is actual source,
+        # not a caret-marker line. Python 3.11+ appends "^^^^"/"~~~~" indicator
+        # lines below the source when a FrameSummary has colno/end_colno set
+        # (e.g. dynamo-generated stack traces); those lines must be skipped so
+        # we still surface the source code line in canonicalized output.
         lines = [s.strip() for s in stack_trace.split("\n") if s.strip()]
-        stack_trace = lines[-1] if lines else ""
+        source_lines = [s for s in lines if not set(s).issubset({"^", "~", " "})]
+        stack_trace = source_lines[-1] if source_lines else ""
 
         events_with_traces.append(
             {

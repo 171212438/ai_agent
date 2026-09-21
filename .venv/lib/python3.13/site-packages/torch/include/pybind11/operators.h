@@ -1,4 +1,3 @@
-#if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 /*
     pybind11/operator.h: Metatemplates for operator overloading
 
@@ -201,7 +200,3 @@ using detail::self;
 using detail::hash;
 
 PYBIND11_NAMESPACE_END(PYBIND11_NAMESPACE)
-
-#else
-#error "This file should not be included when either TORCH_STABLE_ONLY or TORCH_TARGET_VERSION is defined."
-#endif  // !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)

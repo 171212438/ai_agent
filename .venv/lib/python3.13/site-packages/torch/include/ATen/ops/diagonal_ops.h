@@ -27,17 +27,6 @@ struct TORCH_API diagonal {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t offset, int64_t dim1, int64_t dim2);
 };
 
-struct TORCH_API diagonal_Dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, at::Dimname, at::Dimname, int64_t);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::diagonal";
-  static constexpr const char* overload_name = "Dimname";
-  static constexpr const char* schema_str = "diagonal.Dimname(Tensor(a) self, *, Dimname outdim, Dimname dim1, Dimname dim2, int offset=0) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, at::Dimname outdim, at::Dimname dim1, at::Dimname dim2, int64_t offset);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname outdim, at::Dimname dim1, at::Dimname dim2, int64_t offset);
-};
-
 }} // namespace at::_ops
 
 #else

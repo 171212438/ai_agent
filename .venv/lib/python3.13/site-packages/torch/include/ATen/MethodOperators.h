@@ -61,8 +61,6 @@
 #include <ATen/ops/addr_ops.h>
 #include <ATen/ops/adjoint_ops.h>
 #include <ATen/ops/alias_ops.h>
-#include <ATen/ops/align_as_ops.h>
-#include <ATen/ops/align_to_ops.h>
 #include <ATen/ops/all_ops.h>
 #include <ATen/ops/allclose_ops.h>
 #include <ATen/ops/amax_ops.h>
@@ -335,10 +333,8 @@
 #include <ATen/ops/ravel_ops.h>
 #include <ATen/ops/reciprocal_ops.h>
 #include <ATen/ops/record_stream_ops.h>
-#include <ATen/ops/refine_names_ops.h>
 #include <ATen/ops/relu_ops.h>
 #include <ATen/ops/remainder_ops.h>
-#include <ATen/ops/rename_ops.h>
 #include <ATen/ops/renorm_ops.h>
 #include <ATen/ops/repeat_interleave_ops.h>
 #include <ATen/ops/repeat_ops.h>
@@ -372,7 +368,6 @@
 #include <ATen/ops/sin_ops.h>
 #include <ATen/ops/sinc_ops.h>
 #include <ATen/ops/sinh_ops.h>
-#include <ATen/ops/size_ops.h>
 #include <ATen/ops/slice_inverse_ops.h>
 #include <ATen/ops/slice_ops.h>
 #include <ATen/ops/slice_scatter_ops.h>
@@ -393,7 +388,6 @@
 #include <ATen/ops/std_ops.h>
 #include <ATen/ops/stft_ops.h>
 #include <ATen/ops/storage_offset_ops.h>
-#include <ATen/ops/stride_ops.h>
 #include <ATen/ops/sub_ops.h>
 #include <ATen/ops/subtract_ops.h>
 #include <ATen/ops/sum_ops.h>

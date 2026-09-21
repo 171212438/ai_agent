@@ -395,12 +395,17 @@ extern "C" int run_standalone(uint64_t seed, int repetitions) {
     for (int i=0; i<repetitions; i++) {
         {{test_call_statement}};
     }
+#if defined(CUTLASS_ENABLE_SYCL)
+    compat::wait();
+#else
+    cudaDeviceSynchronize();
     cudaError_t result = cudaDeviceSynchronize();
     if (result != cudaSuccess) {
       std::cerr << "Device synchronize failed with error "
         << cudaGetErrorString(result) << std::endl;
       return result;
     }
+#endif
     return 0;
 }
 
@@ -412,7 +417,7 @@ int main(int argc, char** argv) {
 }
 
 #endif
-"""  # noqa: B950
+"""
 
 
 @clear_on_fresh_cache
@@ -442,6 +447,7 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
             beta (float): The scaling factor applied to the output matrix.
             input_reorder (Optional[List[int]]): Specifies the reordering of the input nodes. If not provided,
                             no reordering is performed. Defaults to None.
+            use_fast_accum (Optional[bool]): enable/disable tensor-core fast accumulation (only available in `CUTLASS3xGemmTemplate` and Hopper GPUs)
         """
         super().__init__(
             str(Placeholder.KERNEL_NAME), input_nodes, layout, input_reorder
@@ -812,7 +818,7 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
         if all_match:
             return op
         log.warning(
-            f"Cutlass GEMM Layout change: Input and/or output layouts have changed between autotuning/retuning and call to render on {self}. Applying workaround. This can lead to suboptimal performance. Match List: {match_list}"  # noqa: G004, B950
+            f"Cutlass GEMM Layout change: Input and/or output layouts have changed between autotuning/retuning and call to render on {self}. Applying workaround. This can lead to suboptimal performance. Match List: {match_list}"  # noqa: G004
         )
         new_op = copy.deepcopy(op)
 
@@ -979,7 +985,10 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
         # TODO: update epilogue functor according to epilogues.
         op.element_epilogue = op.accumulator_type()
 
-        if self.use_fast_accum is not None:
+        if (
+            self.use_fast_accum is not None
+            and int(cutlass_utils._normalize_cuda_arch(cuda_env.get_cuda_arch())) == 90
+        ):
             is_op_fast_accum = "fastaccum" in op.configuration_name()
             if self.use_fast_accum ^ is_op_fast_accum:
                 return None
@@ -1150,10 +1159,11 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
             "op argument is required and has to be an instance of GemmOperation"
         )
 
-        if epilogue_nodes and not self._has_tma_epilogue(op):
-            raise NotImplementedError(
-                "Non-TMA epilogue visitor tree is not supported in Cutlass."
-            )
+        if epilogue_nodes:
+            if self.device_type == "cuda" and not self._has_tma_epilogue(op):
+                raise NotImplementedError(
+                    "Non-TMA epilogue visitor tree is not supported in NV-Cutlass."
+                )
 
         assert len(self.input_nodes) >= 2 and self.output_node is not None
         X, W = self.input_nodes[0], self.input_nodes[1]
@@ -1240,10 +1250,25 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
                     D_output_buffer.get_dtype()
                 )
 
+                # When the D output buffer has a compatible reshape of the template
+                # output (e.g., [16, 512, 3072] vs [8192, 3072]), use the template's
+                # layout for EVT since CUTLASS operates on the 2D GEMM output shape.
+                if (
+                    template_buffer_node is not None
+                    and D_output_buffer.get_size() != template_buffer_node.get_size()
+                ):
+                    name_to_buffer[D_output_name] = template_buffer_node
+
                 assert output_names, "There should be at least one write"
 
                 epilogue_inputs = [name_to_buffer[name] for name in input_names]
-                outputs = [name_to_buffer[name] for name in output_names]
+                # Use D_output_buffer directly for the D output entry in outputs,
+                # not name_to_buffer[D_output_name] which may have been replaced
+                # with template_buffer_node for EVT layout purposes.
+                outputs = [
+                    D_output_buffer if name == D_output_name else name_to_buffer[name]
+                    for name in output_names
+                ]
             else:  # Scaled MM, we read the two scale matrices (and optional bias) and write a single output
                 bias = None if len(self.input_nodes) < 5 else self.input_nodes[4]
                 bias_name = bias.get_name() if bias else None
@@ -1288,6 +1313,18 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
                 Y,
                 *extra_inputs,
             ]
+            # Extend input_reorder to cover epilogue inputs, Y, and extra_inputs
+            # at their natural positions (identity mapping for new entries)
+            if input_reorder is not None:
+                base_len = len(input_reorder)
+                assert base_len <= len(inputs), (
+                    "input_reorder must be a prefix mapping for the current input list"
+                )
+                num_new = len(inputs) - base_len
+                if num_new > 0:
+                    input_reorder = input_reorder + list(
+                        range(base_len, base_len + num_new)
+                    )
             input_names = [evt_arg_renames.get(name) for name in input_names]
             output_names = [evt_arg_renames.get(name) for name in output_names]
 
@@ -1371,7 +1408,7 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
             f"(({arg_type}){arg_name}_data.get())"
             for arg_type, arg_name in zip(arg_types, arg_names)
         ]
-        return f"{kernel.kernel_name}({', '.join(arguments)}, M, N, K, B, lda, ldb, ldc, ldd, 0, 0, 0, swizzle, workspace_size_ptr, (uint8_t*)workspace_data.get(), 0);"  # noqa: B950
+        return f"{kernel.kernel_name}({', '.join(arguments)}, M, N, K, B, lda, ldb, ldc, ldd, 0, 0, 0, swizzle, workspace_size_ptr, (uint8_t*)workspace_data.get(), 0);"
 
     def _render_evt(
         self,
@@ -1381,7 +1418,7 @@ class CUTLASSGemmTemplate(CUTLASSTemplate, ABC):
         name_to_buffer: dict[str, Buffer],
         output_dtype: torch.dtype,
         accumulator_dtype: torch.dtype,
-    ) -> tuple[str, str, str, EVTArgRenames]:  # type: ignore[name-defined]  # noqa: F821
+    ) -> tuple[str, str, str, EVTArgRenames]:  # type: ignore[name-defined]
         raise NotImplementedError("_render_evt in CUTLASSGemmTemplate not implemented")
 
 
@@ -1431,7 +1468,7 @@ class CUTLASS3xGemmTemplate(CUTLASSGemmTemplate):
         return (GEMM_ARGS_CUTLASS_3X, GEMM_ARGS_CUTLASS_3X_EPILOGUE)
 
     @staticmethod
-    def _has_tma_epilogue(  # noqa: F821 # type: ignore[arg-type,name-defined]
+    def _has_tma_epilogue(  # type: ignore[arg-type,name-defined]
         op: "cutlass_library.gemm_op.GemmOperation",  # type: ignore[name-defined,arg-type] # noqa: F821
     ) -> bool:  # type: ignore[name-defined]
         """Helper method: Determine whether a given Cutlass GEMM op has a TMA Epilogue"""
@@ -1445,7 +1482,9 @@ class CUTLASS3xGemmTemplate(CUTLASSGemmTemplate):
         return result
 
     @staticmethod
-    def supports_epilogue_fusion(op: GemmOperation) -> bool:
+    def supports_epilogue_fusion(op: GemmOperation, device_type: str) -> bool:
+        if device_type == "xpu":
+            return True
         return CUTLASS3xGemmTemplate._has_tma_epilogue(op)
 
     def _are_inputs_layout_compatible(self, layouts: list[Layout]) -> bool:
@@ -1559,6 +1598,7 @@ class CUTLASS3xGemmTemplate(CUTLASSGemmTemplate):
             {k: name_to_buffer[v] for k, v in var_name_to_buffer_name.items()},  # type: ignore[arg-type,misc]
             V.graph.sizevars.guarding_hint_or_throw,
             kernel_schedule=op.kernel_schedule,
+            device_type=self.device_type,
         )
 
         return (
@@ -1871,7 +1911,7 @@ class CUTLASS2xGemmTemplate(CUTLASSGemmTemplate):
         # SparseGemm in CUTLASS has specific alignment check that for
         # small k could make some of the choices throw kMisalignedOperand
         # CUTLASS error when run, see:
-        # https://github.com/NVIDIA/cutlass/blob/e01b9b5029b7caca5a43c29f7d2714d7cf1dcae8/include/cutlass/gemm/kernel/sparse_gemm.h#L198-L200  # noqa: B950
+        # https://github.com/NVIDIA/cutlass/blob/e01b9b5029b7caca5a43c29f7d2714d7cf1dcae8/include/cutlass/gemm/kernel/sparse_gemm.h#L198-L200
         # So, let's skip these choices if that would be the case.
         X = self.input_nodes[0]
         return (X.get_size()[1] * 2) % op.tile_description.tile_shape[2] == 0

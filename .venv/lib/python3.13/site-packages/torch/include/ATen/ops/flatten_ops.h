@@ -27,39 +27,6 @@ struct TORCH_API flatten_using_ints {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t start_dim, int64_t end_dim);
 };
 
-struct TORCH_API flatten_named_out_dim {
-  using schema = at::Tensor (const at::Tensor &, int64_t, int64_t, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::flatten";
-  static constexpr const char* overload_name = "named_out_dim";
-  static constexpr const char* schema_str = "flatten.named_out_dim(Tensor(a) self, int start_dim, int end_dim, Dimname out_dim) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, int64_t start_dim, int64_t end_dim, at::Dimname out_dim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t start_dim, int64_t end_dim, at::Dimname out_dim);
-};
-
-struct TORCH_API flatten_using_names {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, at::Dimname, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::flatten";
-  static constexpr const char* overload_name = "using_names";
-  static constexpr const char* schema_str = "flatten.using_names(Tensor(a) self, Dimname start_dim, Dimname end_dim, Dimname out_dim) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, at::Dimname start_dim, at::Dimname end_dim, at::Dimname out_dim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname start_dim, at::Dimname end_dim, at::Dimname out_dim);
-};
-
-struct TORCH_API flatten_DimnameList {
-  using schema = at::Tensor (const at::Tensor &, at::DimnameList, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::flatten";
-  static constexpr const char* overload_name = "DimnameList";
-  static constexpr const char* schema_str = "flatten.DimnameList(Tensor(a) self, Dimname[] dims, Dimname out_dim) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, at::DimnameList dims, at::Dimname out_dim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dims, at::Dimname out_dim);
-};
-
 }} // namespace at::_ops
 
 #else

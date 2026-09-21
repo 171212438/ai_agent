@@ -20,7 +20,6 @@ namespace native {
 TORCH_API at::Tensor argsort(const at::Tensor & self, int64_t dim=-1, bool descending=false);
 TORCH_API at::Tensor argsort(const at::Tensor & self, bool stable, int64_t dim=-1, bool descending=false);
 TORCH_API at::Tensor & argsort_out(const at::Tensor & self, bool stable, int64_t dim, bool descending, at::Tensor & out);
-TORCH_API at::Tensor argsort(const at::Tensor & self, at::Dimname dim, bool descending=false);
 } // namespace native
 } // namespace at
 

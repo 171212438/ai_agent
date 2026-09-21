@@ -158,6 +158,7 @@
 #include <ATen/ops/_foreach_max_native.h>
 #include <ATen/ops/_foreach_maximum_native.h>
 #include <ATen/ops/_foreach_minimum_native.h>
+#include <ATen/ops/_foreach_mm_native.h>
 #include <ATen/ops/_foreach_mul_native.h>
 #include <ATen/ops/_foreach_neg_native.h>
 #include <ATen/ops/_foreach_norm_native.h>
@@ -460,9 +461,6 @@
 #include <ATen/ops/affine_grid_generator_backward_native.h>
 #include <ATen/ops/alias_native.h>
 #include <ATen/ops/alias_copy_native.h>
-#include <ATen/ops/align_as_native.h>
-#include <ATen/ops/align_tensors_native.h>
-#include <ATen/ops/align_to_native.h>
 #include <ATen/ops/all_native.h>
 #include <ATen/ops/allclose_native.h>
 #include <ATen/ops/alpha_dropout_native.h>
@@ -1091,7 +1089,6 @@
 #include <ATen/ops/real_native.h>
 #include <ATen/ops/reciprocal_native.h>
 #include <ATen/ops/record_stream_native.h>
-#include <ATen/ops/refine_names_native.h>
 #include <ATen/ops/reflection_pad1d_native.h>
 #include <ATen/ops/reflection_pad1d_backward_native.h>
 #include <ATen/ops/reflection_pad2d_native.h>
@@ -1101,7 +1098,6 @@
 #include <ATen/ops/relu_native.h>
 #include <ATen/ops/relu6_native.h>
 #include <ATen/ops/remainder_native.h>
-#include <ATen/ops/rename_native.h>
 #include <ATen/ops/renorm_native.h>
 #include <ATen/ops/repeat_native.h>
 #include <ATen/ops/repeat_interleave_native.h>

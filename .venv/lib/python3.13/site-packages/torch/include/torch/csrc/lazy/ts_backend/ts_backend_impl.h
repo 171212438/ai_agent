@@ -48,7 +48,7 @@ class TORCH_API TSData : public torch::lazy::BackendData {
 
 TORCH_API torch::lazy::BackendImplInterface* GetTSBackendImpl();
 
-TORCH_PYTHON_API void InitTorchScriptBackend();
+TORCH_API void InitTorchScriptBackend();
 
 } // namespace torch::lazy
 

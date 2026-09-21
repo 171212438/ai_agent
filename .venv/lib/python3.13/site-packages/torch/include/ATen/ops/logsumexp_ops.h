@@ -38,28 +38,6 @@ struct TORCH_API logsumexp_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::IntArrayRef dim, bool keepdim, at::Tensor & out);
 };
 
-struct TORCH_API logsumexp_names {
-  using schema = at::Tensor (const at::Tensor &, at::DimnameList, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::logsumexp";
-  static constexpr const char* overload_name = "names";
-  static constexpr const char* schema_str = "logsumexp.names(Tensor self, Dimname[1] dim, bool keepdim=False) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::DimnameList dim, bool keepdim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim);
-};
-
-struct TORCH_API logsumexp_names_out {
-  using schema = at::Tensor & (const at::Tensor &, at::DimnameList, bool, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::logsumexp";
-  static constexpr const char* overload_name = "names_out";
-  static constexpr const char* schema_str = "logsumexp.names_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(const at::Tensor & self, at::DimnameList dim, bool keepdim, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, at::Tensor & out);
-};
-
 }} // namespace at::_ops
 
 #else

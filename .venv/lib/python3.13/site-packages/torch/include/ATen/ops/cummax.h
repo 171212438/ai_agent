@@ -38,20 +38,6 @@ inline ::std::tuple<at::Tensor &,at::Tensor &> cummax_outf(const at::Tensor & se
     return at::_ops::cummax_out::call(self, dim, values, indices);
 }
 
-// aten::cummax.dimname(Tensor self, Dimname dim) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> cummax(const at::Tensor & self, at::Dimname dim) {
-    return at::_ops::cummax_dimname::call(self, dim);
-}
-
-// aten::cummax.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-inline ::std::tuple<at::Tensor &,at::Tensor &> cummax_out(at::Tensor & values, at::Tensor & indices, const at::Tensor & self, at::Dimname dim) {
-    return at::_ops::cummax_dimname_out::call(self, dim, values, indices);
-}
-// aten::cummax.dimname_out(Tensor self, Dimname dim, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
-inline ::std::tuple<at::Tensor &,at::Tensor &> cummax_outf(const at::Tensor & self, at::Dimname dim, at::Tensor & values, at::Tensor & indices) {
-    return at::_ops::cummax_dimname_out::call(self, dim, values, indices);
-}
-
 }
 
 #else

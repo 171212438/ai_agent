@@ -38,20 +38,6 @@ inline ::std::tuple<at::Tensor &,at::Tensor &> max_outf(const at::Tensor & self,
     return at::_ops::max_dim_max::call(self, dim, keepdim, max, max_values);
 }
 
-// aten::max.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> max(const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-    return at::_ops::max_names_dim::call(self, dim, keepdim);
-}
-
-// aten::max.names_dim_max(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) max, Tensor(b!) max_values) -> (Tensor(a!) values, Tensor(b!) indices)
-inline ::std::tuple<at::Tensor &,at::Tensor &> max_out(at::Tensor & max, at::Tensor & max_values, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-    return at::_ops::max_names_dim_max::call(self, dim, keepdim, max, max_values);
-}
-// aten::max.names_dim_max(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) max, Tensor(b!) max_values) -> (Tensor(a!) values, Tensor(b!) indices)
-inline ::std::tuple<at::Tensor &,at::Tensor &> max_outf(const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & max, at::Tensor & max_values) {
-    return at::_ops::max_names_dim_max::call(self, dim, keepdim, max, max_values);
-}
-
 // aten::max(Tensor self) -> Tensor
 inline at::Tensor max(const at::Tensor & self) {
     return at::_ops::max::call(self);

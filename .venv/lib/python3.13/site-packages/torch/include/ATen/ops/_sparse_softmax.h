@@ -29,11 +29,6 @@ inline at::Tensor _sparse_softmax(const at::Tensor & self, int64_t dim, ::std::o
     return at::_ops::_sparse_softmax_int::call(self, dim, dtype);
 }
 
-// aten::_sparse_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor _sparse_softmax(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-    return at::_ops::_sparse_softmax_Dimname::call(self, dim, dtype);
-}
-
 // aten::_sparse_softmax(Tensor self, int dim, bool half_to_float) -> Tensor
 inline at::Tensor _sparse_softmax(const at::Tensor & self, int64_t dim, bool half_to_float) {
     return at::_ops::_sparse_softmax::call(self, dim, half_to_float);

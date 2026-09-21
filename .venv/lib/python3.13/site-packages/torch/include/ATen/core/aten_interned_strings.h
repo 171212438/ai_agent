@@ -190,6 +190,7 @@ _(aten, _foreach_maximum) \
 _(aten, _foreach_maximum_) \
 _(aten, _foreach_minimum) \
 _(aten, _foreach_minimum_) \
+_(aten, _foreach_mm) \
 _(aten, _foreach_mul) \
 _(aten, _foreach_mul_) \
 _(aten, _foreach_neg) \
@@ -533,9 +534,6 @@ _(aten, affine_grid_generator) \
 _(aten, affine_grid_generator_backward) \
 _(aten, alias) \
 _(aten, alias_copy) \
-_(aten, align_as) \
-_(aten, align_tensors) \
-_(aten, align_to) \
 _(aten, all) \
 _(aten, allclose) \
 _(aten, alpha_dropout) \
@@ -1284,7 +1282,6 @@ _(aten, real) \
 _(aten, reciprocal) \
 _(aten, reciprocal_) \
 _(aten, record_stream) \
-_(aten, refine_names) \
 _(aten, reflection_pad1d) \
 _(aten, reflection_pad1d_backward) \
 _(aten, reflection_pad2d) \
@@ -1297,8 +1294,6 @@ _(aten, relu6_) \
 _(aten, relu_) \
 _(aten, remainder) \
 _(aten, remainder_) \
-_(aten, rename) \
-_(aten, rename_) \
 _(aten, renorm) \
 _(aten, renorm_) \
 _(aten, repeat) \
@@ -1804,7 +1799,6 @@ _(attr, eigvals) \
 _(attr, eigvecs) \
 _(attr, element) \
 _(attr, elements) \
-_(attr, ellipsis_idx) \
 _(attr, embed_dim) \
 _(attr, enable_gqa) \
 _(attr, end) \
@@ -1999,7 +1993,6 @@ _(attr, momentum_buffer_list) \
 _(attr, n) \
 _(attr, n_bins) \
 _(attr, n_fft) \
-_(attr, names) \
 _(attr, nan) \
 _(attr, need_weights) \
 _(attr, neg_log_likelihood) \
@@ -2044,7 +2037,6 @@ _(attr, offset2bag) \
 _(attr, offsets) \
 _(attr, onesided) \
 _(attr, ord) \
-_(attr, order) \
 _(attr, other) \
 _(attr, out) \
 _(attr, out0) \
@@ -2059,7 +2051,6 @@ _(attr, out_dim) \
 _(attr, out_dtype) \
 _(attr, out_features) \
 _(attr, out_int32) \
-_(attr, outdim) \
 _(attr, output) \
 _(attr, output_mask) \
 _(attr, output_padding) \

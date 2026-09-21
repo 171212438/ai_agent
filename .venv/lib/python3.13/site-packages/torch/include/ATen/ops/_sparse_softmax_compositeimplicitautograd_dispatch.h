@@ -19,7 +19,6 @@ namespace at {
 namespace compositeimplicitautograd {
 
 TORCH_API at::Tensor _sparse_softmax(const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt);
-TORCH_API at::Tensor _sparse_softmax(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt);
 
 } // namespace compositeimplicitautograd
 } // namespace at

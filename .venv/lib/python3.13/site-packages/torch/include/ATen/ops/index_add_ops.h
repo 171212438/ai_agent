@@ -49,17 +49,6 @@ struct TORCH_API index_add {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha);
 };
 
-struct TORCH_API index_add_dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, const at::Tensor &, const at::Tensor &, const at::Scalar &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::index_add";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "index_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor source, *, Scalar alpha=1) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha);
-};
-
 }} // namespace at::_ops
 
 #else

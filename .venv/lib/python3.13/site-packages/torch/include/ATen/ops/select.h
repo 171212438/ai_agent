@@ -24,11 +24,6 @@
 namespace at {
 
 
-// aten::select.Dimname(Tensor(a) self, Dimname dim, int index) -> Tensor(a)
-inline at::Tensor select(const at::Tensor & self, at::Dimname dim, int64_t index) {
-    return at::_ops::select_Dimname::call(self, dim, index);
-}
-
 // aten::select.int(Tensor(a) self, int dim, SymInt index) -> Tensor(a)
 inline at::Tensor select(const at::Tensor & self, int64_t dim, int64_t index) {
     return at::_ops::select_int::call(self, dim, index);

@@ -137,6 +137,7 @@
 #include <ATen/ops/_foreach_max_meta.h>
 #include <ATen/ops/_foreach_maximum_meta.h>
 #include <ATen/ops/_foreach_minimum_meta.h>
+#include <ATen/ops/_foreach_mm_meta.h>
 #include <ATen/ops/_foreach_mul_meta.h>
 #include <ATen/ops/_foreach_neg_meta.h>
 #include <ATen/ops/_foreach_norm_meta.h>
@@ -439,9 +440,6 @@
 #include <ATen/ops/affine_grid_generator_backward_meta.h>
 #include <ATen/ops/alias_meta.h>
 #include <ATen/ops/alias_copy_meta.h>
-#include <ATen/ops/align_as_meta.h>
-#include <ATen/ops/align_tensors_meta.h>
-#include <ATen/ops/align_to_meta.h>
 #include <ATen/ops/all_meta.h>
 #include <ATen/ops/allclose_meta.h>
 #include <ATen/ops/alpha_dropout_meta.h>
@@ -1070,7 +1068,6 @@
 #include <ATen/ops/real_meta.h>
 #include <ATen/ops/reciprocal_meta.h>
 #include <ATen/ops/record_stream_meta.h>
-#include <ATen/ops/refine_names_meta.h>
 #include <ATen/ops/reflection_pad1d_meta.h>
 #include <ATen/ops/reflection_pad1d_backward_meta.h>
 #include <ATen/ops/reflection_pad2d_meta.h>
@@ -1080,7 +1077,6 @@
 #include <ATen/ops/relu_meta.h>
 #include <ATen/ops/relu6_meta.h>
 #include <ATen/ops/remainder_meta.h>
-#include <ATen/ops/rename_meta.h>
 #include <ATen/ops/renorm_meta.h>
 #include <ATen/ops/repeat_meta.h>
 #include <ATen/ops/repeat_interleave_meta.h>

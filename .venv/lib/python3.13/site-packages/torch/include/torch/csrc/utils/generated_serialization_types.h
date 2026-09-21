@@ -46,8 +46,7 @@ struct adl_serializer<std::optional<T>> {
 };
 NLOHMANN_JSON_NAMESPACE_END
 
-namespace torch {
-namespace _export {
+namespace torch::_export {
 
 template <typename T>
 class ForwardRef {
@@ -55,9 +54,9 @@ class ForwardRef {
 
  public:
   ForwardRef(): ptr_(std::make_unique<T>()) {}
-  ForwardRef(ForwardRef<T>&&);
+  ForwardRef(ForwardRef<T>&&) noexcept;
   ForwardRef(const ForwardRef<T>& other): ptr_(std::make_unique<T>(*other.ptr_)) {}
-  ForwardRef<T>& operator=(ForwardRef<T>&&);
+  ForwardRef<T>& operator=(ForwardRef<T>&&) noexcept;
   ForwardRef<T>& operator=(const ForwardRef<T>& other) {
     ptr_ = std::make_unique<T>(*other.ptr_);
     return *this;
@@ -100,7 +99,7 @@ class F64 {
   }
 
  private:
-  double value_;
+  double value_{};
 };
 
 inline void to_json(nlohmann::json& j, const F64& f) {
@@ -361,16 +360,18 @@ class Device {
     return type;
   }
 
-  void set_type(std::string def) {
-    type = std::move(def);
+  template <typename U>
+  void set_type(U&& def) {
+    type = std::forward<U>(def);
   }
 
   const std::optional<int64_t>& get_index() const {
     return index;
   }
 
-  void set_index(std::optional<int64_t> def) {
-    index = std::move(def);
+  template <typename U>
+  void set_index(U&& def) {
+    index = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const Device& nlohmann_json_t);
@@ -387,7 +388,7 @@ class SymExprHint {
 
  private:
   std::variant<Void, int64_t, bool, F64> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -398,8 +399,9 @@ class SymExprHint {
     return std::get<1>(variant_);
   }
 
-  void set_as_int(int64_t def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_int(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_INT;
   }
 
@@ -407,8 +409,9 @@ class SymExprHint {
     return std::get<2>(variant_);
   }
 
-  void set_as_bool(bool def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_bool(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_BOOL;
   }
 
@@ -416,8 +419,9 @@ class SymExprHint {
     return std::get<3>(variant_);
   }
 
-  void set_as_float(F64 def) {
-    variant_.emplace<3>(std::move(def));
+  template <typename U>
+  void set_as_float(U&& def) {
+    variant_.emplace<3>(std::forward<U>(def));
     tag_ = Tag::AS_FLOAT;
   }
 
@@ -486,16 +490,18 @@ class SymExpr {
     return expr_str;
   }
 
-  void set_expr_str(std::string def) {
-    expr_str = std::move(def);
+  template <typename U>
+  void set_expr_str(U&& def) {
+    expr_str = std::forward<U>(def);
   }
 
   const std::optional<SymExprHint>& get_hint() const {
     return hint;
   }
 
-  void set_hint(std::optional<SymExprHint> def) {
-    hint = std::move(def);
+  template <typename U>
+  void set_hint(U&& def) {
+    hint = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const SymExpr& nlohmann_json_t);
@@ -512,7 +518,7 @@ class SymInt {
 
  private:
   std::variant<Void, SymExpr, int64_t> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -523,8 +529,9 @@ class SymInt {
     return std::get<1>(variant_);
   }
 
-  void set_as_expr(SymExpr def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_expr(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_EXPR;
   }
 
@@ -532,8 +539,9 @@ class SymInt {
     return std::get<2>(variant_);
   }
 
-  void set_as_int(int64_t def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_int(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_INT;
   }
 
@@ -590,7 +598,7 @@ class SymFloat {
 
  private:
   std::variant<Void, SymExpr, F64> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -601,8 +609,9 @@ class SymFloat {
     return std::get<1>(variant_);
   }
 
-  void set_as_expr(SymExpr def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_expr(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_EXPR;
   }
 
@@ -610,8 +619,9 @@ class SymFloat {
     return std::get<2>(variant_);
   }
 
-  void set_as_float(F64 def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_float(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_FLOAT;
   }
 
@@ -668,7 +678,7 @@ class SymBool {
 
  private:
   std::variant<Void, SymExpr, bool> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -679,8 +689,9 @@ class SymBool {
     return std::get<1>(variant_);
   }
 
-  void set_as_expr(SymExpr def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_expr(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_EXPR;
   }
 
@@ -688,8 +699,9 @@ class SymBool {
     return std::get<2>(variant_);
   }
 
-  void set_as_bool(bool def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_bool(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_BOOL;
   }
 
@@ -738,13 +750,13 @@ inline void parseEnum(std::string_view s, SymBool::Tag& t) {
 
 class TensorMeta {
  private:
-  int64_t dtype;
+  int64_t dtype = {};
   std::vector<SymInt> sizes;
-  bool requires_grad;
+  bool requires_grad = {};
   Device device;
   std::vector<SymInt> strides;
   SymInt storage_offset;
-  int64_t layout;
+  int64_t layout = {};
 
  public:
 
@@ -760,40 +772,45 @@ class TensorMeta {
     return sizes;
   }
 
-  void set_sizes(std::vector<SymInt> def) {
-    sizes = std::move(def);
+  template <typename U>
+  void set_sizes(U&& def) {
+    sizes = std::forward<U>(def);
   }
 
   const bool& get_requires_grad() const {
     return requires_grad;
   }
 
-  void set_requires_grad(bool def) {
-    requires_grad = std::move(def);
+  template <typename U>
+  void set_requires_grad(U&& def) {
+    requires_grad = std::forward<U>(def);
   }
 
   const Device& get_device() const {
     return device;
   }
 
-  void set_device(Device def) {
-    device = std::move(def);
+  template <typename U>
+  void set_device(U&& def) {
+    device = std::forward<U>(def);
   }
 
   const std::vector<SymInt>& get_strides() const {
     return strides;
   }
 
-  void set_strides(std::vector<SymInt> def) {
-    strides = std::move(def);
+  template <typename U>
+  void set_strides(U&& def) {
+    strides = std::forward<U>(def);
   }
 
   const SymInt& get_storage_offset() const {
     return storage_offset;
   }
 
-  void set_storage_offset(SymInt def) {
-    storage_offset = std::move(def);
+  template <typename U>
+  void set_storage_offset(U&& def) {
+    storage_offset = std::forward<U>(def);
   }
 
   Layout get_layout() const {
@@ -818,7 +835,7 @@ class SymIntArgument {
 
  private:
   std::variant<Void, std::string, int64_t> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -829,8 +846,9 @@ class SymIntArgument {
     return std::get<1>(variant_);
   }
 
-  void set_as_name(std::string def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_name(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_NAME;
   }
 
@@ -838,8 +856,9 @@ class SymIntArgument {
     return std::get<2>(variant_);
   }
 
-  void set_as_int(int64_t def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_int(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_INT;
   }
 
@@ -896,7 +915,7 @@ class SymFloatArgument {
 
  private:
   std::variant<Void, std::string, F64> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -907,8 +926,9 @@ class SymFloatArgument {
     return std::get<1>(variant_);
   }
 
-  void set_as_name(std::string def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_name(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_NAME;
   }
 
@@ -916,8 +936,9 @@ class SymFloatArgument {
     return std::get<2>(variant_);
   }
 
-  void set_as_float(F64 def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_float(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_FLOAT;
   }
 
@@ -974,7 +995,7 @@ class SymBoolArgument {
 
  private:
   std::variant<Void, std::string, bool> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -985,8 +1006,9 @@ class SymBoolArgument {
     return std::get<1>(variant_);
   }
 
-  void set_as_name(std::string def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_name(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_NAME;
   }
 
@@ -994,8 +1016,9 @@ class SymBoolArgument {
     return std::get<2>(variant_);
   }
 
-  void set_as_bool(bool def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_bool(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_BOOL;
   }
 
@@ -1052,8 +1075,9 @@ class TensorArgument {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const TensorArgument& nlohmann_json_t);
@@ -1070,8 +1094,9 @@ class TokenArgument {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const TokenArgument& nlohmann_json_t);
@@ -1088,7 +1113,7 @@ class OptionalTensorArgument {
 
  private:
   std::variant<Void, TensorArgument, bool> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -1099,8 +1124,9 @@ class OptionalTensorArgument {
     return std::get<1>(variant_);
   }
 
-  void set_as_tensor(TensorArgument def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_tensor(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_TENSOR;
   }
 
@@ -1108,8 +1134,9 @@ class OptionalTensorArgument {
     return std::get<2>(variant_);
   }
 
-  void set_as_none(bool def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_none(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_NONE;
   }
 
@@ -1167,16 +1194,18 @@ class GraphArgument {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   const ForwardRef<Graph>& get_graph() const {
     return graph;
   }
 
-  void set_graph(ForwardRef<Graph> def) {
-    graph = std::move(def);
+  template <typename U>
+  void set_graph(U&& def) {
+    graph = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const GraphArgument& nlohmann_json_t);
@@ -1194,16 +1223,18 @@ class CustomObjArgument {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   const std::string& get_class_fqn() const {
     return class_fqn;
   }
 
-  void set_class_fqn(std::string def) {
-    class_fqn = std::move(def);
+  template <typename U>
+  void set_class_fqn(U&& def) {
+    class_fqn = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const CustomObjArgument& nlohmann_json_t);
@@ -1212,8 +1243,8 @@ class CustomObjArgument {
 
 class ComplexValue {
  private:
-  F64 real;
-  F64 imag;
+  F64 real = {};
+  F64 imag = {};
 
  public:
 
@@ -1221,16 +1252,18 @@ class ComplexValue {
     return real;
   }
 
-  void set_real(F64 def) {
-    real = std::move(def);
+  template <typename U>
+  void set_real(U&& def) {
+    real = std::forward<U>(def);
   }
 
   const F64& get_imag() const {
     return imag;
   }
 
-  void set_imag(F64 def) {
-    imag = std::move(def);
+  template <typename U>
+  void set_imag(U&& def) {
+    imag = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ComplexValue& nlohmann_json_t);
@@ -1247,7 +1280,7 @@ class Argument {
 
  private:
   std::variant<Void, bool, TensorArgument, std::vector<TensorArgument>, int64_t, std::vector<int64_t>, F64, std::vector<F64>, std::string, std::vector<std::string>, SymIntArgument, std::vector<SymIntArgument>, ScalarType, MemoryFormat, Layout, Device, bool, std::vector<bool>, SymBoolArgument, std::vector<SymBoolArgument>, GraphArgument, std::vector<OptionalTensorArgument>, CustomObjArgument, std::string, SymFloatArgument, std::vector<SymFloatArgument>, OptionalTensorArgument, ComplexValue, std::vector<std::vector<TensorArgument>>, std::vector<std::vector<int64_t>>, std::unordered_map<std::string, ForwardRef<Argument>>, std::vector<std::vector<F64>>> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -1258,8 +1291,9 @@ class Argument {
     return std::get<1>(variant_);
   }
 
-  void set_as_none(bool def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_none(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_NONE;
   }
 
@@ -1267,8 +1301,9 @@ class Argument {
     return std::get<2>(variant_);
   }
 
-  void set_as_tensor(TensorArgument def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_tensor(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_TENSOR;
   }
 
@@ -1276,8 +1311,9 @@ class Argument {
     return std::get<3>(variant_);
   }
 
-  void set_as_tensors(std::vector<TensorArgument> def) {
-    variant_.emplace<3>(std::move(def));
+  template <typename U>
+  void set_as_tensors(U&& def) {
+    variant_.emplace<3>(std::forward<U>(def));
     tag_ = Tag::AS_TENSORS;
   }
 
@@ -1285,8 +1321,9 @@ class Argument {
     return std::get<4>(variant_);
   }
 
-  void set_as_int(int64_t def) {
-    variant_.emplace<4>(std::move(def));
+  template <typename U>
+  void set_as_int(U&& def) {
+    variant_.emplace<4>(std::forward<U>(def));
     tag_ = Tag::AS_INT;
   }
 
@@ -1294,8 +1331,9 @@ class Argument {
     return std::get<5>(variant_);
   }
 
-  void set_as_ints(std::vector<int64_t> def) {
-    variant_.emplace<5>(std::move(def));
+  template <typename U>
+  void set_as_ints(U&& def) {
+    variant_.emplace<5>(std::forward<U>(def));
     tag_ = Tag::AS_INTS;
   }
 
@@ -1303,8 +1341,9 @@ class Argument {
     return std::get<6>(variant_);
   }
 
-  void set_as_float(F64 def) {
-    variant_.emplace<6>(std::move(def));
+  template <typename U>
+  void set_as_float(U&& def) {
+    variant_.emplace<6>(std::forward<U>(def));
     tag_ = Tag::AS_FLOAT;
   }
 
@@ -1312,8 +1351,9 @@ class Argument {
     return std::get<7>(variant_);
   }
 
-  void set_as_floats(std::vector<F64> def) {
-    variant_.emplace<7>(std::move(def));
+  template <typename U>
+  void set_as_floats(U&& def) {
+    variant_.emplace<7>(std::forward<U>(def));
     tag_ = Tag::AS_FLOATS;
   }
 
@@ -1321,8 +1361,9 @@ class Argument {
     return std::get<8>(variant_);
   }
 
-  void set_as_string(std::string def) {
-    variant_.emplace<8>(std::move(def));
+  template <typename U>
+  void set_as_string(U&& def) {
+    variant_.emplace<8>(std::forward<U>(def));
     tag_ = Tag::AS_STRING;
   }
 
@@ -1330,8 +1371,9 @@ class Argument {
     return std::get<9>(variant_);
   }
 
-  void set_as_strings(std::vector<std::string> def) {
-    variant_.emplace<9>(std::move(def));
+  template <typename U>
+  void set_as_strings(U&& def) {
+    variant_.emplace<9>(std::forward<U>(def));
     tag_ = Tag::AS_STRINGS;
   }
 
@@ -1339,8 +1381,9 @@ class Argument {
     return std::get<10>(variant_);
   }
 
-  void set_as_sym_int(SymIntArgument def) {
-    variant_.emplace<10>(std::move(def));
+  template <typename U>
+  void set_as_sym_int(U&& def) {
+    variant_.emplace<10>(std::forward<U>(def));
     tag_ = Tag::AS_SYM_INT;
   }
 
@@ -1348,8 +1391,9 @@ class Argument {
     return std::get<11>(variant_);
   }
 
-  void set_as_sym_ints(std::vector<SymIntArgument> def) {
-    variant_.emplace<11>(std::move(def));
+  template <typename U>
+  void set_as_sym_ints(U&& def) {
+    variant_.emplace<11>(std::forward<U>(def));
     tag_ = Tag::AS_SYM_INTS;
   }
 
@@ -1357,8 +1401,9 @@ class Argument {
     return std::get<12>(variant_);
   }
 
-  void set_as_scalar_type(ScalarType def) {
-    variant_.emplace<12>(std::move(def));
+  template <typename U>
+  void set_as_scalar_type(U&& def) {
+    variant_.emplace<12>(std::forward<U>(def));
     tag_ = Tag::AS_SCALAR_TYPE;
   }
 
@@ -1366,8 +1411,9 @@ class Argument {
     return std::get<13>(variant_);
   }
 
-  void set_as_memory_format(MemoryFormat def) {
-    variant_.emplace<13>(std::move(def));
+  template <typename U>
+  void set_as_memory_format(U&& def) {
+    variant_.emplace<13>(std::forward<U>(def));
     tag_ = Tag::AS_MEMORY_FORMAT;
   }
 
@@ -1375,8 +1421,9 @@ class Argument {
     return std::get<14>(variant_);
   }
 
-  void set_as_layout(Layout def) {
-    variant_.emplace<14>(std::move(def));
+  template <typename U>
+  void set_as_layout(U&& def) {
+    variant_.emplace<14>(std::forward<U>(def));
     tag_ = Tag::AS_LAYOUT;
   }
 
@@ -1384,8 +1431,9 @@ class Argument {
     return std::get<15>(variant_);
   }
 
-  void set_as_device(Device def) {
-    variant_.emplace<15>(std::move(def));
+  template <typename U>
+  void set_as_device(U&& def) {
+    variant_.emplace<15>(std::forward<U>(def));
     tag_ = Tag::AS_DEVICE;
   }
 
@@ -1393,8 +1441,9 @@ class Argument {
     return std::get<16>(variant_);
   }
 
-  void set_as_bool(bool def) {
-    variant_.emplace<16>(std::move(def));
+  template <typename U>
+  void set_as_bool(U&& def) {
+    variant_.emplace<16>(std::forward<U>(def));
     tag_ = Tag::AS_BOOL;
   }
 
@@ -1402,8 +1451,9 @@ class Argument {
     return std::get<17>(variant_);
   }
 
-  void set_as_bools(std::vector<bool> def) {
-    variant_.emplace<17>(std::move(def));
+  template <typename U>
+  void set_as_bools(U&& def) {
+    variant_.emplace<17>(std::forward<U>(def));
     tag_ = Tag::AS_BOOLS;
   }
 
@@ -1411,8 +1461,9 @@ class Argument {
     return std::get<18>(variant_);
   }
 
-  void set_as_sym_bool(SymBoolArgument def) {
-    variant_.emplace<18>(std::move(def));
+  template <typename U>
+  void set_as_sym_bool(U&& def) {
+    variant_.emplace<18>(std::forward<U>(def));
     tag_ = Tag::AS_SYM_BOOL;
   }
 
@@ -1420,8 +1471,9 @@ class Argument {
     return std::get<19>(variant_);
   }
 
-  void set_as_sym_bools(std::vector<SymBoolArgument> def) {
-    variant_.emplace<19>(std::move(def));
+  template <typename U>
+  void set_as_sym_bools(U&& def) {
+    variant_.emplace<19>(std::forward<U>(def));
     tag_ = Tag::AS_SYM_BOOLS;
   }
 
@@ -1429,8 +1481,9 @@ class Argument {
     return std::get<20>(variant_);
   }
 
-  void set_as_graph(GraphArgument def) {
-    variant_.emplace<20>(std::move(def));
+  template <typename U>
+  void set_as_graph(U&& def) {
+    variant_.emplace<20>(std::forward<U>(def));
     tag_ = Tag::AS_GRAPH;
   }
 
@@ -1438,8 +1491,9 @@ class Argument {
     return std::get<21>(variant_);
   }
 
-  void set_as_optional_tensors(std::vector<OptionalTensorArgument> def) {
-    variant_.emplace<21>(std::move(def));
+  template <typename U>
+  void set_as_optional_tensors(U&& def) {
+    variant_.emplace<21>(std::forward<U>(def));
     tag_ = Tag::AS_OPTIONAL_TENSORS;
   }
 
@@ -1447,8 +1501,9 @@ class Argument {
     return std::get<22>(variant_);
   }
 
-  void set_as_custom_obj(CustomObjArgument def) {
-    variant_.emplace<22>(std::move(def));
+  template <typename U>
+  void set_as_custom_obj(U&& def) {
+    variant_.emplace<22>(std::forward<U>(def));
     tag_ = Tag::AS_CUSTOM_OBJ;
   }
 
@@ -1456,8 +1511,9 @@ class Argument {
     return std::get<23>(variant_);
   }
 
-  void set_as_operator(std::string def) {
-    variant_.emplace<23>(std::move(def));
+  template <typename U>
+  void set_as_operator(U&& def) {
+    variant_.emplace<23>(std::forward<U>(def));
     tag_ = Tag::AS_OPERATOR;
   }
 
@@ -1465,8 +1521,9 @@ class Argument {
     return std::get<24>(variant_);
   }
 
-  void set_as_sym_float(SymFloatArgument def) {
-    variant_.emplace<24>(std::move(def));
+  template <typename U>
+  void set_as_sym_float(U&& def) {
+    variant_.emplace<24>(std::forward<U>(def));
     tag_ = Tag::AS_SYM_FLOAT;
   }
 
@@ -1474,8 +1531,9 @@ class Argument {
     return std::get<25>(variant_);
   }
 
-  void set_as_sym_floats(std::vector<SymFloatArgument> def) {
-    variant_.emplace<25>(std::move(def));
+  template <typename U>
+  void set_as_sym_floats(U&& def) {
+    variant_.emplace<25>(std::forward<U>(def));
     tag_ = Tag::AS_SYM_FLOATS;
   }
 
@@ -1483,8 +1541,9 @@ class Argument {
     return std::get<26>(variant_);
   }
 
-  void set_as_optional_tensor(OptionalTensorArgument def) {
-    variant_.emplace<26>(std::move(def));
+  template <typename U>
+  void set_as_optional_tensor(U&& def) {
+    variant_.emplace<26>(std::forward<U>(def));
     tag_ = Tag::AS_OPTIONAL_TENSOR;
   }
 
@@ -1492,8 +1551,9 @@ class Argument {
     return std::get<27>(variant_);
   }
 
-  void set_as_complex(ComplexValue def) {
-    variant_.emplace<27>(std::move(def));
+  template <typename U>
+  void set_as_complex(U&& def) {
+    variant_.emplace<27>(std::forward<U>(def));
     tag_ = Tag::AS_COMPLEX;
   }
 
@@ -1501,8 +1561,9 @@ class Argument {
     return std::get<28>(variant_);
   }
 
-  void set_as_nested_tensors(std::vector<std::vector<TensorArgument>> def) {
-    variant_.emplace<28>(std::move(def));
+  template <typename U>
+  void set_as_nested_tensors(U&& def) {
+    variant_.emplace<28>(std::forward<U>(def));
     tag_ = Tag::AS_NESTED_TENSORS;
   }
 
@@ -1510,8 +1571,9 @@ class Argument {
     return std::get<29>(variant_);
   }
 
-  void set_as_int_lists(std::vector<std::vector<int64_t>> def) {
-    variant_.emplace<29>(std::move(def));
+  template <typename U>
+  void set_as_int_lists(U&& def) {
+    variant_.emplace<29>(std::forward<U>(def));
     tag_ = Tag::AS_INT_LISTS;
   }
 
@@ -1519,8 +1581,9 @@ class Argument {
     return std::get<30>(variant_);
   }
 
-  void set_as_string_to_argument(std::unordered_map<std::string, ForwardRef<Argument>> def) {
-    variant_.emplace<30>(std::move(def));
+  template <typename U>
+  void set_as_string_to_argument(U&& def) {
+    variant_.emplace<30>(std::forward<U>(def));
     tag_ = Tag::AS_STRING_TO_ARGUMENT;
   }
 
@@ -1528,8 +1591,9 @@ class Argument {
     return std::get<31>(variant_);
   }
 
-  void set_as_float_lists(std::vector<std::vector<F64>> def) {
-    variant_.emplace<31>(std::move(def));
+  template <typename U>
+  void set_as_float_lists(U&& def) {
+    variant_.emplace<31>(std::forward<U>(def));
     tag_ = Tag::AS_FLOAT_LISTS;
   }
 
@@ -1907,24 +1971,27 @@ class NamedArgument {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   const Argument& get_arg() const {
     return arg;
   }
 
-  void set_arg(Argument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::optional<int64_t>& get_kind() const {
     return kind;
   }
 
-  void set_kind(std::optional<int64_t> def) {
-    kind = std::move(def);
+  template <typename U>
+  void set_kind(U&& def) {
+    kind = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const NamedArgument& nlohmann_json_t);
@@ -1946,48 +2013,54 @@ class Node {
     return target;
   }
 
-  void set_target(std::string def) {
-    target = std::move(def);
+  template <typename U>
+  void set_target(U&& def) {
+    target = std::forward<U>(def);
   }
 
   const std::vector<NamedArgument>& get_inputs() const {
     return inputs;
   }
 
-  void set_inputs(std::vector<NamedArgument> def) {
-    inputs = std::move(def);
+  template <typename U>
+  void set_inputs(U&& def) {
+    inputs = std::forward<U>(def);
   }
 
   const std::vector<Argument>& get_outputs() const {
     return outputs;
   }
 
-  void set_outputs(std::vector<Argument> def) {
-    outputs = std::move(def);
+  template <typename U>
+  void set_outputs(U&& def) {
+    outputs = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, std::string>& get_metadata() const {
     return metadata;
   }
 
-  void set_metadata(std::unordered_map<std::string, std::string> def) {
-    metadata = std::move(def);
+  template <typename U>
+  void set_metadata(U&& def) {
+    metadata = std::forward<U>(def);
   }
 
   const std::optional<bool>& get_is_hop_single_tensor_return() const {
     return is_hop_single_tensor_return;
   }
 
-  void set_is_hop_single_tensor_return(std::optional<bool> def) {
-    is_hop_single_tensor_return = std::move(def);
+  template <typename U>
+  void set_is_hop_single_tensor_return(U&& def) {
+    is_hop_single_tensor_return = std::forward<U>(def);
   }
 
   const std::optional<std::string>& get_name() const {
     return name;
   }
 
-  void set_name(std::optional<std::string> def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const Node& nlohmann_json_t);
@@ -2003,8 +2076,8 @@ class Graph {
   std::unordered_map<std::string, SymInt> sym_int_values;
   std::unordered_map<std::string, SymBool> sym_bool_values;
   bool is_single_tensor_return = false;
-  std::unordered_map<std::string, CustomObjArgument> custom_obj_values = {};
-  std::unordered_map<std::string, SymFloat> sym_float_values = {};
+  std::unordered_map<std::string, CustomObjArgument> custom_obj_values;
+  std::unordered_map<std::string, SymFloat> sym_float_values;
 
  public:
 
@@ -2012,72 +2085,81 @@ class Graph {
     return inputs;
   }
 
-  void set_inputs(std::vector<Argument> def) {
-    inputs = std::move(def);
+  template <typename U>
+  void set_inputs(U&& def) {
+    inputs = std::forward<U>(def);
   }
 
   const std::vector<Argument>& get_outputs() const {
     return outputs;
   }
 
-  void set_outputs(std::vector<Argument> def) {
-    outputs = std::move(def);
+  template <typename U>
+  void set_outputs(U&& def) {
+    outputs = std::forward<U>(def);
   }
 
   const std::vector<Node>& get_nodes() const {
     return nodes;
   }
 
-  void set_nodes(std::vector<Node> def) {
-    nodes = std::move(def);
+  template <typename U>
+  void set_nodes(U&& def) {
+    nodes = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, TensorMeta>& get_tensor_values() const {
     return tensor_values;
   }
 
-  void set_tensor_values(std::unordered_map<std::string, TensorMeta> def) {
-    tensor_values = std::move(def);
+  template <typename U>
+  void set_tensor_values(U&& def) {
+    tensor_values = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, SymInt>& get_sym_int_values() const {
     return sym_int_values;
   }
 
-  void set_sym_int_values(std::unordered_map<std::string, SymInt> def) {
-    sym_int_values = std::move(def);
+  template <typename U>
+  void set_sym_int_values(U&& def) {
+    sym_int_values = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, SymBool>& get_sym_bool_values() const {
     return sym_bool_values;
   }
 
-  void set_sym_bool_values(std::unordered_map<std::string, SymBool> def) {
-    sym_bool_values = std::move(def);
+  template <typename U>
+  void set_sym_bool_values(U&& def) {
+    sym_bool_values = std::forward<U>(def);
   }
 
   const bool& get_is_single_tensor_return() const {
     return is_single_tensor_return;
   }
 
-  void set_is_single_tensor_return(bool def) {
-    is_single_tensor_return = std::move(def);
+  template <typename U>
+  void set_is_single_tensor_return(U&& def) {
+    is_single_tensor_return = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, CustomObjArgument>& get_custom_obj_values() const {
     return custom_obj_values;
   }
 
-  void set_custom_obj_values(std::unordered_map<std::string, CustomObjArgument> def) {
-    custom_obj_values = std::move(def);
+  template <typename U>
+  void set_custom_obj_values(U&& def) {
+    custom_obj_values = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, SymFloat>& get_sym_float_values() const {
     return sym_float_values;
   }
 
-  void set_sym_float_values(std::unordered_map<std::string, SymFloat> def) {
-    sym_float_values = std::move(def);
+  template <typename U>
+  void set_sym_float_values(U&& def) {
+    sym_float_values = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const Graph& nlohmann_json_t);
@@ -2094,8 +2176,9 @@ class UserInputSpec {
     return arg;
   }
 
-  void set_arg(Argument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const UserInputSpec& nlohmann_json_t);
@@ -2112,7 +2195,7 @@ class ConstantValue {
 
  private:
   std::variant<Void, bool, int64_t, F64, std::string, bool> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -2123,8 +2206,9 @@ class ConstantValue {
     return std::get<1>(variant_);
   }
 
-  void set_as_none(bool def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_as_none(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::AS_NONE;
   }
 
@@ -2132,8 +2216,9 @@ class ConstantValue {
     return std::get<2>(variant_);
   }
 
-  void set_as_int(int64_t def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_as_int(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::AS_INT;
   }
 
@@ -2141,8 +2226,9 @@ class ConstantValue {
     return std::get<3>(variant_);
   }
 
-  void set_as_float(F64 def) {
-    variant_.emplace<3>(std::move(def));
+  template <typename U>
+  void set_as_float(U&& def) {
+    variant_.emplace<3>(std::forward<U>(def));
     tag_ = Tag::AS_FLOAT;
   }
 
@@ -2150,8 +2236,9 @@ class ConstantValue {
     return std::get<4>(variant_);
   }
 
-  void set_as_string(std::string def) {
-    variant_.emplace<4>(std::move(def));
+  template <typename U>
+  void set_as_string(U&& def) {
+    variant_.emplace<4>(std::forward<U>(def));
     tag_ = Tag::AS_STRING;
   }
 
@@ -2159,8 +2246,9 @@ class ConstantValue {
     return std::get<5>(variant_);
   }
 
-  void set_as_bool(bool def) {
-    variant_.emplace<5>(std::move(def));
+  template <typename U>
+  void set_as_bool(U&& def) {
+    variant_.emplace<5>(std::forward<U>(def));
     tag_ = Tag::AS_BOOL;
   }
 
@@ -2251,16 +2339,18 @@ class InputToConstantInputSpec {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   const ConstantValue& get_value() const {
     return value;
   }
 
-  void set_value(ConstantValue def) {
-    value = std::move(def);
+  template <typename U>
+  void set_value(U&& def) {
+    value = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const InputToConstantInputSpec& nlohmann_json_t);
@@ -2278,16 +2368,18 @@ class InputToParameterSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_parameter_name() const {
     return parameter_name;
   }
 
-  void set_parameter_name(std::string def) {
-    parameter_name = std::move(def);
+  template <typename U>
+  void set_parameter_name(U&& def) {
+    parameter_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const InputToParameterSpec& nlohmann_json_t);
@@ -2298,7 +2390,7 @@ class InputToBufferSpec {
  private:
   TensorArgument arg;
   std::string buffer_name;
-  bool persistent;
+  bool persistent = {};
 
  public:
 
@@ -2306,24 +2398,27 @@ class InputToBufferSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_buffer_name() const {
     return buffer_name;
   }
 
-  void set_buffer_name(std::string def) {
-    buffer_name = std::move(def);
+  template <typename U>
+  void set_buffer_name(U&& def) {
+    buffer_name = std::forward<U>(def);
   }
 
   const bool& get_persistent() const {
     return persistent;
   }
 
-  void set_persistent(bool def) {
-    persistent = std::move(def);
+  template <typename U>
+  void set_persistent(U&& def) {
+    persistent = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const InputToBufferSpec& nlohmann_json_t);
@@ -2341,16 +2436,18 @@ class InputToTensorConstantSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_tensor_constant_name() const {
     return tensor_constant_name;
   }
 
-  void set_tensor_constant_name(std::string def) {
-    tensor_constant_name = std::move(def);
+  template <typename U>
+  void set_tensor_constant_name(U&& def) {
+    tensor_constant_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const InputToTensorConstantSpec& nlohmann_json_t);
@@ -2368,16 +2465,18 @@ class InputToCustomObjSpec {
     return arg;
   }
 
-  void set_arg(CustomObjArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_custom_obj_name() const {
     return custom_obj_name;
   }
 
-  void set_custom_obj_name(std::string def) {
-    custom_obj_name = std::move(def);
+  template <typename U>
+  void set_custom_obj_name(U&& def) {
+    custom_obj_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const InputToCustomObjSpec& nlohmann_json_t);
@@ -2394,8 +2493,9 @@ class InputTokenSpec {
     return arg;
   }
 
-  void set_arg(TokenArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const InputTokenSpec& nlohmann_json_t);
@@ -2412,7 +2512,7 @@ class InputSpec {
 
  private:
   std::variant<Void, UserInputSpec, InputToParameterSpec, InputToBufferSpec, InputToTensorConstantSpec, InputToCustomObjSpec, InputTokenSpec, InputToConstantInputSpec> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -2423,8 +2523,9 @@ class InputSpec {
     return std::get<1>(variant_);
   }
 
-  void set_user_input(UserInputSpec def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_user_input(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::USER_INPUT;
   }
 
@@ -2432,8 +2533,9 @@ class InputSpec {
     return std::get<2>(variant_);
   }
 
-  void set_parameter(InputToParameterSpec def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_parameter(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::PARAMETER;
   }
 
@@ -2441,8 +2543,9 @@ class InputSpec {
     return std::get<3>(variant_);
   }
 
-  void set_buffer(InputToBufferSpec def) {
-    variant_.emplace<3>(std::move(def));
+  template <typename U>
+  void set_buffer(U&& def) {
+    variant_.emplace<3>(std::forward<U>(def));
     tag_ = Tag::BUFFER;
   }
 
@@ -2450,8 +2553,9 @@ class InputSpec {
     return std::get<4>(variant_);
   }
 
-  void set_tensor_constant(InputToTensorConstantSpec def) {
-    variant_.emplace<4>(std::move(def));
+  template <typename U>
+  void set_tensor_constant(U&& def) {
+    variant_.emplace<4>(std::forward<U>(def));
     tag_ = Tag::TENSOR_CONSTANT;
   }
 
@@ -2459,8 +2563,9 @@ class InputSpec {
     return std::get<5>(variant_);
   }
 
-  void set_custom_obj(InputToCustomObjSpec def) {
-    variant_.emplace<5>(std::move(def));
+  template <typename U>
+  void set_custom_obj(U&& def) {
+    variant_.emplace<5>(std::forward<U>(def));
     tag_ = Tag::CUSTOM_OBJ;
   }
 
@@ -2468,8 +2573,9 @@ class InputSpec {
     return std::get<6>(variant_);
   }
 
-  void set_token(InputTokenSpec def) {
-    variant_.emplace<6>(std::move(def));
+  template <typename U>
+  void set_token(U&& def) {
+    variant_.emplace<6>(std::forward<U>(def));
     tag_ = Tag::TOKEN;
   }
 
@@ -2477,8 +2583,9 @@ class InputSpec {
     return std::get<7>(variant_);
   }
 
-  void set_constant_input(InputToConstantInputSpec def) {
-    variant_.emplace<7>(std::move(def));
+  template <typename U>
+  void set_constant_input(U&& def) {
+    variant_.emplace<7>(std::forward<U>(def));
     tag_ = Tag::CONSTANT_INPUT;
   }
 
@@ -2590,8 +2697,9 @@ class UserOutputSpec {
     return arg;
   }
 
-  void set_arg(Argument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const UserOutputSpec& nlohmann_json_t);
@@ -2608,8 +2716,9 @@ class LossOutputSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const LossOutputSpec& nlohmann_json_t);
@@ -2627,16 +2736,18 @@ class BufferMutationSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_buffer_name() const {
     return buffer_name;
   }
 
-  void set_buffer_name(std::string def) {
-    buffer_name = std::move(def);
+  template <typename U>
+  void set_buffer_name(U&& def) {
+    buffer_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const BufferMutationSpec& nlohmann_json_t);
@@ -2654,16 +2765,18 @@ class ParameterMutationSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_parameter_name() const {
     return parameter_name;
   }
 
-  void set_parameter_name(std::string def) {
-    parameter_name = std::move(def);
+  template <typename U>
+  void set_parameter_name(U&& def) {
+    parameter_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ParameterMutationSpec& nlohmann_json_t);
@@ -2681,16 +2794,18 @@ class GradientToParameterSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_parameter_name() const {
     return parameter_name;
   }
 
-  void set_parameter_name(std::string def) {
-    parameter_name = std::move(def);
+  template <typename U>
+  void set_parameter_name(U&& def) {
+    parameter_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const GradientToParameterSpec& nlohmann_json_t);
@@ -2708,16 +2823,18 @@ class GradientToUserInputSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_user_input_name() const {
     return user_input_name;
   }
 
-  void set_user_input_name(std::string def) {
-    user_input_name = std::move(def);
+  template <typename U>
+  void set_user_input_name(U&& def) {
+    user_input_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const GradientToUserInputSpec& nlohmann_json_t);
@@ -2735,16 +2852,18 @@ class UserInputMutationSpec {
     return arg;
   }
 
-  void set_arg(TensorArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   const std::string& get_user_input_name() const {
     return user_input_name;
   }
 
-  void set_user_input_name(std::string def) {
-    user_input_name = std::move(def);
+  template <typename U>
+  void set_user_input_name(U&& def) {
+    user_input_name = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const UserInputMutationSpec& nlohmann_json_t);
@@ -2761,8 +2880,9 @@ class OutputTokenSpec {
     return arg;
   }
 
-  void set_arg(TokenArgument def) {
-    arg = std::move(def);
+  template <typename U>
+  void set_arg(U&& def) {
+    arg = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const OutputTokenSpec& nlohmann_json_t);
@@ -2779,7 +2899,7 @@ class OutputSpec {
 
  private:
   std::variant<Void, UserOutputSpec, LossOutputSpec, BufferMutationSpec, GradientToParameterSpec, GradientToUserInputSpec, UserInputMutationSpec, OutputTokenSpec, ParameterMutationSpec> variant_;
-  Tag tag_;
+  Tag tag_{};
 
  public:
   Tag tag() const {
@@ -2790,8 +2910,9 @@ class OutputSpec {
     return std::get<1>(variant_);
   }
 
-  void set_user_output(UserOutputSpec def) {
-    variant_.emplace<1>(std::move(def));
+  template <typename U>
+  void set_user_output(U&& def) {
+    variant_.emplace<1>(std::forward<U>(def));
     tag_ = Tag::USER_OUTPUT;
   }
 
@@ -2799,8 +2920,9 @@ class OutputSpec {
     return std::get<2>(variant_);
   }
 
-  void set_loss_output(LossOutputSpec def) {
-    variant_.emplace<2>(std::move(def));
+  template <typename U>
+  void set_loss_output(U&& def) {
+    variant_.emplace<2>(std::forward<U>(def));
     tag_ = Tag::LOSS_OUTPUT;
   }
 
@@ -2808,8 +2930,9 @@ class OutputSpec {
     return std::get<3>(variant_);
   }
 
-  void set_buffer_mutation(BufferMutationSpec def) {
-    variant_.emplace<3>(std::move(def));
+  template <typename U>
+  void set_buffer_mutation(U&& def) {
+    variant_.emplace<3>(std::forward<U>(def));
     tag_ = Tag::BUFFER_MUTATION;
   }
 
@@ -2817,8 +2940,9 @@ class OutputSpec {
     return std::get<4>(variant_);
   }
 
-  void set_gradient_to_parameter(GradientToParameterSpec def) {
-    variant_.emplace<4>(std::move(def));
+  template <typename U>
+  void set_gradient_to_parameter(U&& def) {
+    variant_.emplace<4>(std::forward<U>(def));
     tag_ = Tag::GRADIENT_TO_PARAMETER;
   }
 
@@ -2826,8 +2950,9 @@ class OutputSpec {
     return std::get<5>(variant_);
   }
 
-  void set_gradient_to_user_input(GradientToUserInputSpec def) {
-    variant_.emplace<5>(std::move(def));
+  template <typename U>
+  void set_gradient_to_user_input(U&& def) {
+    variant_.emplace<5>(std::forward<U>(def));
     tag_ = Tag::GRADIENT_TO_USER_INPUT;
   }
 
@@ -2835,8 +2960,9 @@ class OutputSpec {
     return std::get<6>(variant_);
   }
 
-  void set_user_input_mutation(UserInputMutationSpec def) {
-    variant_.emplace<6>(std::move(def));
+  template <typename U>
+  void set_user_input_mutation(U&& def) {
+    variant_.emplace<6>(std::forward<U>(def));
     tag_ = Tag::USER_INPUT_MUTATION;
   }
 
@@ -2844,8 +2970,9 @@ class OutputSpec {
     return std::get<7>(variant_);
   }
 
-  void set_token(OutputTokenSpec def) {
-    variant_.emplace<7>(std::move(def));
+  template <typename U>
+  void set_token(U&& def) {
+    variant_.emplace<7>(std::forward<U>(def));
     tag_ = Tag::TOKEN;
   }
 
@@ -2853,8 +2980,9 @@ class OutputSpec {
     return std::get<8>(variant_);
   }
 
-  void set_parameter_mutation(ParameterMutationSpec def) {
-    variant_.emplace<8>(std::move(def));
+  template <typename U>
+  void set_parameter_mutation(U&& def) {
+    variant_.emplace<8>(std::forward<U>(def));
     tag_ = Tag::PARAMETER_MUTATION;
   }
 
@@ -2978,16 +3106,18 @@ class GraphSignature {
     return input_specs;
   }
 
-  void set_input_specs(std::vector<InputSpec> def) {
-    input_specs = std::move(def);
+  template <typename U>
+  void set_input_specs(U&& def) {
+    input_specs = std::forward<U>(def);
   }
 
   const std::vector<OutputSpec>& get_output_specs() const {
     return output_specs;
   }
 
-  void set_output_specs(std::vector<OutputSpec> def) {
-    output_specs = std::move(def);
+  template <typename U>
+  void set_output_specs(U&& def) {
+    output_specs = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const GraphSignature& nlohmann_json_t);
@@ -3005,16 +3135,18 @@ class RangeConstraint {
     return min_val;
   }
 
-  void set_min_val(std::optional<int64_t> def) {
-    min_val = std::move(def);
+  template <typename U>
+  void set_min_val(U&& def) {
+    min_val = std::forward<U>(def);
   }
 
   const std::optional<int64_t>& get_max_val() const {
     return max_val;
   }
 
-  void set_max_val(std::optional<int64_t> def) {
-    max_val = std::move(def);
+  template <typename U>
+  void set_max_val(U&& def) {
+    max_val = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const RangeConstraint& nlohmann_json_t);
@@ -3035,40 +3167,45 @@ class ModuleCallSignature {
     return inputs;
   }
 
-  void set_inputs(std::vector<Argument> def) {
-    inputs = std::move(def);
+  template <typename U>
+  void set_inputs(U&& def) {
+    inputs = std::forward<U>(def);
   }
 
   const std::vector<Argument>& get_outputs() const {
     return outputs;
   }
 
-  void set_outputs(std::vector<Argument> def) {
-    outputs = std::move(def);
+  template <typename U>
+  void set_outputs(U&& def) {
+    outputs = std::forward<U>(def);
   }
 
   const std::string& get_in_spec() const {
     return in_spec;
   }
 
-  void set_in_spec(std::string def) {
-    in_spec = std::move(def);
+  template <typename U>
+  void set_in_spec(U&& def) {
+    in_spec = std::forward<U>(def);
   }
 
   const std::string& get_out_spec() const {
     return out_spec;
   }
 
-  void set_out_spec(std::string def) {
-    out_spec = std::move(def);
+  template <typename U>
+  void set_out_spec(U&& def) {
+    out_spec = std::forward<U>(def);
   }
 
   const std::optional<std::vector<std::string>>& get_forward_arg_names() const {
     return forward_arg_names;
   }
 
-  void set_forward_arg_names(std::optional<std::vector<std::string>> def) {
-    forward_arg_names = std::move(def);
+  template <typename U>
+  void set_forward_arg_names(U&& def) {
+    forward_arg_names = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ModuleCallSignature& nlohmann_json_t);
@@ -3086,16 +3223,18 @@ class ModuleCallEntry {
     return fqn;
   }
 
-  void set_fqn(std::string def) {
-    fqn = std::move(def);
+  template <typename U>
+  void set_fqn(U&& def) {
+    fqn = std::forward<U>(def);
   }
 
   const std::optional<ModuleCallSignature>& get_signature() const {
     return signature;
   }
 
-  void set_signature(std::optional<ModuleCallSignature> def) {
-    signature = std::move(def);
+  template <typename U>
+  void set_signature(U&& def) {
+    signature = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ModuleCallEntry& nlohmann_json_t);
@@ -3112,8 +3251,9 @@ class NamedTupleDef {
     return field_names;
   }
 
-  void set_field_names(std::vector<std::string> def) {
-    field_names = std::move(def);
+  template <typename U>
+  void set_field_names(U&& def) {
+    field_names = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const NamedTupleDef& nlohmann_json_t);
@@ -3125,8 +3265,8 @@ class GraphModule {
   Graph graph;
   GraphSignature signature;
   std::vector<ModuleCallEntry> module_call_graph;
-  std::unordered_map<std::string, std::string> metadata = {};
-  std::unordered_map<std::string, NamedTupleDef> treespec_namedtuple_fields = {};
+  std::unordered_map<std::string, std::string> metadata;
+  std::unordered_map<std::string, NamedTupleDef> treespec_namedtuple_fields;
 
  public:
 
@@ -3134,40 +3274,45 @@ class GraphModule {
     return graph;
   }
 
-  void set_graph(Graph def) {
-    graph = std::move(def);
+  template <typename U>
+  void set_graph(U&& def) {
+    graph = std::forward<U>(def);
   }
 
   const GraphSignature& get_signature() const {
     return signature;
   }
 
-  void set_signature(GraphSignature def) {
-    signature = std::move(def);
+  template <typename U>
+  void set_signature(U&& def) {
+    signature = std::forward<U>(def);
   }
 
   const std::vector<ModuleCallEntry>& get_module_call_graph() const {
     return module_call_graph;
   }
 
-  void set_module_call_graph(std::vector<ModuleCallEntry> def) {
-    module_call_graph = std::move(def);
+  template <typename U>
+  void set_module_call_graph(U&& def) {
+    module_call_graph = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, std::string>& get_metadata() const {
     return metadata;
   }
 
-  void set_metadata(std::unordered_map<std::string, std::string> def) {
-    metadata = std::move(def);
+  template <typename U>
+  void set_metadata(U&& def) {
+    metadata = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, NamedTupleDef>& get_treespec_namedtuple_fields() const {
     return treespec_namedtuple_fields;
   }
 
-  void set_treespec_namedtuple_fields(std::unordered_map<std::string, NamedTupleDef> def) {
-    treespec_namedtuple_fields = std::move(def);
+  template <typename U>
+  void set_treespec_namedtuple_fields(U&& def) {
+    treespec_namedtuple_fields = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const GraphModule& nlohmann_json_t);
@@ -3176,8 +3321,8 @@ class GraphModule {
 
 class SchemaVersion {
  private:
-  int64_t major;
-  int64_t minor;
+  int64_t major = {};
+  int64_t minor = {};
 
  public:
 
@@ -3185,16 +3330,18 @@ class SchemaVersion {
     return major;
   }
 
-  void set_major(int64_t def) {
-    major = std::move(def);
+  template <typename U>
+  void set_major(U&& def) {
+    major = std::forward<U>(def);
   }
 
   const int64_t& get_minor() const {
     return minor;
   }
 
-  void set_minor(int64_t def) {
-    minor = std::move(def);
+  template <typename U>
+  void set_minor(U&& def) {
+    minor = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const SchemaVersion& nlohmann_json_t);
@@ -3207,9 +3354,9 @@ class ExportedProgram {
   std::unordered_map<std::string, int64_t> opset_version;
   std::unordered_map<std::string, RangeConstraint> range_constraints;
   SchemaVersion schema_version;
-  std::vector<std::string> verifiers = {};
+  std::vector<std::string> verifiers;
   std::string torch_version = "<=2.4";
-  std::vector<std::string> guards_code = {};
+  std::vector<std::string> guards_code;
 
  public:
 
@@ -3217,56 +3364,63 @@ class ExportedProgram {
     return graph_module;
   }
 
-  void set_graph_module(GraphModule def) {
-    graph_module = std::move(def);
+  template <typename U>
+  void set_graph_module(U&& def) {
+    graph_module = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, int64_t>& get_opset_version() const {
     return opset_version;
   }
 
-  void set_opset_version(std::unordered_map<std::string, int64_t> def) {
-    opset_version = std::move(def);
+  template <typename U>
+  void set_opset_version(U&& def) {
+    opset_version = std::forward<U>(def);
   }
 
   const std::unordered_map<std::string, RangeConstraint>& get_range_constraints() const {
     return range_constraints;
   }
 
-  void set_range_constraints(std::unordered_map<std::string, RangeConstraint> def) {
-    range_constraints = std::move(def);
+  template <typename U>
+  void set_range_constraints(U&& def) {
+    range_constraints = std::forward<U>(def);
   }
 
   const SchemaVersion& get_schema_version() const {
     return schema_version;
   }
 
-  void set_schema_version(SchemaVersion def) {
-    schema_version = std::move(def);
+  template <typename U>
+  void set_schema_version(U&& def) {
+    schema_version = std::forward<U>(def);
   }
 
   const std::vector<std::string>& get_verifiers() const {
     return verifiers;
   }
 
-  void set_verifiers(std::vector<std::string> def) {
-    verifiers = std::move(def);
+  template <typename U>
+  void set_verifiers(U&& def) {
+    verifiers = std::forward<U>(def);
   }
 
   const std::string& get_torch_version() const {
     return torch_version;
   }
 
-  void set_torch_version(std::string def) {
-    torch_version = std::move(def);
+  template <typename U>
+  void set_torch_version(U&& def) {
+    torch_version = std::forward<U>(def);
   }
 
   const std::vector<std::string>& get_guards_code() const {
     return guards_code;
   }
 
-  void set_guards_code(std::vector<std::string> def) {
-    guards_code = std::move(def);
+  template <typename U>
+  void set_guards_code(U&& def) {
+    guards_code = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ExportedProgram& nlohmann_json_t);
@@ -3276,8 +3430,8 @@ class ExportedProgram {
 class PayloadMeta {
  private:
   std::string path_name;
-  bool is_param;
-  bool use_pickle;
+  bool is_param = {};
+  bool use_pickle = {};
   std::optional<TensorMeta> tensor_meta;
 
  public:
@@ -3286,32 +3440,36 @@ class PayloadMeta {
     return path_name;
   }
 
-  void set_path_name(std::string def) {
-    path_name = std::move(def);
+  template <typename U>
+  void set_path_name(U&& def) {
+    path_name = std::forward<U>(def);
   }
 
   const bool& get_is_param() const {
     return is_param;
   }
 
-  void set_is_param(bool def) {
-    is_param = std::move(def);
+  template <typename U>
+  void set_is_param(U&& def) {
+    is_param = std::forward<U>(def);
   }
 
   const bool& get_use_pickle() const {
     return use_pickle;
   }
 
-  void set_use_pickle(bool def) {
-    use_pickle = std::move(def);
+  template <typename U>
+  void set_use_pickle(U&& def) {
+    use_pickle = std::forward<U>(def);
   }
 
   const std::optional<TensorMeta>& get_tensor_meta() const {
     return tensor_meta;
   }
 
-  void set_tensor_meta(std::optional<TensorMeta> def) {
-    tensor_meta = std::move(def);
+  template <typename U>
+  void set_tensor_meta(U&& def) {
+    tensor_meta = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const PayloadMeta& nlohmann_json_t);
@@ -3328,8 +3486,9 @@ class PayloadConfig {
     return config;
   }
 
-  void set_config(std::unordered_map<std::string, PayloadMeta> def) {
-    config = std::move(def);
+  template <typename U>
+  void set_config(U&& def) {
+    config = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const PayloadConfig& nlohmann_json_t);
@@ -3351,48 +3510,54 @@ class AOTInductorModelPickleData {
     return library_basename;
   }
 
-  void set_library_basename(std::string def) {
-    library_basename = std::move(def);
+  template <typename U>
+  void set_library_basename(U&& def) {
+    library_basename = std::forward<U>(def);
   }
 
   const std::vector<std::string>& get_input_names() const {
     return input_names;
   }
 
-  void set_input_names(std::vector<std::string> def) {
-    input_names = std::move(def);
+  template <typename U>
+  void set_input_names(U&& def) {
+    input_names = std::forward<U>(def);
   }
 
   const std::vector<std::string>& get_output_names() const {
     return output_names;
   }
 
-  void set_output_names(std::vector<std::string> def) {
-    output_names = std::move(def);
+  template <typename U>
+  void set_output_names(U&& def) {
+    output_names = std::forward<U>(def);
   }
 
   const std::optional<int64_t>& get_floating_point_input_dtype() const {
     return floating_point_input_dtype;
   }
 
-  void set_floating_point_input_dtype(std::optional<int64_t> def) {
-    floating_point_input_dtype = std::move(def);
+  template <typename U>
+  void set_floating_point_input_dtype(U&& def) {
+    floating_point_input_dtype = std::forward<U>(def);
   }
 
   const std::optional<int64_t>& get_floating_point_output_dtype() const {
     return floating_point_output_dtype;
   }
 
-  void set_floating_point_output_dtype(std::optional<int64_t> def) {
-    floating_point_output_dtype = std::move(def);
+  template <typename U>
+  void set_floating_point_output_dtype(U&& def) {
+    floating_point_output_dtype = std::forward<U>(def);
   }
 
   const std::optional<bool>& get_aot_inductor_model_is_cpu() const {
     return aot_inductor_model_is_cpu;
   }
 
-  void set_aot_inductor_model_is_cpu(std::optional<bool> def) {
-    aot_inductor_model_is_cpu = std::move(def);
+  template <typename U>
+  void set_aot_inductor_model_is_cpu(U&& def) {
+    aot_inductor_model_is_cpu = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const AOTInductorModelPickleData& nlohmann_json_t);
@@ -3410,16 +3575,18 @@ class ExternKernelNode {
     return name;
   }
 
-  void set_name(std::string def) {
-    name = std::move(def);
+  template <typename U>
+  void set_name(U&& def) {
+    name = std::forward<U>(def);
   }
 
   const Node& get_node() const {
     return node;
   }
 
-  void set_node(Node def) {
-    node = std::move(def);
+  template <typename U>
+  void set_node(U&& def) {
+    node = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ExternKernelNode& nlohmann_json_t);
@@ -3436,8 +3603,9 @@ class ExternKernelNodes {
     return nodes;
   }
 
-  void set_nodes(std::vector<ExternKernelNode> def) {
-    nodes = std::move(def);
+  template <typename U>
+  void set_nodes(U&& def) {
+    nodes = std::forward<U>(def);
   }
 
   friend void to_json(nlohmann::json& nlohmann_json_j, const ExternKernelNodes& nlohmann_json_t);
@@ -3924,11 +4092,10 @@ inline void from_json(const nlohmann::json& nlohmann_json_j, UserOutputSpec& nlo
 }
 
 
-template <typename T> ForwardRef<T>::ForwardRef(ForwardRef<T>&&) = default;
-template <typename T> ForwardRef<T>& ForwardRef<T>::operator=(ForwardRef<T>&&) = default;
+template <typename T> ForwardRef<T>::ForwardRef(ForwardRef<T>&&) noexcept = default;
+template <typename T> ForwardRef<T>& ForwardRef<T>::operator=(ForwardRef<T>&&) noexcept = default;
 template <typename T> ForwardRef<T>::~ForwardRef() = default;
-} // namespace _export
-} // namespace torch
+} // namespace torch::_export
 
 // clang-format on
 

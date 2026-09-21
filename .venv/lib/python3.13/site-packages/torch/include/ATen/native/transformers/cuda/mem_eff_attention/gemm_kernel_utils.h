@@ -10,6 +10,8 @@
 
 #include <cutlass/arch/mma.h>
 
+#include <cstdint>
+
 ////////////////////////////////////////////////////////////////////////////////
 // Some helper functions
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,9 +73,10 @@
   TORCH_CHECK(                                                         \
       TENSOR.stride(-1) == 1, #TENSOR ": last dimension must be contiguous");
 
-#define CHECK_ALIGNED_PTR(PTR, ALIGNMENT) \
-  TORCH_CHECK(                         \
-      uint64_t(PTR) % ALIGNMENT == 0, #PTR " is not correctly aligned")
+#define CHECK_ALIGNED_PTR(PTR, ALIGNMENT)                              \
+  TORCH_CHECK(                                                         \
+      uint64_t(PTR) % ((ALIGNMENT) * sizeof(*(PTR))) == 0,             \
+      #PTR " is not correctly aligned")
 
 #define ASSIGN_CHECK_OVERFLOW(A, B)                                    \
   {                                                                    \

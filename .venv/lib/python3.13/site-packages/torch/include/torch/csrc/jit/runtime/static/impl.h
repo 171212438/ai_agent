@@ -15,6 +15,7 @@
 #include <torch/csrc/jit/runtime/static/ProcessedNodeInputs.h>
 #include <torch/custom_class.h>
 #include <limits>
+#include <vector>
 
 #ifdef FBCODE_CAFFE2
 #include <folly/container/F14Map.h>
@@ -197,7 +198,7 @@ class TORCH_API StaticRuntimeMetadata : public torch::CustomClassHolder {
   StaticModuleOptions opts_;
 };
 
-/// The static runime supports two execution modes.
+/// The static runtime supports two execution modes.
 ///
 /// Mode 1: single-threaded with no parallelism except for intra-op parallelism
 /// For this mode, you can do either:
@@ -1112,30 +1113,28 @@ class TORCH_API StaticRuntime {
   class IValueArray {
    public:
     IValueArray() = default;
-    explicit IValueArray(size_t size) : array_(allocate(size)), size_(size) {}
+    IValueArray(const IValueArray&) = delete;
+    IValueArray& operator=(const IValueArray&) = delete;
 
-    IValue* data() const {
-      return array_.get();
+    IValueArray(IValueArray&&) noexcept = default;
+    IValueArray& operator=(IValueArray&&) noexcept = default;
+
+    explicit IValueArray(size_t size) : array_(size) {}
+
+    IValue* data() {
+      return array_.empty() ? nullptr : array_.data();
+    }
+
+    const IValue* data() const {
+      return array_.empty() ? nullptr : array_.data();
     }
 
     size_t size() const {
-      return size_;
+      return array_.size();
     }
 
    private:
-    // NOLINTNEXTLINE(modernize-avoid-c-arrays)
-    // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-    static std::unique_ptr<IValue[]> allocate(size_t size) {
-      if (size) {
-        return std::make_unique<IValue[]>(size);
-      }
-      return nullptr;
-    }
-
-    // NOLINTNEXTLINE(modernize-avoid-c-arrays)
-    // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-    std::unique_ptr<IValue[]> array_ = nullptr;
-    size_t size_ = 0;
+    std::vector<IValue> array_;
   };
 
   std::unique_ptr<BlockRunner> block_;

@@ -91,6 +91,7 @@
 #include <ATen/ops/_foreach_max_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/_foreach_maximum_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/_foreach_minimum_compositeexplicitautograd_dispatch.h>
+#include <ATen/ops/_foreach_mm_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/_foreach_mul_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/_foreach_neg_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/_foreach_norm_compositeexplicitautograd_dispatch.h>
@@ -315,7 +316,6 @@
 #include <ATen/ops/embedding_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/embedding_dense_backward_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/embedding_renorm_compositeexplicitautograd_dispatch.h>
-#include <ATen/ops/empty_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/empty_like_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/empty_permuted_compositeexplicitautograd_dispatch.h>
 #include <ATen/ops/empty_quantized_compositeexplicitautograd_dispatch.h>

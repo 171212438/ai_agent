@@ -1,0 +1,10 @@
+{
+  "project_dir": "~/Projects/YourProject",
+  "tasks_file": "tasks.csv",
+  "output_dir": "~/Library/Application Support/codex-function-doc-batch/YourProject",
+  "thread_name": "函数文档批处理",
+  "model": null,
+  "effort": "high",
+  "stream_events": true,
+  "continue_on_error": false
+}

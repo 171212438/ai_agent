@@ -49,28 +49,6 @@ struct TORCH_API var_mean_correction {
   static ::std::tuple<at::Tensor,at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, const ::std::optional<at::Scalar> & correction, bool keepdim);
 };
 
-struct TORCH_API var_mean_names_dim {
-  using schema = ::std::tuple<at::Tensor,at::Tensor> (const at::Tensor &, at::DimnameList, bool, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::var_mean";
-  static constexpr const char* overload_name = "names_dim";
-  static constexpr const char* schema_str = "var_mean.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> (Tensor, Tensor)";
-  static ::std::tuple<at::Tensor,at::Tensor> call(const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim);
-  static ::std::tuple<at::Tensor,at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim);
-};
-
-struct TORCH_API var_mean_correction_names {
-  using schema = ::std::tuple<at::Tensor,at::Tensor> (const at::Tensor &, at::DimnameList, const ::std::optional<at::Scalar> &, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::var_mean";
-  static constexpr const char* overload_name = "correction_names";
-  static constexpr const char* schema_str = "var_mean.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> (Tensor, Tensor)";
-  static ::std::tuple<at::Tensor,at::Tensor> call(const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim);
-  static ::std::tuple<at::Tensor,at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim);
-};
-
 struct TORCH_API var_mean_correction_out {
   using schema = ::std::tuple<at::Tensor &,at::Tensor &> (const at::Tensor &, at::OptionalIntArrayRef, const ::std::optional<at::Scalar> &, bool, at::Tensor &, at::Tensor &);
   using ptr_schema = schema*;

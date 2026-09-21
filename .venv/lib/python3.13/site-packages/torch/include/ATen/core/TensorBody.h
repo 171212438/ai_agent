@@ -33,7 +33,6 @@
 #include <ATen/core/CheckMemoryFormat.h>
 #include <ATen/core/DeprecatedTypePropertiesRegistry.h>
 #include <ATen/core/DeprecatedTypeProperties.h>
-#include <ATen/core/NamedTensor.h>
 #include <ATen/core/QuantizerBase.h>
 #include <c10/core/SymInt.h>
 #include <ATen/core/TensorAccessor.h>
@@ -145,7 +144,7 @@ class TORCH_API Tensor: public TensorBase {
     C10_DIAGNOSTIC_POP()
   }
 
-  // Aliased by Dimname overloads, so need explicit using
+  // Bring in base class methods
   using TensorBase::size;
   using TensorBase::sym_size;
   using TensorBase::stride;
@@ -534,12 +533,6 @@ class TORCH_API Tensor: public TensorBase {
   void __dispatch_retain_grad() const;
   bool __dispatch_retains_grad() const;
   at::Tensor _fw_primal(int64_t level) const;
-  at::Tensor & rename_(::std::optional<at::DimnameList> names) const;
-  at::Tensor rename(::std::optional<at::DimnameList> names) const;
-  at::Tensor align_to(at::DimnameList names) const;
-  at::Tensor align_to(at::DimnameList order, int64_t ellipsis_idx) const;
-  at::Tensor align_as(const at::Tensor & other) const;
-  at::Tensor refine_names(at::DimnameList names) const;
   at::Tensor abs() const;
   at::Tensor & abs_() const;
   at::Tensor absolute() const;
@@ -572,11 +565,9 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor _is_any_true() const;
   at::Tensor all(int64_t dim, bool keepdim=false) const;
   at::Tensor all(at::OptionalIntArrayRef dim, bool keepdim=false) const;
-  at::Tensor all(at::Dimname dim, bool keepdim=false) const;
   bool allclose(const at::Tensor & other, double rtol=1e-05, double atol=1e-08, bool equal_nan=false) const;
   at::Tensor any(int64_t dim, bool keepdim=false) const;
   at::Tensor any(at::OptionalIntArrayRef dim, bool keepdim=false) const;
-  at::Tensor any(at::Dimname dim, bool keepdim=false) const;
   at::Tensor argmax(::std::optional<int64_t> dim=::std::nullopt, bool keepdim=false) const;
   at::Tensor argmin(::std::optional<int64_t> dim=::std::nullopt, bool keepdim=false) const;
   at::Tensor acosh() const;
@@ -665,21 +656,14 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor cov(int64_t correction=1, const ::std::optional<at::Tensor> & fweights={}, const ::std::optional<at::Tensor> & aweights={}) const;
   at::Tensor corrcoef() const;
   ::std::tuple<at::Tensor,at::Tensor> cummax(int64_t dim) const;
-  ::std::tuple<at::Tensor,at::Tensor> cummax(at::Dimname dim) const;
   ::std::tuple<at::Tensor,at::Tensor> cummin(int64_t dim) const;
-  ::std::tuple<at::Tensor,at::Tensor> cummin(at::Dimname dim) const;
   at::Tensor cumprod(int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor & cumprod_(int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor cumprod(at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor & cumprod_(at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor cumsum(int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor & cumsum_(int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor cumsum(at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor & cumsum_(at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor diag_embed(int64_t offset=0, int64_t dim1=-2, int64_t dim2=-1) const;
   at::Tensor diagflat(int64_t offset=0) const;
   at::Tensor diagonal(int64_t offset=0, int64_t dim1=0, int64_t dim2=1) const;
-  at::Tensor diagonal(at::Dimname outdim, at::Dimname dim1, at::Dimname dim2, int64_t offset=0) const;
   at::Tensor & fill_diagonal_(const at::Scalar & fill_value, bool wrap=false) const;
   at::Tensor diff(int64_t n=1, int64_t dim=-1, const ::std::optional<at::Tensor> & prepend={}, const ::std::optional<at::Tensor> & append={}) const;
   at::Tensor div(const at::Tensor & other) const;
@@ -740,13 +724,8 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor expand_symint(c10::SymIntArrayRef size, bool implicit=false) const;
   at::Tensor expand_as(const at::Tensor & other) const;
   at::Tensor flatten(int64_t start_dim=0, int64_t end_dim=-1) const;
-  at::Tensor flatten(int64_t start_dim, int64_t end_dim, at::Dimname out_dim) const;
-  at::Tensor flatten(at::Dimname start_dim, at::Dimname end_dim, at::Dimname out_dim) const;
-  at::Tensor flatten(at::DimnameList dims, at::Dimname out_dim) const;
   at::Tensor unflatten(int64_t dim, at::IntArrayRef sizes) const;
   at::Tensor unflatten_symint(int64_t dim, c10::SymIntArrayRef sizes) const;
-  at::Tensor unflatten(at::Dimname dim, at::IntArrayRef sizes, at::DimnameList names) const;
-  at::Tensor unflatten_symint(at::Dimname dim, c10::SymIntArrayRef sizes, at::DimnameList names) const;
   at::Tensor & fill_(const at::Scalar & value) const;
   at::Tensor & fill_(const at::Tensor & value) const;
   at::Tensor floor() const;
@@ -764,8 +743,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor index(const c10::List<::std::optional<at::Tensor>> & indices) const;
   at::Tensor & index_copy_(int64_t dim, const at::Tensor & index, const at::Tensor & source) const;
   at::Tensor index_copy(int64_t dim, const at::Tensor & index, const at::Tensor & source) const;
-  at::Tensor & index_copy_(at::Dimname dim, const at::Tensor & index, const at::Tensor & source) const;
-  at::Tensor index_copy(at::Dimname dim, const at::Tensor & index, const at::Tensor & source) const;
   at::Tensor & index_put_(const c10::List<::std::optional<at::Tensor>> & indices, const at::Tensor & values, bool accumulate=false) const;
   at::Tensor index_put(const c10::List<::std::optional<at::Tensor>> & indices, const at::Tensor & values, bool accumulate=false) const;
   at::Tensor isclose(const at::Tensor & other, double rtol=1e-05, double atol=1e-08, bool equal_nan=false) const;
@@ -790,8 +767,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor kron(const at::Tensor & other) const;
   ::std::tuple<at::Tensor,at::Tensor> kthvalue(int64_t k, int64_t dim=-1, bool keepdim=false) const;
   ::std::tuple<at::Tensor,at::Tensor> kthvalue_symint(c10::SymInt k, int64_t dim=-1, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> kthvalue(int64_t k, at::Dimname dim, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> kthvalue_symint(c10::SymInt k, at::Dimname dim, bool keepdim=false) const;
   at::Tensor nan_to_num(::std::optional<double> nan=::std::nullopt, ::std::optional<double> posinf=::std::nullopt, ::std::optional<double> neginf=::std::nullopt) const;
   at::Tensor & nan_to_num_(::std::optional<double> nan=::std::nullopt, ::std::optional<double> posinf=::std::nullopt, ::std::optional<double> neginf=::std::nullopt) const;
   at::Tensor ldexp(const at::Tensor & other) const;
@@ -811,34 +786,25 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor & xlogy_(const at::Tensor & other) const;
   at::Tensor & xlogy_(const at::Scalar & other) const;
   at::Tensor log_softmax(int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor log_softmax(at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor logcumsumexp(int64_t dim) const;
-  at::Tensor logcumsumexp(at::Dimname dim) const;
   at::Tensor logsumexp(at::IntArrayRef dim, bool keepdim=false) const;
-  at::Tensor logsumexp(at::DimnameList dim, bool keepdim=false) const;
   at::Tensor matmul(const at::Tensor & other) const;
   at::Tensor matrix_power(int64_t n) const;
   at::Tensor matrix_exp() const;
   ::std::tuple<at::Tensor,at::Tensor> aminmax(::std::optional<int64_t> dim=::std::nullopt, bool keepdim=false) const;
   ::std::tuple<at::Tensor,at::Tensor> max(int64_t dim, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> max(at::Dimname dim, bool keepdim=false) const;
   at::Tensor amax(at::IntArrayRef dim={}, bool keepdim=false) const;
   at::Tensor mean(::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor mean(at::OptionalIntArrayRef dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor mean(at::DimnameList dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor nanmean(at::OptionalIntArrayRef dim=::std::nullopt, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor median() const;
   ::std::tuple<at::Tensor,at::Tensor> median(int64_t dim, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> median(at::Dimname dim, bool keepdim=false) const;
   at::Tensor nanmedian() const;
   ::std::tuple<at::Tensor,at::Tensor> nanmedian(int64_t dim, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> nanmedian(at::Dimname dim, bool keepdim=false) const;
   ::std::tuple<at::Tensor,at::Tensor> min(int64_t dim, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> min(at::Dimname dim, bool keepdim=false) const;
   at::Tensor amin(at::IntArrayRef dim={}, bool keepdim=false) const;
   at::Tensor mm(const at::Tensor & mat2) const;
   ::std::tuple<at::Tensor,at::Tensor> mode(int64_t dim=-1, bool keepdim=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> mode(at::Dimname dim, bool keepdim=false) const;
   at::Tensor mul(const at::Tensor & other) const;
   at::Tensor & mul_(const at::Tensor & other) const;
   at::Tensor mul(const at::Scalar & other) const;
@@ -902,7 +868,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor hardshrink_backward(const at::Tensor & grad_out, const at::Scalar & lambd) const;
   at::Tensor rsqrt() const;
   at::Tensor & rsqrt_() const;
-  at::Tensor select(at::Dimname dim, int64_t index) const;
   at::Tensor select(int64_t dim, int64_t index) const;
   at::Tensor select_symint(int64_t dim, c10::SymInt index) const;
   at::Tensor sigmoid() const;
@@ -917,7 +882,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor & sinh_() const;
   at::Tensor detach() const;
   at::Tensor & detach_() const;
-  int64_t size(at::Dimname dim) const;
   at::Tensor slice(int64_t dim=0, ::std::optional<int64_t> start=::std::nullopt, ::std::optional<int64_t> end=::std::nullopt, int64_t step=1) const;
   at::Tensor slice_symint(int64_t dim=0, ::std::optional<c10::SymInt> start=::std::nullopt, ::std::optional<c10::SymInt> end=::std::nullopt, c10::SymInt step=1) const;
   at::Tensor slice_inverse(const at::Tensor & src, int64_t dim=0, ::std::optional<int64_t> start=::std::nullopt, ::std::optional<int64_t> end=::std::nullopt, int64_t step=1) const;
@@ -931,7 +895,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor as_strided_scatter_symint(const at::Tensor & src, c10::SymIntArrayRef size, c10::SymIntArrayRef stride, ::std::optional<c10::SymInt> storage_offset=::std::nullopt) const;
   at::Tensor smm(const at::Tensor & mat2) const;
   at::Tensor softmax(int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor softmax(at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   ::std::vector<at::Tensor> unsafe_split(int64_t split_size, int64_t dim=0) const;
   ::std::vector<at::Tensor> unsafe_split_symint(c10::SymInt split_size, int64_t dim=0) const;
   ::std::vector<at::Tensor> split(int64_t split_size, int64_t dim=0) const;
@@ -950,20 +913,16 @@ class TORCH_API Tensor: public TensorBase {
   ::std::vector<at::Tensor> dsplit(at::IntArrayRef indices) const;
   at::Tensor squeeze() const;
   at::Tensor squeeze(int64_t dim) const;
-  at::Tensor squeeze(at::Dimname dim) const;
   at::Tensor squeeze(at::IntArrayRef dim) const;
   at::Tensor & squeeze_() const;
   at::Tensor & squeeze_(int64_t dim) const;
   at::Tensor & squeeze_(at::IntArrayRef dim) const;
-  at::Tensor & squeeze_(at::Dimname dim) const;
   at::Tensor sspaddmm(const at::Tensor & mat1, const at::Tensor & mat2, const at::Scalar & beta=1, const at::Scalar & alpha=1) const;
   at::Tensor stft(int64_t n_fft, ::std::optional<int64_t> hop_length, ::std::optional<int64_t> win_length, const ::std::optional<at::Tensor> & window, bool normalized, ::std::optional<bool> onesided=::std::nullopt, ::std::optional<bool> return_complex=::std::nullopt, ::std::optional<bool> align_to_window=::std::nullopt) const;
   at::Tensor stft(int64_t n_fft, ::std::optional<int64_t> hop_length=::std::nullopt, ::std::optional<int64_t> win_length=::std::nullopt, const ::std::optional<at::Tensor> & window={}, bool center=true, c10::string_view pad_mode="reflect", bool normalized=false, ::std::optional<bool> onesided=::std::nullopt, ::std::optional<bool> return_complex=::std::nullopt, ::std::optional<bool> align_to_window=::std::nullopt) const;
   at::Tensor istft(int64_t n_fft, ::std::optional<int64_t> hop_length=::std::nullopt, ::std::optional<int64_t> win_length=::std::nullopt, const ::std::optional<at::Tensor> & window={}, bool center=true, bool normalized=false, ::std::optional<bool> onesided=::std::nullopt, ::std::optional<int64_t> length=::std::nullopt, bool return_complex=false) const;
-  int64_t stride(at::Dimname dim) const;
   at::Tensor sum(::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor sum(at::OptionalIntArrayRef dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor sum(at::DimnameList dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor nansum(at::OptionalIntArrayRef dim=::std::nullopt, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor hash_tensor(at::IntArrayRef dim={}, bool keepdim=false, int64_t mode=0) const;
   at::Tensor sum_to_size(at::IntArrayRef size) const;
@@ -975,11 +934,8 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor std(bool unbiased) const;
   at::Tensor std(at::OptionalIntArrayRef dim, bool unbiased, bool keepdim=false) const;
   at::Tensor std(at::OptionalIntArrayRef dim=::std::nullopt, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) const;
-  at::Tensor std(at::DimnameList dim, bool unbiased, bool keepdim=false) const;
-  at::Tensor std(at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) const;
   at::Tensor prod(::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor prod(int64_t dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
-  at::Tensor prod(at::Dimname dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) const;
   at::Tensor t() const;
   at::Tensor & t_() const;
   at::Tensor tan() const;
@@ -989,7 +945,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor tile(at::IntArrayRef dims) const;
   at::Tensor tile_symint(c10::SymIntArrayRef dims) const;
   at::Tensor transpose(int64_t dim0, int64_t dim1) const;
-  at::Tensor transpose(at::Dimname dim0, at::Dimname dim1) const;
   at::Tensor & transpose_(int64_t dim0, int64_t dim1) const;
   at::Tensor flip(at::IntArrayRef dims) const;
   at::Tensor fliplr() const;
@@ -1010,8 +965,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor var(bool unbiased) const;
   at::Tensor var(at::OptionalIntArrayRef dim, bool unbiased, bool keepdim=false) const;
   at::Tensor var(at::OptionalIntArrayRef dim=::std::nullopt, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) const;
-  at::Tensor var(at::DimnameList dim, bool unbiased, bool keepdim=false) const;
-  at::Tensor var(at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) const;
   at::Tensor view_as(const at::Tensor & other) const;
   at::Tensor where(const at::Tensor & condition, const at::Tensor & other) const;
   at::Tensor where(const at::Tensor & condition, const at::Scalar & other) const;
@@ -1021,8 +974,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor norm(const at::Scalar & p=2) const;
   at::Tensor norm(const ::std::optional<at::Scalar> & p, at::IntArrayRef dim, bool keepdim, at::ScalarType dtype) const;
   at::Tensor norm(const ::std::optional<at::Scalar> & p, at::IntArrayRef dim, bool keepdim=false) const;
-  at::Tensor norm(const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype) const;
-  at::Tensor norm(const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim=false) const;
   ::std::tuple<at::Tensor,at::Tensor> frexp() const;
   at::Tensor clone(::std::optional<at::MemoryFormat> memory_format=::std::nullopt) const;
   at::Tensor positive() const;
@@ -1065,7 +1016,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor ccol_indices() const;
   at::Tensor row_indices() const;
   ::std::vector<at::Tensor> unbind(int64_t dim=0) const;
-  ::std::vector<at::Tensor> unbind(at::Dimname dim) const;
   at::Tensor to_sparse(int64_t sparse_dim) const;
   at::Tensor _to_sparse(int64_t sparse_dim) const;
   at::Tensor to_sparse(::std::optional<at::Layout> layout=::std::nullopt, at::OptionalIntArrayRef blocksize=::std::nullopt, ::std::optional<int64_t> dense_dim=::std::nullopt) const;
@@ -1116,17 +1066,12 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor put(const at::Tensor & index, const at::Tensor & source, bool accumulate=false) const;
   at::Tensor & index_add_(int64_t dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha=1) const;
   at::Tensor index_add(int64_t dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha=1) const;
-  at::Tensor index_add(at::Dimname dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha=1) const;
   at::Tensor & index_reduce_(int64_t dim, const at::Tensor & index, const at::Tensor & source, c10::string_view reduce, bool include_self=true) const;
   at::Tensor index_reduce(int64_t dim, const at::Tensor & index, const at::Tensor & source, c10::string_view reduce, bool include_self=true) const;
   at::Tensor & index_fill_(int64_t dim, const at::Tensor & index, const at::Scalar & value) const;
   at::Tensor index_fill(int64_t dim, const at::Tensor & index, const at::Scalar & value) const;
   at::Tensor & index_fill_(int64_t dim, const at::Tensor & index, const at::Tensor & value) const;
   at::Tensor index_fill(int64_t dim, const at::Tensor & index, const at::Tensor & value) const;
-  at::Tensor & index_fill_(at::Dimname dim, const at::Tensor & index, const at::Scalar & value) const;
-  at::Tensor & index_fill_(at::Dimname dim, const at::Tensor & index, const at::Tensor & value) const;
-  at::Tensor index_fill(at::Dimname dim, const at::Tensor & index, const at::Scalar & value) const;
-  at::Tensor index_fill(at::Dimname dim, const at::Tensor & index, const at::Tensor & value) const;
   at::Tensor scatter(int64_t dim, const at::Tensor & index, const at::Tensor & src) const;
   at::Tensor & scatter_(int64_t dim, const at::Tensor & index, const at::Tensor & src) const;
   at::Tensor scatter(int64_t dim, const at::Tensor & index, const at::Scalar & value) const;
@@ -1135,11 +1080,8 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor & scatter_(int64_t dim, const at::Tensor & index, const at::Tensor & src, c10::string_view reduce) const;
   at::Tensor scatter(int64_t dim, const at::Tensor & index, const at::Scalar & value, c10::string_view reduce) const;
   at::Tensor & scatter_(int64_t dim, const at::Tensor & index, const at::Scalar & value, c10::string_view reduce) const;
-  at::Tensor scatter(at::Dimname dim, const at::Tensor & index, const at::Tensor & src) const;
-  at::Tensor scatter(at::Dimname dim, const at::Tensor & index, const at::Scalar & value) const;
   at::Tensor scatter_add(int64_t dim, const at::Tensor & index, const at::Tensor & src) const;
   at::Tensor & scatter_add_(int64_t dim, const at::Tensor & index, const at::Tensor & src) const;
-  at::Tensor scatter_add(at::Dimname dim, const at::Tensor & index, const at::Tensor & src) const;
   at::Tensor scatter_reduce(int64_t dim, const at::Tensor & index, const at::Tensor & src, c10::string_view reduce, bool include_self=true) const;
   at::Tensor & scatter_reduce_(int64_t dim, const at::Tensor & index, const at::Tensor & src, c10::string_view reduce, bool include_self=true) const;
   at::Tensor & eq_(const at::Scalar & other) const;
@@ -1253,7 +1195,6 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor take(const at::Tensor & index) const;
   at::Tensor take_along_dim(const at::Tensor & indices, ::std::optional<int64_t> dim=::std::nullopt) const;
   at::Tensor index_select(int64_t dim, const at::Tensor & index) const;
-  at::Tensor index_select(at::Dimname dim, const at::Tensor & index) const;
   at::Tensor masked_select(const at::Tensor & mask) const;
   at::Tensor nonzero() const;
   at::Tensor nonzero_static(int64_t size, int64_t fill_value=-1) const;
@@ -1261,7 +1202,6 @@ class TORCH_API Tensor: public TensorBase {
   ::std::vector<at::Tensor> nonzero_numpy() const;
   at::Tensor argwhere() const;
   at::Tensor gather(int64_t dim, const at::Tensor & index, bool sparse_grad=false) const;
-  at::Tensor gather(at::Dimname dim, const at::Tensor & index, bool sparse_grad=false) const;
   at::Tensor addcmul(const at::Tensor & tensor1, const at::Tensor & tensor2, const at::Scalar & value=1) const;
   at::Tensor & addcmul_(const at::Tensor & tensor1, const at::Tensor & tensor2, const at::Scalar & value=1) const;
   at::Tensor addcdiv(const at::Tensor & tensor1, const at::Tensor & tensor2, const at::Scalar & value=1) const;
@@ -1334,12 +1274,9 @@ class TORCH_API Tensor: public TensorBase {
   at::Tensor nanquantile(double q, ::std::optional<int64_t> dim=::std::nullopt, bool keepdim=false, c10::string_view interpolation="linear") const;
   ::std::tuple<at::Tensor,at::Tensor> sort(int64_t dim=-1, bool descending=false) const;
   ::std::tuple<at::Tensor,at::Tensor> sort(::std::optional<bool> stable, int64_t dim=-1, bool descending=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> sort(at::Dimname dim, bool descending=false) const;
-  ::std::tuple<at::Tensor,at::Tensor> sort(::std::optional<bool> stable, at::Dimname dim, bool descending=false) const;
   at::Tensor msort() const;
   at::Tensor argsort(int64_t dim=-1, bool descending=false) const;
   at::Tensor argsort(bool stable, int64_t dim=-1, bool descending=false) const;
-  at::Tensor argsort(at::Dimname dim, bool descending=false) const;
   ::std::tuple<at::Tensor,at::Tensor> topk(int64_t k, int64_t dim=-1, bool largest=true, bool sorted=true) const;
   ::std::tuple<at::Tensor,at::Tensor> topk_symint(c10::SymInt k, int64_t dim=-1, bool largest=true, bool sorted=true) const;
   at::Tensor all() const;
@@ -1553,36 +1490,6 @@ inline at::Tensor Tensor::_fw_primal(int64_t level) const {
     return at::_ops::_fw_primal::call(const_cast<Tensor&>(*this), level);
 }
 
-// aten::rename_(Tensor(a!) self, Dimname[]? names) -> Tensor(a!)
-inline at::Tensor & Tensor::rename_(::std::optional<at::DimnameList> names) const {
-    return at::_ops::rename_::call(const_cast<Tensor&>(*this), names);
-}
-
-// aten::rename(Tensor(a) self, Dimname[]? names) -> Tensor(a)
-inline at::Tensor Tensor::rename(::std::optional<at::DimnameList> names) const {
-    return at::_ops::rename::call(const_cast<Tensor&>(*this), names);
-}
-
-// aten::align_to(Tensor(a) self, Dimname[] names) -> Tensor(a)
-inline at::Tensor Tensor::align_to(at::DimnameList names) const {
-    return at::_ops::align_to::call(const_cast<Tensor&>(*this), names);
-}
-
-// aten::align_to.ellipsis_idx(Tensor(a) self, Dimname[] order, int ellipsis_idx) -> Tensor(a)
-inline at::Tensor Tensor::align_to(at::DimnameList order, int64_t ellipsis_idx) const {
-    return at::_ops::align_to_ellipsis_idx::call(const_cast<Tensor&>(*this), order, ellipsis_idx);
-}
-
-// aten::align_as(Tensor self, Tensor other) -> Tensor
-inline at::Tensor Tensor::align_as(const at::Tensor & other) const {
-    return at::_ops::align_as::call(const_cast<Tensor&>(*this), other);
-}
-
-// aten::refine_names(Tensor(a) self, Dimname[] names) -> Tensor(a)
-inline at::Tensor Tensor::refine_names(at::DimnameList names) const {
-    return at::_ops::refine_names::call(const_cast<Tensor&>(*this), names);
-}
-
 // aten::abs(Tensor self) -> Tensor
 inline at::Tensor Tensor::abs() const {
     return at::_ops::abs::call(const_cast<Tensor&>(*this));
@@ -1743,11 +1650,6 @@ inline at::Tensor Tensor::all(at::OptionalIntArrayRef dim, bool keepdim) const {
     return at::_ops::all_dims::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
-// aten::all.dimname(Tensor self, Dimname dim, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::all(at::Dimname dim, bool keepdim) const {
-    return at::_ops::all_dimname::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
 // aten::allclose(Tensor self, Tensor other, float rtol=1e-05, float atol=1e-08, bool equal_nan=False) -> bool
 inline bool Tensor::allclose(const at::Tensor & other, double rtol, double atol, bool equal_nan) const {
     return at::_ops::allclose::call(const_cast<Tensor&>(*this), other, rtol, atol, equal_nan);
@@ -1761,11 +1663,6 @@ inline at::Tensor Tensor::any(int64_t dim, bool keepdim) const {
 // aten::any.dims(Tensor self, int[]? dim=None, bool keepdim=False) -> Tensor
 inline at::Tensor Tensor::any(at::OptionalIntArrayRef dim, bool keepdim) const {
     return at::_ops::any_dims::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
-// aten::any.dimname(Tensor self, Dimname dim, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::any(at::Dimname dim, bool keepdim) const {
-    return at::_ops::any_dimname::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
 // aten::argmax(Tensor self, int? dim=None, bool keepdim=False) -> Tensor
@@ -2208,19 +2105,9 @@ inline ::std::tuple<at::Tensor,at::Tensor> Tensor::cummax(int64_t dim) const {
     return at::_ops::cummax::call(const_cast<Tensor&>(*this), dim);
 }
 
-// aten::cummax.dimname(Tensor self, Dimname dim) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::cummax(at::Dimname dim) const {
-    return at::_ops::cummax_dimname::call(const_cast<Tensor&>(*this), dim);
-}
-
 // aten::cummin(Tensor self, int dim) -> (Tensor values, Tensor indices)
 inline ::std::tuple<at::Tensor,at::Tensor> Tensor::cummin(int64_t dim) const {
     return at::_ops::cummin::call(const_cast<Tensor&>(*this), dim);
-}
-
-// aten::cummin.dimname(Tensor self, Dimname dim) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::cummin(at::Dimname dim) const {
-    return at::_ops::cummin_dimname::call(const_cast<Tensor&>(*this), dim);
 }
 
 // aten::cumprod(Tensor self, int dim, *, ScalarType? dtype=None) -> Tensor
@@ -2233,16 +2120,6 @@ inline at::Tensor & Tensor::cumprod_(int64_t dim, ::std::optional<at::ScalarType
     return at::_ops::cumprod_::call(const_cast<Tensor&>(*this), dim, dtype);
 }
 
-// aten::cumprod.dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::cumprod(at::Dimname dim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::cumprod_dimname::call(const_cast<Tensor&>(*this), dim, dtype);
-}
-
-// aten::cumprod_.dimname(Tensor(a!) self, Dimname dim, *, ScalarType? dtype=None) -> Tensor(a!)
-inline at::Tensor & Tensor::cumprod_(at::Dimname dim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::cumprod__dimname::call(const_cast<Tensor&>(*this), dim, dtype);
-}
-
 // aten::cumsum(Tensor self, int dim, *, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::cumsum(int64_t dim, ::std::optional<at::ScalarType> dtype) const {
     return at::_ops::cumsum::call(const_cast<Tensor&>(*this), dim, dtype);
@@ -2251,16 +2128,6 @@ inline at::Tensor Tensor::cumsum(int64_t dim, ::std::optional<at::ScalarType> dt
 // aten::cumsum_(Tensor(a!) self, int dim, *, ScalarType? dtype=None) -> Tensor(a!)
 inline at::Tensor & Tensor::cumsum_(int64_t dim, ::std::optional<at::ScalarType> dtype) const {
     return at::_ops::cumsum_::call(const_cast<Tensor&>(*this), dim, dtype);
-}
-
-// aten::cumsum.dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::cumsum(at::Dimname dim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::cumsum_dimname::call(const_cast<Tensor&>(*this), dim, dtype);
-}
-
-// aten::cumsum_.dimname(Tensor(a!) self, Dimname dim, *, ScalarType? dtype=None) -> Tensor(a!)
-inline at::Tensor & Tensor::cumsum_(at::Dimname dim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::cumsum__dimname::call(const_cast<Tensor&>(*this), dim, dtype);
 }
 
 // aten::diag_embed(Tensor self, int offset=0, int dim1=-2, int dim2=-1) -> Tensor
@@ -2276,11 +2143,6 @@ inline at::Tensor Tensor::diagflat(int64_t offset) const {
 // aten::diagonal(Tensor(a) self, int offset=0, int dim1=0, int dim2=1) -> Tensor(a)
 inline at::Tensor Tensor::diagonal(int64_t offset, int64_t dim1, int64_t dim2) const {
     return at::_ops::diagonal::call(const_cast<Tensor&>(*this), offset, dim1, dim2);
-}
-
-// aten::diagonal.Dimname(Tensor(a) self, *, Dimname outdim, Dimname dim1, Dimname dim2, int offset=0) -> Tensor(a)
-inline at::Tensor Tensor::diagonal(at::Dimname outdim, at::Dimname dim1, at::Dimname dim2, int64_t offset) const {
-    return at::_ops::diagonal_Dimname::call(const_cast<Tensor&>(*this), outdim, dim1, dim2, offset);
 }
 
 // aten::fill_diagonal_(Tensor(a!) self, Scalar fill_value, bool wrap=False) -> Tensor(a!)
@@ -2583,21 +2445,6 @@ inline at::Tensor Tensor::flatten(int64_t start_dim, int64_t end_dim) const {
     return at::_ops::flatten_using_ints::call(const_cast<Tensor&>(*this), start_dim, end_dim);
 }
 
-// aten::flatten.named_out_dim(Tensor(a) self, int start_dim, int end_dim, Dimname out_dim) -> Tensor(a)
-inline at::Tensor Tensor::flatten(int64_t start_dim, int64_t end_dim, at::Dimname out_dim) const {
-    return at::_ops::flatten_named_out_dim::call(const_cast<Tensor&>(*this), start_dim, end_dim, out_dim);
-}
-
-// aten::flatten.using_names(Tensor(a) self, Dimname start_dim, Dimname end_dim, Dimname out_dim) -> Tensor(a)
-inline at::Tensor Tensor::flatten(at::Dimname start_dim, at::Dimname end_dim, at::Dimname out_dim) const {
-    return at::_ops::flatten_using_names::call(const_cast<Tensor&>(*this), start_dim, end_dim, out_dim);
-}
-
-// aten::flatten.DimnameList(Tensor(a) self, Dimname[] dims, Dimname out_dim) -> Tensor(a)
-inline at::Tensor Tensor::flatten(at::DimnameList dims, at::Dimname out_dim) const {
-    return at::_ops::flatten_DimnameList::call(const_cast<Tensor&>(*this), dims, out_dim);
-}
-
 // aten::unflatten.int(Tensor(a) self, int dim, SymInt[] sizes) -> Tensor(a)
 inline at::Tensor Tensor::unflatten(int64_t dim, at::IntArrayRef sizes) const {
     return at::_ops::unflatten_int::call(const_cast<Tensor&>(*this), dim, c10::fromIntArrayRefSlow(sizes));
@@ -2606,16 +2453,6 @@ inline at::Tensor Tensor::unflatten(int64_t dim, at::IntArrayRef sizes) const {
 // aten::unflatten.int(Tensor(a) self, int dim, SymInt[] sizes) -> Tensor(a)
 inline at::Tensor Tensor::unflatten_symint(int64_t dim, c10::SymIntArrayRef sizes) const {
     return at::_ops::unflatten_int::call(const_cast<Tensor&>(*this), dim, sizes);
-}
-
-// aten::unflatten.Dimname(Tensor(a) self, Dimname dim, SymInt[] sizes, Dimname[] names) -> Tensor(a)
-inline at::Tensor Tensor::unflatten(at::Dimname dim, at::IntArrayRef sizes, at::DimnameList names) const {
-    return at::_ops::unflatten_Dimname::call(const_cast<Tensor&>(*this), dim, c10::fromIntArrayRefSlow(sizes), names);
-}
-
-// aten::unflatten.Dimname(Tensor(a) self, Dimname dim, SymInt[] sizes, Dimname[] names) -> Tensor(a)
-inline at::Tensor Tensor::unflatten_symint(at::Dimname dim, c10::SymIntArrayRef sizes, at::DimnameList names) const {
-    return at::_ops::unflatten_Dimname::call(const_cast<Tensor&>(*this), dim, sizes, names);
 }
 
 // aten::fill_.Scalar(Tensor(a!) self, Scalar value) -> Tensor(a!)
@@ -2701,16 +2538,6 @@ inline at::Tensor & Tensor::index_copy_(int64_t dim, const at::Tensor & index, c
 // aten::index_copy(Tensor self, int dim, Tensor index, Tensor source) -> Tensor
 inline at::Tensor Tensor::index_copy(int64_t dim, const at::Tensor & index, const at::Tensor & source) const {
     return at::_ops::index_copy::call(const_cast<Tensor&>(*this), dim, index, source);
-}
-
-// aten::index_copy_.dimname(Tensor(a!) self, Dimname dim, Tensor index, Tensor source) -> Tensor(a!)
-inline at::Tensor & Tensor::index_copy_(at::Dimname dim, const at::Tensor & index, const at::Tensor & source) const {
-    return at::_ops::index_copy__dimname::call(const_cast<Tensor&>(*this), dim, index, source);
-}
-
-// aten::index_copy.dimname(Tensor self, Dimname dim, Tensor index, Tensor source) -> Tensor
-inline at::Tensor Tensor::index_copy(at::Dimname dim, const at::Tensor & index, const at::Tensor & source) const {
-    return at::_ops::index_copy_dimname::call(const_cast<Tensor&>(*this), dim, index, source);
 }
 
 // aten::index_put_(Tensor(a!) self, Tensor?[] indices, Tensor values, bool accumulate=False) -> Tensor(a!)
@@ -2833,16 +2660,6 @@ inline ::std::tuple<at::Tensor,at::Tensor> Tensor::kthvalue_symint(c10::SymInt k
     return at::_ops::kthvalue::call(const_cast<Tensor&>(*this), k, dim, keepdim);
 }
 
-// aten::kthvalue.dimname(Tensor self, SymInt k, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::kthvalue(int64_t k, at::Dimname dim, bool keepdim) const {
-    return at::_ops::kthvalue_dimname::call(const_cast<Tensor&>(*this), k, dim, keepdim);
-}
-
-// aten::kthvalue.dimname(Tensor self, SymInt k, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::kthvalue_symint(c10::SymInt k, at::Dimname dim, bool keepdim) const {
-    return at::_ops::kthvalue_dimname::call(const_cast<Tensor&>(*this), k, dim, keepdim);
-}
-
 // aten::nan_to_num(Tensor self, float? nan=None, float? posinf=None, float? neginf=None) -> Tensor
 inline at::Tensor Tensor::nan_to_num(::std::optional<double> nan, ::std::optional<double> posinf, ::std::optional<double> neginf) const {
     return at::_ops::nan_to_num::call(const_cast<Tensor&>(*this), nan, posinf, neginf);
@@ -2938,29 +2755,14 @@ inline at::Tensor Tensor::log_softmax(int64_t dim, ::std::optional<at::ScalarTyp
     return at::_ops::log_softmax_int::call(const_cast<Tensor&>(*this), dim, dtype);
 }
 
-// aten::log_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::log_softmax(at::Dimname dim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::log_softmax_Dimname::call(const_cast<Tensor&>(*this), dim, dtype);
-}
-
 // aten::logcumsumexp(Tensor self, int dim) -> Tensor
 inline at::Tensor Tensor::logcumsumexp(int64_t dim) const {
     return at::_ops::logcumsumexp::call(const_cast<Tensor&>(*this), dim);
 }
 
-// aten::logcumsumexp.dimname(Tensor self, Dimname dim) -> Tensor
-inline at::Tensor Tensor::logcumsumexp(at::Dimname dim) const {
-    return at::_ops::logcumsumexp_dimname::call(const_cast<Tensor&>(*this), dim);
-}
-
 // aten::logsumexp(Tensor self, int[1] dim, bool keepdim=False) -> Tensor
 inline at::Tensor Tensor::logsumexp(at::IntArrayRef dim, bool keepdim) const {
     return at::_ops::logsumexp::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
-// aten::logsumexp.names(Tensor self, Dimname[1] dim, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::logsumexp(at::DimnameList dim, bool keepdim) const {
-    return at::_ops::logsumexp_names::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
 // aten::matmul(Tensor self, Tensor other) -> Tensor
@@ -2988,11 +2790,6 @@ inline ::std::tuple<at::Tensor,at::Tensor> Tensor::max(int64_t dim, bool keepdim
     return at::_ops::max_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
-// aten::max.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::max(at::Dimname dim, bool keepdim) const {
-    return at::_ops::max_names_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
 // aten::amax(Tensor self, int[1] dim=[], bool keepdim=False) -> Tensor
 inline at::Tensor Tensor::amax(at::IntArrayRef dim, bool keepdim) const {
     return at::_ops::amax::call(const_cast<Tensor&>(*this), dim, keepdim);
@@ -3006,11 +2803,6 @@ inline at::Tensor Tensor::mean(::std::optional<at::ScalarType> dtype) const {
 // aten::mean.dim(Tensor self, int[1]? dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::mean(at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype) const {
     return at::_ops::mean_dim::call(const_cast<Tensor&>(*this), dim, keepdim, dtype);
-}
-
-// aten::mean.names_dim(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::mean(at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::mean_names_dim::call(const_cast<Tensor&>(*this), dim, keepdim, dtype);
 }
 
 // aten::nanmean(Tensor self, int[1]? dim=None, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
@@ -3028,11 +2820,6 @@ inline ::std::tuple<at::Tensor,at::Tensor> Tensor::median(int64_t dim, bool keep
     return at::_ops::median_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
-// aten::median.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::median(at::Dimname dim, bool keepdim) const {
-    return at::_ops::median_names_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
 // aten::nanmedian(Tensor self) -> Tensor
 inline at::Tensor Tensor::nanmedian() const {
     return at::_ops::nanmedian::call(const_cast<Tensor&>(*this));
@@ -3043,19 +2830,9 @@ inline ::std::tuple<at::Tensor,at::Tensor> Tensor::nanmedian(int64_t dim, bool k
     return at::_ops::nanmedian_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
-// aten::nanmedian.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::nanmedian(at::Dimname dim, bool keepdim) const {
-    return at::_ops::nanmedian_names_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
 // aten::min.dim(Tensor self, int dim, bool keepdim=False) -> (Tensor values, Tensor indices)
 inline ::std::tuple<at::Tensor,at::Tensor> Tensor::min(int64_t dim, bool keepdim) const {
     return at::_ops::min_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
-// aten::min.names_dim(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::min(at::Dimname dim, bool keepdim) const {
-    return at::_ops::min_names_dim::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
 // aten::amin(Tensor self, int[1] dim=[], bool keepdim=False) -> Tensor
@@ -3071,11 +2848,6 @@ inline at::Tensor Tensor::mm(const at::Tensor & mat2) const {
 // aten::mode(Tensor self, int dim=-1, bool keepdim=False) -> (Tensor values, Tensor indices)
 inline ::std::tuple<at::Tensor,at::Tensor> Tensor::mode(int64_t dim, bool keepdim) const {
     return at::_ops::mode::call(const_cast<Tensor&>(*this), dim, keepdim);
-}
-
-// aten::mode.dimname(Tensor self, Dimname dim, bool keepdim=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::mode(at::Dimname dim, bool keepdim) const {
-    return at::_ops::mode_dimname::call(const_cast<Tensor&>(*this), dim, keepdim);
 }
 
 // aten::mul.Tensor(Tensor self, Tensor other) -> Tensor
@@ -3393,11 +3165,6 @@ inline at::Tensor & Tensor::rsqrt_() const {
     return at::_ops::rsqrt_::call(const_cast<Tensor&>(*this));
 }
 
-// aten::select.Dimname(Tensor(a) self, Dimname dim, int index) -> Tensor(a)
-inline at::Tensor Tensor::select(at::Dimname dim, int64_t index) const {
-    return at::_ops::select_Dimname::call(const_cast<Tensor&>(*this), dim, index);
-}
-
 // aten::select.int(Tensor(a) self, int dim, SymInt index) -> Tensor(a)
 inline at::Tensor Tensor::select(int64_t dim, int64_t index) const {
     return at::_ops::select_int::call(const_cast<Tensor&>(*this), dim, index);
@@ -3468,11 +3235,6 @@ inline at::Tensor & Tensor::detach_() const {
     return at::_ops::detach_::call(const_cast<Tensor&>(*this));
 }
 
-// aten::size.Dimname(Tensor self, Dimname dim) -> int
-inline int64_t Tensor::size(at::Dimname dim) const {
-    return at::_ops::size_Dimname::call(const_cast<Tensor&>(*this), dim);
-}
-
 // aten::slice.Tensor(Tensor(a) self, int dim=0, SymInt? start=None, SymInt? end=None, SymInt step=1) -> Tensor(a)
 inline at::Tensor Tensor::slice(int64_t dim, ::std::optional<int64_t> start, ::std::optional<int64_t> end, int64_t step) const {
     return at::_ops::slice_Tensor::call(const_cast<Tensor&>(*this), dim, start.has_value() ? ::std::make_optional(c10::SymInt(*start)) : ::std::nullopt, end.has_value() ? ::std::make_optional(c10::SymInt(*end)) : ::std::nullopt, step);
@@ -3536,11 +3298,6 @@ inline at::Tensor Tensor::smm(const at::Tensor & mat2) const {
 // aten::softmax.int(Tensor self, int dim, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::softmax(int64_t dim, ::std::optional<at::ScalarType> dtype) const {
     return at::_ops::softmax_int::call(const_cast<Tensor&>(*this), dim, dtype);
-}
-
-// aten::softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::softmax(at::Dimname dim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::softmax_Dimname::call(const_cast<Tensor&>(*this), dim, dtype);
 }
 
 // aten::unsafe_split.Tensor(Tensor self, SymInt split_size, int dim=0) -> Tensor[]
@@ -3633,11 +3390,6 @@ inline at::Tensor Tensor::squeeze(int64_t dim) const {
     return at::_ops::squeeze_dim::call(const_cast<Tensor&>(*this), dim);
 }
 
-// aten::squeeze.dimname(Tensor(a) self, Dimname dim) -> Tensor(a)
-inline at::Tensor Tensor::squeeze(at::Dimname dim) const {
-    return at::_ops::squeeze_dimname::call(const_cast<Tensor&>(*this), dim);
-}
-
 // aten::squeeze.dims(Tensor(a) self, int[] dim) -> Tensor(a)
 inline at::Tensor Tensor::squeeze(at::IntArrayRef dim) const {
     return at::_ops::squeeze_dims::call(const_cast<Tensor&>(*this), dim);
@@ -3656,11 +3408,6 @@ inline at::Tensor & Tensor::squeeze_(int64_t dim) const {
 // aten::squeeze_.dims(Tensor(a!) self, int[] dim) -> Tensor(a!)
 inline at::Tensor & Tensor::squeeze_(at::IntArrayRef dim) const {
     return at::_ops::squeeze__dims::call(const_cast<Tensor&>(*this), dim);
-}
-
-// aten::squeeze_.dimname(Tensor(a!) self, Dimname dim) -> Tensor(a!)
-inline at::Tensor & Tensor::squeeze_(at::Dimname dim) const {
-    return at::_ops::squeeze__dimname::call(const_cast<Tensor&>(*this), dim);
 }
 
 // aten::sspaddmm(Tensor self, Tensor mat1, Tensor mat2, *, Scalar beta=1, Scalar alpha=1) -> Tensor
@@ -3683,11 +3430,6 @@ inline at::Tensor Tensor::istft(int64_t n_fft, ::std::optional<int64_t> hop_leng
     return at::_ops::istft::call(const_cast<Tensor&>(*this), n_fft, hop_length, win_length, window, center, normalized, onesided, length, return_complex);
 }
 
-// aten::stride.Dimname(Tensor self, Dimname dim) -> int
-inline int64_t Tensor::stride(at::Dimname dim) const {
-    return at::_ops::stride_Dimname::call(const_cast<Tensor&>(*this), dim);
-}
-
 // aten::sum(Tensor self, *, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::sum(::std::optional<at::ScalarType> dtype) const {
     return at::_ops::sum::call(const_cast<Tensor&>(*this), dtype);
@@ -3696,11 +3438,6 @@ inline at::Tensor Tensor::sum(::std::optional<at::ScalarType> dtype) const {
 // aten::sum.dim_IntList(Tensor self, int[1]? dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::sum(at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype) const {
     return at::_ops::sum_dim_IntList::call(const_cast<Tensor&>(*this), dim, keepdim, dtype);
-}
-
-// aten::sum.dim_DimnameList(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::sum(at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::sum_dim_DimnameList::call(const_cast<Tensor&>(*this), dim, keepdim, dtype);
 }
 
 // aten::nansum(Tensor self, int[1]? dim=None, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
@@ -3758,16 +3495,6 @@ inline at::Tensor Tensor::std(at::OptionalIntArrayRef dim, const ::std::optional
     return at::_ops::std_correction::call(const_cast<Tensor&>(*this), dim, correction, keepdim);
 }
 
-// aten::std.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::std(at::DimnameList dim, bool unbiased, bool keepdim) const {
-    return at::_ops::std_names_dim::call(const_cast<Tensor&>(*this), dim, unbiased, keepdim);
-}
-
-// aten::std.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::std(at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim) const {
-    return at::_ops::std_correction_names::call(const_cast<Tensor&>(*this), dim, correction, keepdim);
-}
-
 // aten::prod(Tensor self, *, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::prod(::std::optional<at::ScalarType> dtype) const {
     return at::_ops::prod::call(const_cast<Tensor&>(*this), dtype);
@@ -3776,11 +3503,6 @@ inline at::Tensor Tensor::prod(::std::optional<at::ScalarType> dtype) const {
 // aten::prod.dim_int(Tensor self, int dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
 inline at::Tensor Tensor::prod(int64_t dim, bool keepdim, ::std::optional<at::ScalarType> dtype) const {
     return at::_ops::prod_dim_int::call(const_cast<Tensor&>(*this), dim, keepdim, dtype);
-}
-
-// aten::prod.dim_Dimname(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor Tensor::prod(at::Dimname dim, bool keepdim, ::std::optional<at::ScalarType> dtype) const {
-    return at::_ops::prod_dim_Dimname::call(const_cast<Tensor&>(*this), dim, keepdim, dtype);
 }
 
 // aten::t(Tensor(a) self) -> Tensor(a)
@@ -3826,11 +3548,6 @@ inline at::Tensor Tensor::tile_symint(c10::SymIntArrayRef dims) const {
 // aten::transpose.int(Tensor(a) self, int dim0, int dim1) -> Tensor(a)
 inline at::Tensor Tensor::transpose(int64_t dim0, int64_t dim1) const {
     return at::_ops::transpose_int::call(const_cast<Tensor&>(*this), dim0, dim1);
-}
-
-// aten::transpose.Dimname(Tensor(a) self, Dimname dim0, Dimname dim1) -> Tensor(a)
-inline at::Tensor Tensor::transpose(at::Dimname dim0, at::Dimname dim1) const {
-    return at::_ops::transpose_Dimname::call(const_cast<Tensor&>(*this), dim0, dim1);
 }
 
 // aten::transpose_(Tensor(a!) self, int dim0, int dim1) -> Tensor(a!)
@@ -3933,16 +3650,6 @@ inline at::Tensor Tensor::var(at::OptionalIntArrayRef dim, const ::std::optional
     return at::_ops::var_correction::call(const_cast<Tensor&>(*this), dim, correction, keepdim);
 }
 
-// aten::var.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::var(at::DimnameList dim, bool unbiased, bool keepdim) const {
-    return at::_ops::var_names_dim::call(const_cast<Tensor&>(*this), dim, unbiased, keepdim);
-}
-
-// aten::var.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::var(at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim) const {
-    return at::_ops::var_correction_names::call(const_cast<Tensor&>(*this), dim, correction, keepdim);
-}
-
 // aten::view_as(Tensor(a) self, Tensor other) -> Tensor(a)
 inline at::Tensor Tensor::view_as(const at::Tensor & other) const {
     return at::_ops::view_as::call(const_cast<Tensor&>(*this), other);
@@ -3986,16 +3693,6 @@ inline at::Tensor Tensor::norm(const ::std::optional<at::Scalar> & p, at::IntArr
 // aten::norm.ScalarOpt_dim(Tensor self, Scalar? p, int[1] dim, bool keepdim=False) -> Tensor
 inline at::Tensor Tensor::norm(const ::std::optional<at::Scalar> & p, at::IntArrayRef dim, bool keepdim) const {
     return at::_ops::norm_ScalarOpt_dim::call(const_cast<Tensor&>(*this), p, dim, keepdim);
-}
-
-// aten::norm.names_ScalarOpt_dim_dtype(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype) -> Tensor
-inline at::Tensor Tensor::norm(const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype) const {
-    return at::_ops::norm_names_ScalarOpt_dim_dtype::call(const_cast<Tensor&>(*this), p, dim, keepdim, dtype);
-}
-
-// aten::norm.names_ScalarOpt_dim(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False) -> Tensor
-inline at::Tensor Tensor::norm(const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim) const {
-    return at::_ops::norm_names_ScalarOpt_dim::call(const_cast<Tensor&>(*this), p, dim, keepdim);
 }
 
 // aten::frexp.Tensor(Tensor self) -> (Tensor mantissa, Tensor exponent)
@@ -4206,11 +3903,6 @@ inline at::Tensor Tensor::row_indices() const {
 // aten::unbind.int(Tensor(a -> *) self, int dim=0) -> Tensor(a)[]
 inline ::std::vector<at::Tensor> Tensor::unbind(int64_t dim) const {
     return at::_ops::unbind_int::call(const_cast<Tensor&>(*this), dim);
-}
-
-// aten::unbind.Dimname(Tensor(a -> *) self, Dimname dim) -> Tensor(a)[]
-inline ::std::vector<at::Tensor> Tensor::unbind(at::Dimname dim) const {
-    return at::_ops::unbind_Dimname::call(const_cast<Tensor&>(*this), dim);
 }
 
 // aten::to_sparse.sparse_dim(Tensor self, int sparse_dim) -> Tensor
@@ -4463,11 +4155,6 @@ inline at::Tensor Tensor::index_add(int64_t dim, const at::Tensor & index, const
     return at::_ops::index_add::call(const_cast<Tensor&>(*this), dim, index, source, alpha);
 }
 
-// aten::index_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor source, *, Scalar alpha=1) -> Tensor
-inline at::Tensor Tensor::index_add(at::Dimname dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha) const {
-    return at::_ops::index_add_dimname::call(const_cast<Tensor&>(*this), dim, index, source, alpha);
-}
-
 // aten::index_reduce_(Tensor(a!) self, int dim, Tensor index, Tensor source, str reduce, *, bool include_self=True) -> Tensor(a!)
 inline at::Tensor & Tensor::index_reduce_(int64_t dim, const at::Tensor & index, const at::Tensor & source, c10::string_view reduce, bool include_self) const {
     return at::_ops::index_reduce_::call(const_cast<Tensor&>(*this), dim, index, source, reduce, include_self);
@@ -4496,26 +4183,6 @@ inline at::Tensor & Tensor::index_fill_(int64_t dim, const at::Tensor & index, c
 // aten::index_fill.int_Tensor(Tensor self, int dim, Tensor index, Tensor value) -> Tensor
 inline at::Tensor Tensor::index_fill(int64_t dim, const at::Tensor & index, const at::Tensor & value) const {
     return at::_ops::index_fill_int_Tensor::call(const_cast<Tensor&>(*this), dim, index, value);
-}
-
-// aten::index_fill_.Dimname_Scalar(Tensor(a!) self, Dimname dim, Tensor index, Scalar value) -> Tensor(a!)
-inline at::Tensor & Tensor::index_fill_(at::Dimname dim, const at::Tensor & index, const at::Scalar & value) const {
-    return at::_ops::index_fill__Dimname_Scalar::call(const_cast<Tensor&>(*this), dim, index, value);
-}
-
-// aten::index_fill_.Dimname_Tensor(Tensor(a!) self, Dimname dim, Tensor index, Tensor value) -> Tensor(a!)
-inline at::Tensor & Tensor::index_fill_(at::Dimname dim, const at::Tensor & index, const at::Tensor & value) const {
-    return at::_ops::index_fill__Dimname_Tensor::call(const_cast<Tensor&>(*this), dim, index, value);
-}
-
-// aten::index_fill.Dimname_Scalar(Tensor self, Dimname dim, Tensor index, Scalar value) -> Tensor
-inline at::Tensor Tensor::index_fill(at::Dimname dim, const at::Tensor & index, const at::Scalar & value) const {
-    return at::_ops::index_fill_Dimname_Scalar::call(const_cast<Tensor&>(*this), dim, index, value);
-}
-
-// aten::index_fill.Dimname_Tensor(Tensor self, Dimname dim, Tensor index, Tensor value) -> Tensor
-inline at::Tensor Tensor::index_fill(at::Dimname dim, const at::Tensor & index, const at::Tensor & value) const {
-    return at::_ops::index_fill_Dimname_Tensor::call(const_cast<Tensor&>(*this), dim, index, value);
 }
 
 // aten::scatter.src(Tensor self, int dim, Tensor index, Tensor src) -> Tensor
@@ -4558,16 +4225,6 @@ inline at::Tensor & Tensor::scatter_(int64_t dim, const at::Tensor & index, cons
     return at::_ops::scatter__value_reduce::call(const_cast<Tensor&>(*this), dim, index, value, reduce);
 }
 
-// aten::scatter.dimname_src(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor
-inline at::Tensor Tensor::scatter(at::Dimname dim, const at::Tensor & index, const at::Tensor & src) const {
-    return at::_ops::scatter_dimname_src::call(const_cast<Tensor&>(*this), dim, index, src);
-}
-
-// aten::scatter.dimname_value(Tensor self, Dimname dim, Tensor index, Scalar value) -> Tensor
-inline at::Tensor Tensor::scatter(at::Dimname dim, const at::Tensor & index, const at::Scalar & value) const {
-    return at::_ops::scatter_dimname_value::call(const_cast<Tensor&>(*this), dim, index, value);
-}
-
 // aten::scatter_add(Tensor self, int dim, Tensor index, Tensor src) -> Tensor
 inline at::Tensor Tensor::scatter_add(int64_t dim, const at::Tensor & index, const at::Tensor & src) const {
     return at::_ops::scatter_add::call(const_cast<Tensor&>(*this), dim, index, src);
@@ -4576,11 +4233,6 @@ inline at::Tensor Tensor::scatter_add(int64_t dim, const at::Tensor & index, con
 // aten::scatter_add_(Tensor(a!) self, int dim, Tensor index, Tensor src) -> Tensor(a!)
 inline at::Tensor & Tensor::scatter_add_(int64_t dim, const at::Tensor & index, const at::Tensor & src) const {
     return at::_ops::scatter_add_::call(const_cast<Tensor&>(*this), dim, index, src);
-}
-
-// aten::scatter_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor
-inline at::Tensor Tensor::scatter_add(at::Dimname dim, const at::Tensor & index, const at::Tensor & src) const {
-    return at::_ops::scatter_add_dimname::call(const_cast<Tensor&>(*this), dim, index, src);
 }
 
 // aten::scatter_reduce.two(Tensor self, int dim, Tensor index, Tensor src, str reduce, *, bool include_self=True) -> Tensor
@@ -5148,11 +4800,6 @@ inline at::Tensor Tensor::index_select(int64_t dim, const at::Tensor & index) co
     return at::_ops::index_select::call(const_cast<Tensor&>(*this), dim, index);
 }
 
-// aten::index_select.dimname(Tensor self, Dimname dim, Tensor index) -> Tensor
-inline at::Tensor Tensor::index_select(at::Dimname dim, const at::Tensor & index) const {
-    return at::_ops::index_select_dimname::call(const_cast<Tensor&>(*this), dim, index);
-}
-
 // aten::masked_select(Tensor self, Tensor mask) -> Tensor
 inline at::Tensor Tensor::masked_select(const at::Tensor & mask) const {
     return at::_ops::masked_select::call(const_cast<Tensor&>(*this), mask);
@@ -5186,11 +4833,6 @@ inline at::Tensor Tensor::argwhere() const {
 // aten::gather(Tensor self, int dim, Tensor index, *, bool sparse_grad=False) -> Tensor
 inline at::Tensor Tensor::gather(int64_t dim, const at::Tensor & index, bool sparse_grad) const {
     return at::_ops::gather::call(const_cast<Tensor&>(*this), dim, index, sparse_grad);
-}
-
-// aten::gather.dimname(Tensor self, Dimname dim, Tensor index, *, bool sparse_grad=False) -> Tensor
-inline at::Tensor Tensor::gather(at::Dimname dim, const at::Tensor & index, bool sparse_grad) const {
-    return at::_ops::gather_dimname::call(const_cast<Tensor&>(*this), dim, index, sparse_grad);
 }
 
 // aten::addcmul(Tensor self, Tensor tensor1, Tensor tensor2, *, Scalar value=1) -> Tensor
@@ -5553,16 +5195,6 @@ inline ::std::tuple<at::Tensor,at::Tensor> Tensor::sort(::std::optional<bool> st
     return at::_ops::sort_stable::call(const_cast<Tensor&>(*this), stable, dim, descending);
 }
 
-// aten::sort.dimname(Tensor self, Dimname dim, bool descending=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::sort(at::Dimname dim, bool descending) const {
-    return at::_ops::sort_dimname::call(const_cast<Tensor&>(*this), dim, descending);
-}
-
-// aten::sort.dimname_stable(Tensor self, *, bool? stable, Dimname dim, bool descending=False) -> (Tensor values, Tensor indices)
-inline ::std::tuple<at::Tensor,at::Tensor> Tensor::sort(::std::optional<bool> stable, at::Dimname dim, bool descending) const {
-    return at::_ops::sort_dimname_stable::call(const_cast<Tensor&>(*this), stable, dim, descending);
-}
-
 // aten::msort(Tensor self) -> Tensor
 inline at::Tensor Tensor::msort() const {
     return at::_ops::msort::call(const_cast<Tensor&>(*this));
@@ -5576,11 +5208,6 @@ inline at::Tensor Tensor::argsort(int64_t dim, bool descending) const {
 // aten::argsort.stable(Tensor self, *, bool stable, int dim=-1, bool descending=False) -> Tensor
 inline at::Tensor Tensor::argsort(bool stable, int64_t dim, bool descending) const {
     return at::_ops::argsort_stable::call(const_cast<Tensor&>(*this), stable, dim, descending);
-}
-
-// aten::argsort.dimname(Tensor self, Dimname dim, bool descending=False) -> Tensor
-inline at::Tensor Tensor::argsort(at::Dimname dim, bool descending) const {
-    return at::_ops::argsort_dimname::call(const_cast<Tensor&>(*this), dim, descending);
 }
 
 // aten::topk(Tensor self, SymInt k, int dim=-1, bool largest=True, bool sorted=True) -> (Tensor values, Tensor indices)

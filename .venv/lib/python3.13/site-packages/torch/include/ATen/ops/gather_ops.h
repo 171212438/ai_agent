@@ -38,28 +38,6 @@ struct TORCH_API gather {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, const at::Tensor & index, bool sparse_grad);
 };
 
-struct TORCH_API gather_dimname_out {
-  using schema = at::Tensor & (const at::Tensor &, at::Dimname, const at::Tensor &, bool, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::gather";
-  static constexpr const char* overload_name = "dimname_out";
-  static constexpr const char* schema_str = "gather.dimname_out(Tensor self, Dimname dim, Tensor index, *, bool sparse_grad=False, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad, at::Tensor & out);
-};
-
-struct TORCH_API gather_dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, const at::Tensor &, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::gather";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "gather.dimname(Tensor self, Dimname dim, Tensor index, *, bool sparse_grad=False) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, bool sparse_grad);
-};
-
 }} // namespace at::_ops
 
 #else

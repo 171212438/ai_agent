@@ -57,34 +57,6 @@ inline at::Tensor & std_outf(const at::Tensor & self, at::OptionalIntArrayRef di
     return at::_ops::std_correction_out::call(self, dim, correction, keepdim, out);
 }
 
-// aten::std.names_dim(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False) -> Tensor
-inline at::Tensor std(const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-    return at::_ops::std_names_dim::call(self, dim, unbiased, keepdim);
-}
-
-// aten::std.names_out(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & std_out(at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false) {
-    return at::_ops::std_names_out::call(self, dim, unbiased, keepdim, out);
-}
-// aten::std.names_out(Tensor self, Dimname[1] dim, bool unbiased=True, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & std_outf(const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim, at::Tensor & out) {
-    return at::_ops::std_names_out::call(self, dim, unbiased, keepdim, out);
-}
-
-// aten::std.correction_names(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False) -> Tensor
-inline at::Tensor std(const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-    return at::_ops::std_correction_names::call(self, dim, correction, keepdim);
-}
-
-// aten::std.correction_names_out(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & std_out(at::Tensor & out, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false) {
-    return at::_ops::std_correction_names_out::call(self, dim, correction, keepdim, out);
-}
-// aten::std.correction_names_out(Tensor self, Dimname[1] dim, *, Scalar? correction=None, bool keepdim=False, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & std_outf(const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim, at::Tensor & out) {
-    return at::_ops::std_correction_names_out::call(self, dim, correction, keepdim, out);
-}
-
 }
 
 #else

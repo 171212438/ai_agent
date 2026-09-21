@@ -16,28 +16,6 @@ namespace at {
 namespace _ops {
 
 
-struct TORCH_API rand_names {
-  using schema = at::Tensor (c10::SymIntArrayRef, ::std::optional<at::DimnameList>, ::std::optional<at::ScalarType>, ::std::optional<at::Layout>, ::std::optional<at::Device>, ::std::optional<bool>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::rand";
-  static constexpr const char* overload_name = "names";
-  static constexpr const char* schema_str = "rand.names(SymInt[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor";
-  static at::Tensor call(c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory);
-};
-
-struct TORCH_API rand_generator_with_names {
-  using schema = at::Tensor (c10::SymIntArrayRef, ::std::optional<at::Generator>, ::std::optional<at::DimnameList>, ::std::optional<at::ScalarType>, ::std::optional<at::Layout>, ::std::optional<at::Device>, ::std::optional<bool>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::rand";
-  static constexpr const char* overload_name = "generator_with_names";
-  static constexpr const char* schema_str = "rand.generator_with_names(SymInt[] size, *, Generator? generator, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor";
-  static at::Tensor call(c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory);
-};
-
 struct TORCH_API rand {
   using schema = at::Tensor (c10::SymIntArrayRef, ::std::optional<at::ScalarType>, ::std::optional<at::Layout>, ::std::optional<at::Device>, ::std::optional<bool>);
   using ptr_schema = schema*;
@@ -80,28 +58,6 @@ struct TORCH_API rand_generator_out {
   static constexpr const char* schema_str = "rand.generator_out(SymInt[] size, *, Generator? generator, Tensor(a!) out) -> Tensor(a!)";
   static at::Tensor & call(c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, at::Tensor & out);
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, at::Tensor & out);
-};
-
-struct TORCH_API rand_names_out {
-  using schema = at::Tensor & (c10::SymIntArrayRef, ::std::optional<at::DimnameList>, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::rand";
-  static constexpr const char* overload_name = "names_out";
-  static constexpr const char* schema_str = "rand.names_out(SymInt[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out);
-};
-
-struct TORCH_API rand_generator_with_names_out {
-  using schema = at::Tensor & (c10::SymIntArrayRef, ::std::optional<at::Generator>, ::std::optional<at::DimnameList>, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::rand";
-  static constexpr const char* overload_name = "generator_with_names_out";
-  static constexpr const char* schema_str = "rand.generator_with_names_out(SymInt[] size, *, Generator? generator, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, c10::SymIntArrayRef size, ::std::optional<at::Generator> generator, ::std::optional<at::DimnameList> names, at::Tensor & out);
 };
 
 }} // namespace at::_ops

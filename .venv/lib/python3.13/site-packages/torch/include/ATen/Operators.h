@@ -156,6 +156,7 @@
 #include <ATen/ops/_foreach_max_ops.h>
 #include <ATen/ops/_foreach_maximum_ops.h>
 #include <ATen/ops/_foreach_minimum_ops.h>
+#include <ATen/ops/_foreach_mm_ops.h>
 #include <ATen/ops/_foreach_mul_ops.h>
 #include <ATen/ops/_foreach_neg_ops.h>
 #include <ATen/ops/_foreach_norm_ops.h>
@@ -458,9 +459,6 @@
 #include <ATen/ops/affine_grid_generator_backward_ops.h>
 #include <ATen/ops/alias_ops.h>
 #include <ATen/ops/alias_copy_ops.h>
-#include <ATen/ops/align_as_ops.h>
-#include <ATen/ops/align_tensors_ops.h>
-#include <ATen/ops/align_to_ops.h>
 #include <ATen/ops/all_ops.h>
 #include <ATen/ops/allclose_ops.h>
 #include <ATen/ops/alpha_dropout_ops.h>
@@ -1089,7 +1087,6 @@
 #include <ATen/ops/real_ops.h>
 #include <ATen/ops/reciprocal_ops.h>
 #include <ATen/ops/record_stream_ops.h>
-#include <ATen/ops/refine_names_ops.h>
 #include <ATen/ops/reflection_pad1d_ops.h>
 #include <ATen/ops/reflection_pad1d_backward_ops.h>
 #include <ATen/ops/reflection_pad2d_ops.h>
@@ -1099,7 +1096,6 @@
 #include <ATen/ops/relu_ops.h>
 #include <ATen/ops/relu6_ops.h>
 #include <ATen/ops/remainder_ops.h>
-#include <ATen/ops/rename_ops.h>
 #include <ATen/ops/renorm_ops.h>
 #include <ATen/ops/repeat_ops.h>
 #include <ATen/ops/repeat_interleave_ops.h>

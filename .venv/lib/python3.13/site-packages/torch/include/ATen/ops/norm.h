@@ -62,34 +62,6 @@ inline at::Tensor & norm_outf(const at::Tensor & self, const ::std::optional<at:
     return at::_ops::norm_out::call(self, p, dim, keepdim, out);
 }
 
-// aten::norm.names_ScalarOpt_dim_dtype(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype) -> Tensor
-inline at::Tensor norm(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype) {
-    return at::_ops::norm_names_ScalarOpt_dim_dtype::call(self, p, dim, keepdim, dtype);
-}
-
-// aten::norm.names_ScalarOpt_dim(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False) -> Tensor
-inline at::Tensor norm(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim=false) {
-    return at::_ops::norm_names_ScalarOpt_dim::call(self, p, dim, keepdim);
-}
-
-// aten::norm.names_dtype_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & norm_out(at::Tensor & out, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype) {
-    return at::_ops::norm_names_dtype_out::call(self, p, dim, keepdim, dtype, out);
-}
-// aten::norm.names_dtype_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim, *, ScalarType dtype, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & norm_outf(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype, at::Tensor & out) {
-    return at::_ops::norm_names_dtype_out::call(self, p, dim, keepdim, dtype, out);
-}
-
-// aten::norm.names_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & norm_out(at::Tensor & out, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim=false) {
-    return at::_ops::norm_names_out::call(self, p, dim, keepdim, out);
-}
-// aten::norm.names_out(Tensor self, Scalar? p, Dimname[1] dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & norm_outf(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::Tensor & out) {
-    return at::_ops::norm_names_out::call(self, p, dim, keepdim, out);
-}
-
 // aten::norm.ScalarOpt_dtype_out(Tensor self, Scalar? p, *, ScalarType dtype, Tensor(a!) out) -> Tensor(a!)
 inline at::Tensor & norm_out(at::Tensor & out, const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::ScalarType dtype) {
     return at::_ops::norm_ScalarOpt_dtype_out::call(self, p, dtype, out);

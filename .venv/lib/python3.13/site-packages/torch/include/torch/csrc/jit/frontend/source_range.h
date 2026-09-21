@@ -49,7 +49,7 @@ struct TORCH_API StringCordView {
     for (auto s : pieces_) {
       ss << std::string(s);
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
   bool operator==(const std::string& rhs) const;
@@ -502,7 +502,7 @@ struct TORCH_API SourceRange {
   std::string str() const {
     std::stringstream ss;
     highlight(ss);
-    return ss.str();
+    return std::move(ss).str();
   }
 
   std::optional<std::tuple<std::string, size_t, size_t>> file_line_col() const {

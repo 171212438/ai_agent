@@ -38,17 +38,6 @@ struct TORCH_API sum_dim_IntList {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype);
 };
 
-struct TORCH_API sum_dim_DimnameList {
-  using schema = at::Tensor (const at::Tensor &, at::DimnameList, bool, ::std::optional<at::ScalarType>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::sum";
-  static constexpr const char* overload_name = "dim_DimnameList";
-  static constexpr const char* schema_str = "sum.dim_DimnameList(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype);
-};
-
 struct TORCH_API sum_IntList_out {
   using schema = at::Tensor & (const at::Tensor &, at::OptionalIntArrayRef, bool, ::std::optional<at::ScalarType>, at::Tensor &);
   using ptr_schema = schema*;
@@ -58,17 +47,6 @@ struct TORCH_API sum_IntList_out {
   static constexpr const char* schema_str = "sum.IntList_out(Tensor self, int[1]? dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)";
   static at::Tensor & call(const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::OptionalIntArrayRef dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-};
-
-struct TORCH_API sum_DimnameList_out {
-  using schema = at::Tensor & (const at::Tensor &, at::DimnameList, bool, ::std::optional<at::ScalarType>, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::sum";
-  static constexpr const char* overload_name = "DimnameList_out";
-  static constexpr const char* schema_str = "sum.DimnameList_out(Tensor self, Dimname[1] dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::DimnameList dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
 };
 
 struct TORCH_API sum_out {

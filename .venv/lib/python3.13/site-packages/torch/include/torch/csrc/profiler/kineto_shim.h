@@ -148,6 +148,8 @@ TORCH_API void addMetadataJson(
 
 TORCH_API void profilerStep();
 
+TORCH_API bool isKinetoStopped();
+
 } // namespace autograd::profiler
 
 } // namespace torch

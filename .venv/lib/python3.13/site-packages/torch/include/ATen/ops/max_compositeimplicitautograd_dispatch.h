@@ -18,9 +18,6 @@ namespace at {
 
 namespace compositeimplicitautograd {
 
-TORCH_API ::std::tuple<at::Tensor,at::Tensor> max(const at::Tensor & self, at::Dimname dim, bool keepdim=false);
-TORCH_API ::std::tuple<at::Tensor &,at::Tensor &> max_out(at::Tensor & max, at::Tensor & max_values, const at::Tensor & self, at::Dimname dim, bool keepdim=false);
-TORCH_API ::std::tuple<at::Tensor &,at::Tensor &> max_outf(const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & max, at::Tensor & max_values);
 TORCH_API at::Tensor max(const at::Tensor & self, const at::Tensor & other);
 TORCH_API at::Tensor & max_out(at::Tensor & out, const at::Tensor & self, const at::Tensor & other);
 TORCH_API at::Tensor & max_outf(const at::Tensor & self, const at::Tensor & other, at::Tensor & out);

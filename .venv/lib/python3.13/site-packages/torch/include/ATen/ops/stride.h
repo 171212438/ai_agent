@@ -29,11 +29,6 @@ inline int64_t __dispatch_stride(const at::Tensor & self, int64_t dim) {
     return at::_ops::stride_int::call(self, dim);
 }
 
-// aten::stride.Dimname(Tensor self, Dimname dim) -> int
-inline int64_t stride(const at::Tensor & self, at::Dimname dim) {
-    return at::_ops::stride_Dimname::call(self, dim);
-}
-
 }
 
 #else

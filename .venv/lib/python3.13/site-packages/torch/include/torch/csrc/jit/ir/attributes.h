@@ -169,7 +169,7 @@ struct IRAttributeError : public std::exception {
       ss << "required keyword attribute '" << name.toUnqualString()
          << "' has the wrong type";
     }
-    msg = ss.str();
+    msg = std::move(ss).str();
   }
   const char* what() const noexcept override {
     return msg.c_str();

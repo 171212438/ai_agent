@@ -38,11 +38,6 @@ inline at::Tensor index_add(const at::Tensor & self, int64_t dim, const at::Tens
     return at::_ops::index_add::call(self, dim, index, source, alpha);
 }
 
-// aten::index_add.dimname(Tensor self, Dimname dim, Tensor index, Tensor source, *, Scalar alpha=1) -> Tensor
-inline at::Tensor index_add(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source, const at::Scalar & alpha=1) {
-    return at::_ops::index_add_dimname::call(self, dim, index, source, alpha);
-}
-
 }
 
 #else

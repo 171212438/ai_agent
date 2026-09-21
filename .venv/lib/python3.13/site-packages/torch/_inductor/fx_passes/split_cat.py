@@ -141,7 +141,6 @@ def _get_dim(node: Any):
     )
 
 
-# noqa: W605
 # ############The pattern to be optimized is#########
 #         unbind (dim=0)
 #       /   ...    \
@@ -250,7 +249,7 @@ def remove_split_with_size_one(match: Match, *args, **kwargs):
         return
     # remove the dummy split whose split sections size is one
     # theoretically nodes with no users should be removed, but we have seen the corner case
-    # thus we add its users check to walk around the StopIteration error.
+    # thus we add its users check to work around the StopIteration error.
     if len(split_sections) == 1 and len(split_node.users.keys()) > 0:
         # find the grand children of the split_node
         next_users = find_next_users(split_node)
@@ -1430,7 +1429,6 @@ def simplify_split_cat(match: Match, split_sections: list[int], dim: int):
     SplitCatSimplifier().simplify(match.graph, split_node, split_sections)
 
 
-# noqa: W605
 # ############pattern to be optimized is#########
 
 #                 split_node(dim=1)

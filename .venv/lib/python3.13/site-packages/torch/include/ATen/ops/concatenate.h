@@ -38,20 +38,6 @@ inline at::Tensor & concatenate_outf(at::TensorList tensors, int64_t dim, at::Te
     return at::_ops::concatenate_out::call(tensors, dim, out);
 }
 
-// aten::concatenate.names(Tensor[] tensors, Dimname dim) -> Tensor
-inline at::Tensor concatenate(at::TensorList tensors, at::Dimname dim) {
-    return at::_ops::concatenate_names::call(tensors, dim);
-}
-
-// aten::concatenate.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & concatenate_out(at::Tensor & out, at::TensorList tensors, at::Dimname dim) {
-    return at::_ops::concatenate_names_out::call(tensors, dim, out);
-}
-// aten::concatenate.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & concatenate_outf(at::TensorList tensors, at::Dimname dim, at::Tensor & out) {
-    return at::_ops::concatenate_names_out::call(tensors, dim, out);
-}
-
 }
 
 #else

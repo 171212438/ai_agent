@@ -29,10 +29,6 @@ struct TORCH_API structured_norm_out : public at::meta::structured_norm_ScalarOp
 void impl(const at::Tensor & self, at::OptionalScalarRef p, at::IntArrayRef dim, bool keepdim, const at::Tensor & out);
 };
 TORCH_API at::Tensor sparse_norm(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::IntArrayRef dim, bool keepdim=false);
-TORCH_API at::Tensor norm(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype);
-TORCH_API at::Tensor & norm_out(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::ScalarType dtype, at::Tensor & out);
-TORCH_API at::Tensor norm(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim=false);
-TORCH_API at::Tensor & norm_out(const at::Tensor & self, const ::std::optional<at::Scalar> & p, at::DimnameList dim, bool keepdim, at::Tensor & out);
 } // namespace native
 } // namespace at
 

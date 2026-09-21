@@ -21,9 +21,6 @@ namespace compositeimplicitautograd {
 TORCH_API at::Tensor concatenate(at::TensorList tensors, int64_t dim=0);
 TORCH_API at::Tensor & concatenate_out(at::Tensor & out, at::TensorList tensors, int64_t dim=0);
 TORCH_API at::Tensor & concatenate_outf(at::TensorList tensors, int64_t dim, at::Tensor & out);
-TORCH_API at::Tensor concatenate(at::TensorList tensors, at::Dimname dim);
-TORCH_API at::Tensor & concatenate_out(at::Tensor & out, at::TensorList tensors, at::Dimname dim);
-TORCH_API at::Tensor & concatenate_outf(at::TensorList tensors, at::Dimname dim, at::Tensor & out);
 
 } // namespace compositeimplicitautograd
 } // namespace at

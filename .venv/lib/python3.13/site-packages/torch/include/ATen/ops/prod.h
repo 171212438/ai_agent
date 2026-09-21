@@ -43,20 +43,6 @@ inline at::Tensor & prod_outf(const at::Tensor & self, int64_t dim, bool keepdim
     return at::_ops::prod_int_out::call(self, dim, keepdim, dtype, out);
 }
 
-// aten::prod.dim_Dimname(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None) -> Tensor
-inline at::Tensor prod(const at::Tensor & self, at::Dimname dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-    return at::_ops::prod_dim_Dimname::call(self, dim, keepdim, dtype);
-}
-
-// aten::prod.Dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & prod_out(at::Tensor & out, const at::Tensor & self, at::Dimname dim, bool keepdim=false, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
-    return at::_ops::prod_Dimname_out::call(self, dim, keepdim, dtype, out);
-}
-// aten::prod.Dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & prod_outf(const at::Tensor & self, at::Dimname dim, bool keepdim, ::std::optional<at::ScalarType> dtype, at::Tensor & out) {
-    return at::_ops::prod_Dimname_out::call(self, dim, keepdim, dtype, out);
-}
-
 // aten::prod.out(Tensor self, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)
 inline at::Tensor & prod_out(at::Tensor & out, const at::Tensor & self, ::std::optional<at::ScalarType> dtype=::std::nullopt) {
     return at::_ops::prod_out::call(self, dtype, out);

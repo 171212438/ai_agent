@@ -38,17 +38,6 @@ struct TORCH_API squeeze_dim {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim);
 };
 
-struct TORCH_API squeeze_dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::squeeze";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "squeeze.dimname(Tensor(a) self, Dimname dim) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim);
-};
-
 struct TORCH_API squeeze_dims {
   using schema = at::Tensor (const at::Tensor &, at::IntArrayRef);
   using ptr_schema = schema*;
@@ -91,17 +80,6 @@ struct TORCH_API squeeze__dims {
   static constexpr const char* schema_str = "squeeze_.dims(Tensor(a!) self, int[] dim) -> Tensor(a!)";
   static at::Tensor & call(at::Tensor & self, at::IntArrayRef dim);
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::IntArrayRef dim);
-};
-
-struct TORCH_API squeeze__dimname {
-  using schema = at::Tensor & (at::Tensor &, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::squeeze_";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "squeeze_.dimname(Tensor(a!) self, Dimname dim) -> Tensor(a!)";
-  static at::Tensor & call(at::Tensor & self, at::Dimname dim);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, at::Tensor & self, at::Dimname dim);
 };
 
 }} // namespace at::_ops

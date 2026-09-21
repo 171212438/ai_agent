@@ -60,50 +60,6 @@ struct TORCH_API sort_stable {
   static ::std::tuple<at::Tensor,at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<bool> stable, int64_t dim, bool descending);
 };
 
-struct TORCH_API sort_dimname_values {
-  using schema = ::std::tuple<at::Tensor &,at::Tensor &> (const at::Tensor &, at::Dimname, bool, at::Tensor &, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::sort";
-  static constexpr const char* overload_name = "dimname_values";
-  static constexpr const char* schema_str = "sort.dimname_values(Tensor self, Dimname dim, bool descending=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)";
-  static ::std::tuple<at::Tensor &,at::Tensor &> call(const at::Tensor & self, at::Dimname dim, bool descending, at::Tensor & values, at::Tensor & indices);
-  static ::std::tuple<at::Tensor &,at::Tensor &> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool descending, at::Tensor & values, at::Tensor & indices);
-};
-
-struct TORCH_API sort_dimname_values_stable {
-  using schema = ::std::tuple<at::Tensor &,at::Tensor &> (const at::Tensor &, ::std::optional<bool>, at::Dimname, bool, at::Tensor &, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::sort";
-  static constexpr const char* overload_name = "dimname_values_stable";
-  static constexpr const char* schema_str = "sort.dimname_values_stable(Tensor self, *, bool? stable, Dimname dim, bool descending=False, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)";
-  static ::std::tuple<at::Tensor &,at::Tensor &> call(const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending, at::Tensor & values, at::Tensor & indices);
-  static ::std::tuple<at::Tensor &,at::Tensor &> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending, at::Tensor & values, at::Tensor & indices);
-};
-
-struct TORCH_API sort_dimname {
-  using schema = ::std::tuple<at::Tensor,at::Tensor> (const at::Tensor &, at::Dimname, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::sort";
-  static constexpr const char* overload_name = "dimname";
-  static constexpr const char* schema_str = "sort.dimname(Tensor self, Dimname dim, bool descending=False) -> (Tensor values, Tensor indices)";
-  static ::std::tuple<at::Tensor,at::Tensor> call(const at::Tensor & self, at::Dimname dim, bool descending);
-  static ::std::tuple<at::Tensor,at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, bool descending);
-};
-
-struct TORCH_API sort_dimname_stable {
-  using schema = ::std::tuple<at::Tensor,at::Tensor> (const at::Tensor &, ::std::optional<bool>, at::Dimname, bool);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::sort";
-  static constexpr const char* overload_name = "dimname_stable";
-  static constexpr const char* schema_str = "sort.dimname_stable(Tensor self, *, bool? stable, Dimname dim, bool descending=False) -> (Tensor values, Tensor indices)";
-  static ::std::tuple<at::Tensor,at::Tensor> call(const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending);
-  static ::std::tuple<at::Tensor,at::Tensor> redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, ::std::optional<bool> stable, at::Dimname dim, bool descending);
-};
-
 }} // namespace at::_ops
 
 #else

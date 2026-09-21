@@ -18,7 +18,6 @@
 namespace at {
 namespace native {
 TORCH_API at::Tensor _sparse_softmax(const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype=::std::nullopt);
-TORCH_API at::Tensor _sparse_softmax(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype=::std::nullopt);
 TORCH_API at::Tensor & _sparse_softmax_out(const at::Tensor & self, int64_t dim, bool half_to_float, at::Tensor & out);
 TORCH_API at::Tensor softmax_sparse_cpu(const at::Tensor & self, int64_t dim, bool half_to_float);
 TORCH_API at::Tensor softmax_sparse_cuda(const at::Tensor & self, int64_t dim, bool half_to_float);

@@ -38,11 +38,6 @@ inline at::Tensor index_copy(const at::Tensor & self, int64_t dim, const at::Ten
     return at::_ops::index_copy::call(self, dim, index, source);
 }
 
-// aten::index_copy.dimname(Tensor self, Dimname dim, Tensor index, Tensor source) -> Tensor
-inline at::Tensor index_copy(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & source) {
-    return at::_ops::index_copy_dimname::call(self, dim, index, source);
-}
-
 }
 
 #else

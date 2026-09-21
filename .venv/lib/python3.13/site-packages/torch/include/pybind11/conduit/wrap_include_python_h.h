@@ -1,4 +1,3 @@
-#if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 #pragma once
 
 // Copyright (c) 2024 The pybind Community.
@@ -71,7 +70,3 @@
 #if defined(copysign)
 #    undef copysign
 #endif
-
-#else
-#error "This file should not be included when either TORCH_STABLE_ONLY or TORCH_TARGET_VERSION is defined."
-#endif  // !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)

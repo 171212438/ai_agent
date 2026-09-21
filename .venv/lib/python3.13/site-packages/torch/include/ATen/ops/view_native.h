@@ -20,6 +20,7 @@ namespace native {
 TORCH_API at::Tensor view(const at::Tensor & self, at::IntArrayRef size);
 TORCH_API at::Tensor view_nested(const at::Tensor & self, at::IntArrayRef size);
 TORCH_API at::Tensor mkldnn_view(const at::Tensor & self, at::IntArrayRef size);
+TORCH_API at::Tensor view_symint(const at::Tensor & self, c10::SymIntArrayRef size);
 TORCH_API at::Tensor view_dtype(const at::Tensor & self, at::ScalarType dtype);
 } // namespace native
 } // namespace at

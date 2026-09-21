@@ -16,17 +16,6 @@ namespace at {
 namespace _ops {
 
 
-struct TORCH_API select_Dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, int64_t);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::select";
-  static constexpr const char* overload_name = "Dimname";
-  static constexpr const char* schema_str = "select.Dimname(Tensor(a) self, Dimname dim, int index) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, int64_t index);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, int64_t index);
-};
-
 struct TORCH_API select_int {
   using schema = at::Tensor (const at::Tensor &, int64_t, c10::SymInt);
   using ptr_schema = schema*;

@@ -38,20 +38,6 @@ inline at::Tensor & cat_outf(const at::ITensorListRef & tensors, int64_t dim, at
     return at::_ops::cat_out::call(tensors, dim, out);
 }
 
-// aten::cat.names(Tensor[] tensors, Dimname dim) -> Tensor
-inline at::Tensor cat(at::TensorList tensors, at::Dimname dim) {
-    return at::_ops::cat_names::call(tensors, dim);
-}
-
-// aten::cat.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & cat_out(at::Tensor & out, at::TensorList tensors, at::Dimname dim) {
-    return at::_ops::cat_names_out::call(tensors, dim, out);
-}
-// aten::cat.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & cat_outf(at::TensorList tensors, at::Dimname dim, at::Tensor & out) {
-    return at::_ops::cat_names_out::call(tensors, dim, out);
-}
-
 }
 
 #else

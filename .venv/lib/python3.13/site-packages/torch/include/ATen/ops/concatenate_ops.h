@@ -38,28 +38,6 @@ struct TORCH_API concatenate_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, int64_t dim, at::Tensor & out);
 };
 
-struct TORCH_API concatenate_names {
-  using schema = at::Tensor (at::TensorList, at::Dimname);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::concatenate";
-  static constexpr const char* overload_name = "names";
-  static constexpr const char* schema_str = "concatenate.names(Tensor[] tensors, Dimname dim) -> Tensor";
-  static at::Tensor call(at::TensorList tensors, at::Dimname dim);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim);
-};
-
-struct TORCH_API concatenate_names_out {
-  using schema = at::Tensor & (at::TensorList, at::Dimname, at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::concatenate";
-  static constexpr const char* overload_name = "names_out";
-  static constexpr const char* schema_str = "concatenate.names_out(Tensor[] tensors, Dimname dim, *, Tensor(a!) out) -> Tensor(a!)";
-  static at::Tensor & call(at::TensorList tensors, at::Dimname dim, at::Tensor & out);
-  static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, at::TensorList tensors, at::Dimname dim, at::Tensor & out);
-};
-
 }} // namespace at::_ops
 
 #else

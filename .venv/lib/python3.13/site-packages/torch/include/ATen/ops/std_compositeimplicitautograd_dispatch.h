@@ -22,12 +22,6 @@ TORCH_API at::Tensor std(const at::Tensor & self, bool unbiased);
 TORCH_API at::Tensor std(const at::Tensor & self, at::OptionalIntArrayRef dim, bool unbiased, bool keepdim=false);
 TORCH_API at::Tensor & std_out(at::Tensor & out, const at::Tensor & self, at::OptionalIntArrayRef dim, bool unbiased, bool keepdim=false);
 TORCH_API at::Tensor & std_outf(const at::Tensor & self, at::OptionalIntArrayRef dim, bool unbiased, bool keepdim, at::Tensor & out);
-TORCH_API at::Tensor std(const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false);
-TORCH_API at::Tensor & std_out(at::Tensor & out, const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim=false);
-TORCH_API at::Tensor & std_outf(const at::Tensor & self, at::DimnameList dim, bool unbiased, bool keepdim, at::Tensor & out);
-TORCH_API at::Tensor std(const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false);
-TORCH_API at::Tensor & std_out(at::Tensor & out, const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction=::std::nullopt, bool keepdim=false);
-TORCH_API at::Tensor & std_outf(const at::Tensor & self, at::DimnameList dim, const ::std::optional<at::Scalar> & correction, bool keepdim, at::Tensor & out);
 
 } // namespace compositeimplicitautograd
 } // namespace at

@@ -24,15 +24,6 @@
 namespace at {
 
 
-// aten::ones.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-inline at::Tensor ones(at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::TensorOptions options={}) {
-    return at::_ops::ones_names::call(size, names, c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
-}
-// aten::ones.names(int[] size, *, Dimname[]? names, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
-inline at::Tensor ones(at::IntArrayRef size, ::std::optional<at::DimnameList> names, ::std::optional<at::ScalarType> dtype, ::std::optional<at::Layout> layout, ::std::optional<at::Device> device, ::std::optional<bool> pin_memory) {
-    return at::_ops::ones_names::call(size, names, dtype, layout, device, pin_memory);
-}
-
 // aten::ones(SymInt[] size, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
 inline at::Tensor ones(at::IntArrayRef size, at::TensorOptions options={}) {
     return at::_ops::ones::call(c10::fromIntArrayRefSlow(size), c10::optTypeMetaToScalarType(options.dtype_opt()), options.layout_opt(), options.device_opt(), options.pinned_memory_opt());
@@ -119,15 +110,6 @@ namespace symint {
   at::Tensor & ones_outf(c10::SymIntArrayRef size, at::Tensor & out) {
     return at::_ops::ones_out::call(size, out);
   }
-}
-
-// aten::ones.names_out(int[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & ones_out(at::Tensor & out, at::IntArrayRef size, ::std::optional<at::DimnameList> names) {
-    return at::_ops::ones_names_out::call(size, names, out);
-}
-// aten::ones.names_out(int[] size, *, Dimname[]? names, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & ones_outf(at::IntArrayRef size, ::std::optional<at::DimnameList> names, at::Tensor & out) {
-    return at::_ops::ones_names_out::call(size, names, out);
 }
 
 }

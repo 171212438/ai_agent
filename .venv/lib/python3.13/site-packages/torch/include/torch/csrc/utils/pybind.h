@@ -1,6 +1,7 @@
 #if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 #pragma once
 
+#include <torch/csrc/Layout.h>
 #include <torch/csrc/python_headers.h>
 #include <torch/csrc/utils/pythoncapi_compat.h>
 
@@ -360,6 +361,28 @@ struct type_caster<c10::complex<T>> {
   }
 };
 
+template <>
+struct type_caster<c10::Layout> {
+ public:
+  // NOLINTNEXTLINE(cppcoreguidelines-non-private-member-variables-in-classes)
+  PYBIND11_TYPE_CASTER(c10::Layout, _("torch.layout"));
+
+  static handle cast(
+      c10::Layout layout,
+      return_value_policy /*unused*/,
+      handle /*parent*/) {
+    return handle(Py_NewRef(torch::getTHPLayout(layout)));
+  }
+
+  bool load(handle src, bool /*convert*/) {
+    if (!THPLayout_Check(src.ptr())) {
+      return false;
+    }
+    const auto layout = reinterpret_cast<THPLayout*>(src.ptr());
+    value = layout->layout;
+    return true;
+  }
+};
 } // namespace pybind11::detail
 
 namespace torch::impl {

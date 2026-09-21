@@ -1,4 +1,3 @@
-#if !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)
 /*
     pybind11/warnings.h: Python warnings wrappers.
 
@@ -74,7 +73,3 @@ warn(const char *message, handle category = PyExc_RuntimeWarning, int stack_leve
 PYBIND11_NAMESPACE_END(warnings)
 
 PYBIND11_NAMESPACE_END(PYBIND11_NAMESPACE)
-
-#else
-#error "This file should not be included when either TORCH_STABLE_ONLY or TORCH_TARGET_VERSION is defined."
-#endif  // !defined(TORCH_STABLE_ONLY) && !defined(TORCH_TARGET_VERSION)

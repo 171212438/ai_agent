@@ -45,6 +45,7 @@ class OptionalArrayRef final {
 
   template <
       typename U = ArrayRef<T>,
+      // NOLINTNEXTLINE(modernize-use-constraints)
       std::enable_if_t<
           !std::is_same_v<std::decay_t<U>, OptionalArrayRef> &&
               !std::is_same_v<std::decay_t<U>, std::in_place_t> &&
@@ -58,6 +59,7 @@ class OptionalArrayRef final {
 
   template <
       typename U = ArrayRef<T>,
+      // NOLINTNEXTLINE(modernize-use-constraints)
       std::enable_if_t<
           !std::is_same_v<std::decay_t<U>, OptionalArrayRef> &&
               !std::is_same_v<std::decay_t<U>, std::in_place_t> &&
@@ -113,6 +115,7 @@ class OptionalArrayRef final {
 
   template <
       typename U = ArrayRef<T>,
+      // NOLINTNEXTLINE(modernize-use-constraints)
       typename = std::enable_if_t<
           !std::is_same_v<std::decay_t<U>, OptionalArrayRef> &&
           std::is_constructible_v<ArrayRef<T>, U&&> &&
@@ -176,6 +179,7 @@ class OptionalArrayRef final {
   }
 
   template <typename U>
+  // NOLINTNEXTLINE(modernize-use-constraints)
   constexpr std::
       enable_if_t<std::is_convertible_v<U&&, ArrayRef<T>>, ArrayRef<T>>
       value_or(U&& default_value) const& {
@@ -183,6 +187,7 @@ class OptionalArrayRef final {
   }
 
   template <typename U>
+  // NOLINTNEXTLINE(modernize-use-constraints)
   constexpr std::
       enable_if_t<std::is_convertible_v<U&&, ArrayRef<T>>, ArrayRef<T>>
       value_or(U&& default_value) && {
@@ -200,6 +205,7 @@ class OptionalArrayRef final {
   }
 
   template <typename... Args>
+  // NOLINTNEXTLINE(modernize-use-constraints)
   constexpr std::
       enable_if_t<std::is_constructible_v<ArrayRef<T>, Args&&...>, ArrayRef<T>&>
       emplace(Args&&... args) noexcept(
@@ -214,26 +220,18 @@ class OptionalArrayRef final {
     return wrapped_opt_array_ref.emplace(il, std::forward<Args>(args)...);
   }
 
+  friend bool operator==(OptionalArrayRef a1, ArrayRef<T> other) {
+    if (!a1.has_value()) {
+      return false;
+    }
+    return a1.value() == other;
+  }
+
  private:
   std::optional<ArrayRef<T>> wrapped_opt_array_ref;
 };
 
 using OptionalIntArrayRef = OptionalArrayRef<int64_t>;
-
-inline bool operator==(
-    const OptionalIntArrayRef& a1,
-    const IntArrayRef& other) {
-  if (!a1.has_value()) {
-    return false;
-  }
-  return a1.value() == other;
-}
-
-inline bool operator==(
-    const c10::IntArrayRef& a1,
-    const c10::OptionalIntArrayRef& a2) {
-  return a2 == a1;
-}
 
 } // namespace c10
 

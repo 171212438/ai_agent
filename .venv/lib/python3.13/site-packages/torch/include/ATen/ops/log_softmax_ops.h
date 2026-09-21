@@ -38,17 +38,6 @@ struct TORCH_API log_softmax_int_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, ::std::optional<at::ScalarType> dtype, at::Tensor & out);
 };
 
-struct TORCH_API log_softmax_Dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, ::std::optional<at::ScalarType>);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::log_softmax";
-  static constexpr const char* overload_name = "Dimname";
-  static constexpr const char* schema_str = "log_softmax.Dimname(Tensor self, Dimname dim, *, ScalarType? dtype=None) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, ::std::optional<at::ScalarType> dtype);
-};
-
 }} // namespace at::_ops
 
 #else

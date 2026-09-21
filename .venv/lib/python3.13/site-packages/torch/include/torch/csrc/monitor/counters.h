@@ -229,7 +229,7 @@ class Stat {
       key << name_;
       key << '.';
       key << aggregationName(kv.first);
-      e.data[key.str()] = kv.second;
+      e.data[std::move(key).str()] = kv.second;
     }
 
     logEvent(e);

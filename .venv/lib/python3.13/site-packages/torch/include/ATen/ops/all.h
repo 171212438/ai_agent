@@ -52,20 +52,6 @@ inline at::Tensor & all_outf(const at::Tensor & self, at::OptionalIntArrayRef di
     return at::_ops::all_dims_out::call(self, dim, keepdim, out);
 }
 
-// aten::all.dimname(Tensor self, Dimname dim, bool keepdim=False) -> Tensor
-inline at::Tensor all(const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-    return at::_ops::all_dimname::call(self, dim, keepdim);
-}
-
-// aten::all.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & all_out(at::Tensor & out, const at::Tensor & self, at::Dimname dim, bool keepdim=false) {
-    return at::_ops::all_dimname_out::call(self, dim, keepdim, out);
-}
-// aten::all.dimname_out(Tensor self, Dimname dim, bool keepdim=False, *, Tensor(a!) out) -> Tensor(a!)
-inline at::Tensor & all_outf(const at::Tensor & self, at::Dimname dim, bool keepdim, at::Tensor & out) {
-    return at::_ops::all_dimname_out::call(self, dim, keepdim, out);
-}
-
 // aten::all(Tensor self) -> Tensor
 inline at::Tensor all(const at::Tensor & self) {
     return at::_ops::all::call(self);

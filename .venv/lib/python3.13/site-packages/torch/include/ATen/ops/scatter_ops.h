@@ -148,28 +148,6 @@ struct TORCH_API scatter_value_reduce_out {
   static at::Tensor & redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, const at::Tensor & index, const at::Scalar & value, c10::string_view reduce, at::Tensor & out);
 };
 
-struct TORCH_API scatter_dimname_src {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, const at::Tensor &, const at::Tensor &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::scatter";
-  static constexpr const char* overload_name = "dimname_src";
-  static constexpr const char* schema_str = "scatter.dimname_src(Tensor self, Dimname dim, Tensor index, Tensor src) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & src);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Tensor & src);
-};
-
-struct TORCH_API scatter_dimname_value {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, const at::Tensor &, const at::Scalar &);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::scatter";
-  static constexpr const char* overload_name = "dimname_value";
-  static constexpr const char* schema_str = "scatter.dimname_value(Tensor self, Dimname dim, Tensor index, Scalar value) -> Tensor";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Scalar & value);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, const at::Tensor & index, const at::Scalar & value);
-};
-
 }} // namespace at::_ops
 
 #else

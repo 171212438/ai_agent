@@ -29,11 +29,6 @@ inline int64_t __dispatch_size(const at::Tensor & self, int64_t dim) {
     return at::_ops::size_int::call(self, dim);
 }
 
-// aten::size.Dimname(Tensor self, Dimname dim) -> int
-inline int64_t size(const at::Tensor & self, at::Dimname dim) {
-    return at::_ops::size_Dimname::call(self, dim);
-}
-
 }
 
 #else

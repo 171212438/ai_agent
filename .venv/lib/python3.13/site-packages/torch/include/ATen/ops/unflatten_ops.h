@@ -27,17 +27,6 @@ struct TORCH_API unflatten_int {
   static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, int64_t dim, c10::SymIntArrayRef sizes);
 };
 
-struct TORCH_API unflatten_Dimname {
-  using schema = at::Tensor (const at::Tensor &, at::Dimname, c10::SymIntArrayRef, at::DimnameList);
-  using ptr_schema = schema*;
-  // See Note [static constexpr char* members for windows NVCC]
-  static constexpr const char* name = "aten::unflatten";
-  static constexpr const char* overload_name = "Dimname";
-  static constexpr const char* schema_str = "unflatten.Dimname(Tensor(a) self, Dimname dim, SymInt[] sizes, Dimname[] names) -> Tensor(a)";
-  static at::Tensor call(const at::Tensor & self, at::Dimname dim, c10::SymIntArrayRef sizes, at::DimnameList names);
-  static at::Tensor redispatch(c10::DispatchKeySet dispatchKeySet, const at::Tensor & self, at::Dimname dim, c10::SymIntArrayRef sizes, at::DimnameList names);
-};
-
 }} // namespace at::_ops
 
 #else

@@ -36,7 +36,7 @@ class Scalar : public TsNode {
     ss << TsNode::ToString();
     ss << ", value=" << value;
     ss << ", type=" << type;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -78,7 +78,7 @@ class Expand : public TsNode {
     ss << TsNode::ToString();
     ss << ", size=" << size;
     ss << ", is_scalar_expand=" << is_scalar_expand;
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
@@ -129,7 +129,7 @@ class Cast : public TsNode {
     } else {
       ss << ", stype=null";
     }
-    return ss.str();
+    return std::move(ss).str();
   }
 
 
