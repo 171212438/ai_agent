@@ -1,0 +1,9 @@
+# Local IDE settings and run configurations
+/.idea/
+/.run/
+
+# Local environment variables and API keys
+/.env
+
+# Python bytecode cache directories at every level
+__pycache__/
